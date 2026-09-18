@@ -56,5 +56,8 @@ to manage equity exposure dynamically.
 2. Click Runtime → Run All
 3. All charts and results will generate automatically
 
+## Performance Charts
+![Regime Detector Charts](regime_detector_charts.png)
+
 ## Author
 Sidney Pratt | Cross-Asset Research
