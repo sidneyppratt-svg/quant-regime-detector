@@ -5,11 +5,11 @@
 This project uses unsupervised machine learning to detect market regimes 
 across four asset classes — US Equities (SPY), Investment Grade Bonds (AGG), 
 High Yield Credit (HYG), and Gold (GLD). The model classifies every trading 
-day from 2014 to 2024 as either RISK-ON or RISK-OFF and uses those signals 
+day from 2014 to 2026 as either RISK-ON or RISK-OFF and uses those signals 
 to manage equity exposure dynamically.
 
 ## Methodology
-- **Data:** 10 years of daily price data across 4 asset classes (2014–2024)
+- **Data:** 10 years of daily price data across 4 asset classes (2014–2026)
 - **Model:** Gaussian Mixture Model (GMM) — unsupervised machine learning
 - **Signal:** 21-day rolling mean returns used as input features
 - **Strategy:** Long SPY during RISK-ON regimes, cash during RISK-OFF regimes
@@ -19,12 +19,11 @@ to manage equity exposure dynamically.
 
 | Metric | AI Strategy | Buy & Hold |
 |--------|------------|------------|
-| Total Return | 302.2% | 309.8% |
-| Annualized Return | 13.6% | 13.8% |
-| Annualized Volatility | 14.9% | 17.2% |
-| Sharpe Ratio | 0.91 | 0.81 |
-| Max Drawdown | -26.6% | -33.7% |
-| Win Rate | 54.1% | 55.1% |
+| Total Return | 441.9% | 440.4% |
+| Annualized Return | 14.4% | 14.3% |
+| Annualized Volatility | 15.5% | 17.1% |
+| Sharpe Ratio | 0.93 | 0.84 |
+| Max Drawdown | -24.0% | -33.7% |
 
 ## Key Findings
 - The AI model matched buy-and-hold returns while reducing maximum drawdown 
