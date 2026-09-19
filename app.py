@@ -90,6 +90,16 @@ st.markdown("""
     }
     .player-card h3 { color: #222222 !important; margin-bottom: 0.3rem; }
     .player-card p { color: #333333 !important; line-height: 1.7; }
+    .player-card-college {
+        background-color: #F5F0FF;
+        border: 1px solid #CCCCCC;
+        border-left: 5px solid #6644AA;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .player-card-college h3 { color: #222222 !important; margin-bottom: 0.3rem; }
+    .player-card-college p { color: #333333 !important; line-height: 1.7; }
     .pathway-step {
         display: inline-block;
         background-color: #333333;
@@ -99,6 +109,36 @@ st.markdown("""
         font-size: 12px;
         margin: 2px;
         font-weight: bold;
+    }
+    .pathway-step-college {
+        display: inline-block;
+        background-color: #6644AA;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        margin: 2px;
+        font-weight: bold;
+    }
+    .section-label {
+        background-color: #333333;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+    .section-label-college {
+        background-color: #6644AA;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 1rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -1088,16 +1128,22 @@ elif page == "AI Research":
             st.info("Pathway map loading — check back shortly.")
 
         st.markdown("---")
-        st.markdown("### NHL Player Spotlights — Real Paths to the Pros")
+        st.markdown("### Real Players, Real Paths")
         st.markdown("""
         <p style="color:#555555; font-size:14px;">
-        These are the actual pathways taken by five of today's
-        top young NHL players. Every path is different —
-        and all of them worked.
+        Every path is different and all of them can work.
+        Here are real players at every level — from the NHL
+        to college hockey — and the exact routes they took
+        to get there.
         </p>
         """, unsafe_allow_html=True)
 
-        players = [
+        # ── THE NHL ROUTE ──────────────────────────────────────
+        st.markdown("""
+        <div class="section-label">⭐ The NHL Route</div>
+        """, unsafe_allow_html=True)
+
+        nhl_players = [
             {
                 'name':   'Connor Bedard',
                 'team':   'Chicago Blackhawks — #1 Overall Pick 2023',
@@ -1203,7 +1249,7 @@ elif page == "AI Research":
             },
         ]
 
-        for player in players:
+        for player in nhl_players:
             st.markdown(f"""
             <div class="player-card">
                 <h3>{player['name']}</h3>
@@ -1216,6 +1262,139 @@ elif page == "AI Research":
             st.markdown("**Pathway:**")
             path_html = " → ".join([
                 f'<span class="pathway-step">{step}</span>'
+                for step in player['path']
+            ])
+            st.markdown(
+                f'<div style="margin-bottom:0.75rem;">{path_html}</div>',
+                unsafe_allow_html=True)
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown(f"""
+                <div class="card">
+                    <h3>Key Fact</h3>
+                    <p>{player['key_fact']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+            with col2:
+                st.markdown(f"""
+                <div class="card">
+                    <h3>Lesson for Families</h3>
+                    <p>{player['lesson']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+            st.markdown("---")
+
+        # ── THE COLLEGE ROUTE ──────────────────────────────────
+        st.markdown("""
+        <div class="section-label-college">🎓 The College Route</div>
+        """, unsafe_allow_html=True)
+        st.markdown("""
+        <p style="color:#555555; font-size:14px; margin-bottom:1rem;">
+        Not everyone takes the NHL path — and that is perfectly fine.
+        These players chose academics, chose their school, and kept
+        playing the game they love at the college level.
+        That is a win by any measure.
+        </p>
+        """, unsafe_allow_html=True)
+
+        college_players = [
+            {
+                'name':    'Sidney Pratt',
+                'team':    'Western Michigan University — ACHA D1 — #96',
+                'born':    'San Francisco, CA, USA — Born 2005',
+                'path': [
+                    'Youth Hockey — San Francisco Sabercats USHS-CA',
+                    'AAA — Golden State Eagles 18U AA 🏆 State Champion',
+                    'USPHL Elite — Northern Cyclones 🏆 National Champion 2023-24',
+                    'ACHA D1 — Western Michigan University (current)',
+                ],
+                'key_fact': 'Sidney grew up playing hockey in San Francisco — '
+                            'one of the least likely places to produce a serious '
+                            'junior hockey player. He earned two championships '
+                            'at two different levels — a state title with the '
+                            'Golden State Eagles and a national title with the '
+                            'Northern Cyclones in 2023-24. He chose Western '
+                            'Michigan for his Finance and Economics degree and '
+                            'has kept playing ACHA D1 hockey while building '
+                            'a career in quantitative finance. He also '
+                            'co-founded the Northern Cyclones Financial Club — '
+                            'bringing finance and hockey together in a way '
+                            'nobody had done before.',
+                'lesson':  'ACHA D1 means you choose the school that is right '
+                           'for you academically and keep playing hockey. '
+                           'No compromises. Sidney chose Western Michigan for '
+                           'its Finance program and walked in as a national '
+                           'champion. Hockey does not have to end when '
+                           'junior hockey does.',
+            },
+            {
+                'name':    'Luke Linart',
+                'team':    'Saint Anselm College — NCAA D3 — #28 — Senior',
+                'born':    'Holland, Michigan, USA — Born 2001',
+                'path': [
+                    'AAA Youth — Meijer AAA 15U',
+                    'High School — West Ottawa HS (captain, 114 pts in 3 seasons)',
+                    'USPHL Premier — Northern Cyclones (38 pts in 44 games)',
+                    'NCAA D3 — Saint Anselm College',
+                ],
+                'key_fact': 'Luke captained West Ottawa High School and scored '
+                            '114 points across three varsity seasons. He then '
+                            'played USPHL Premier with the Northern Cyclones '
+                            'before landing at Saint Anselm College in the '
+                            'NE10 conference. As a freshman he won the NE10 '
+                            'Championship and earned All-Rookie Team honors. '
+                            'He has been an iron man — playing in every single '
+                            'Saints game since arriving in 2022 — and carries '
+                            'a 4.0 GPA in Accounting and Business Analytics. '
+                            'In 2025-26 he earned NE10 Second Team All-Conference '
+                            'as a senior with 29 points in 32 games.',
+                'lesson':  'USPHL Premier leads to real NCAA D3 opportunities '
+                           'at strong academic schools. Luke went from Northern '
+                           'Cyclones to a championship program at Saint Anselm '
+                           'while maintaining a 4.0 GPA. The level on the ice '
+                           'matters less than how you carry yourself off it.',
+            },
+            {
+                'name':    'Eddie Shepler',
+                'team':    'Milwaukee School of Engineering — NCAA D3 — #4',
+                'born':    'Livonia, Michigan, USA',
+                'path': [
+                    'AAA Youth — Compuware 14U, Honeybaked 16U (captain)',
+                    'NAHL — Bismarck Bobcats',
+                    'NAHL — Minnesota Wilderness',
+                    'NAHL — El Paso Rhinos',
+                    'NCAA D3 — Milwaukee School of Engineering',
+                ],
+                'key_fact': 'Eddie spent four full seasons in the NAHL — '
+                            'one of the best Tier 2 junior leagues in the US — '
+                            'playing 191 games across three different teams '
+                            'including the Bismarck Bobcats, Minnesota '
+                            'Wilderness, and El Paso Rhinos. He was a captain '
+                            'at the AAA youth level with Honeybaked and kept '
+                            'grinding through junior hockey until landing at '
+                            'Milwaukee School of Engineering where he scored '
+                            '11 goals in his first NCAA season.',
+                'lesson':  'The NAHL is a serious Tier 2 league and four '
+                           'seasons there is no small thing. Eddie proves '
+                           'that the path to college hockey is not always '
+                           'straight — sometimes it takes years of junior '
+                           'hockey to find the right fit. The grind pays off.',
+            },
+        ]
+
+        for player in college_players:
+            st.markdown(f"""
+            <div class="player-card-college">
+                <h3>{player['name']}</h3>
+                <p style="color:#666666; font-size:13px;
+                margin-bottom:0.5rem;">
+                {player['team']}<br>{player['born']}
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            st.markdown("**Pathway:**")
+            path_html = " → ".join([
+                f'<span class="pathway-step-college">{step}</span>'
                 for step in player['path']
             ])
             st.markdown(
