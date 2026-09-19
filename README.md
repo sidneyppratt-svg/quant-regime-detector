@@ -9,7 +9,7 @@ day from 2014 to 2026 as either RISK-ON or RISK-OFF and uses those signals
 to manage equity exposure dynamically.
 
 ## Methodology
-- **Data:** 10 years of daily price data across 4 asset classes (2014–2026)
+- **Data:** 12 years of daily price data across 4 asset classes (2014–2026)
 - **Model:** Gaussian Mixture Model (GMM) — unsupervised machine learning
 - **Signal:** 21-day rolling mean returns used as input features
 - **Strategy:** Long SPY during RISK-ON regimes, cash during RISK-OFF regimes
