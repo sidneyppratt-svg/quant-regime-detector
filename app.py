@@ -371,19 +371,133 @@ elif page == "AI Research":
         "More models coming soon..."
     ])
 
-    if model == "Multi-Asset Market Regime Detector":
+      if model == "Multi-Asset Market Regime Detector":
         st.markdown("## Multi-Asset Market Regime Detector")
+
         st.markdown("""
         <div class="card">
+            <h3>Overview</h3>
             <p>
             This model uses unsupervised machine learning (Gaussian 
             Mixture Model) to detect whether markets are in a 
             <b>RISK-ON</b> or <b>RISK-OFF</b> regime by analyzing 
             four asset classes simultaneously — US Equities (SPY), 
             Investment Grade Bonds (AGG), High Yield Credit (HYG), 
-            and Gold (GLD).
+            and Gold (GLD). The model was trained on 12 years of 
+            real daily market data from 2014 to 2026.
             </p>
         </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+            <h3>Methodology</h3>
+            <p>
+            <b>Data:</b> 12 years of daily price data across 4 asset 
+            classes (2014–2026)<br><br>
+            <b>Model:</b> Gaussian Mixture Model (GMM) — unsupervised 
+            machine learning that finds hidden patterns in data without 
+            being told what to look for<br><br>
+            <b>Signal:</b> 21-day rolling mean returns used as input 
+            features — this smooths out daily noise so the AI sees 
+            trends instead of random fluctuations<br><br>
+            <b>Strategy:</b> Long SPY during RISK-ON regimes, move to 
+            cash during RISK-OFF regimes<br><br>
+            <b>Backtest:</b> Chronological train/test split to prevent 
+            lookahead bias — meaning the model never uses future data 
+            to make past decisions
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("""
+            <div class="card">
+                <h3>RISK-ON ✅ — Markets Are Calm</h3>
+                <p>
+                All four asset classes are behaving normally. 
+                Stocks are rising, credit is tight, gold is steady. 
+                Investors are confident and willing to take risk.<br><br>
+                <b>What this means:</b> Stay invested in equities. 
+                The environment is favorable for growth.<br><br>
+                <b>Real world example:</b> 2021 post-COVID recovery — 
+                stocks surged, credit was cheap, investors were 
+                pouring money into risk assets everywhere.
+                The model correctly identified this as a sustained 
+                RISK-ON period.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        with col2:
+            st.markdown("""
+            <div class="card">
+                <h3>RISK-OFF ⚠️ — Market Stress Detected</h3>
+                <p>
+                Something is wrong across multiple asset classes 
+                simultaneously. Stocks are falling, credit is 
+                widening, gold is spiking. Investors are scared 
+                and moving to safety.<br><br>
+                <b>What this means:</b> Move to cash. Protect 
+                capital until conditions stabilize.<br><br>
+                <b>Real world example:</b> March 2020 COVID crash — 
+                stocks dropped 34% in 23 days, credit markets froze, 
+                and gold spiked as investors panicked. The model 
+                flagged RISK-OFF and moved to cash before the 
+                worst of the decline.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+            <h3>The Four Asset Class Sensors</h3>
+            <p>
+            <b>SPY — US Stock Market:</b> Measures overall investor 
+            confidence. Rising SPY = investors are optimistic about 
+            the economy.<br><br>
+            <b>AGG — Investment Grade Bonds:</b> Measures flight to 
+            safety. Rising AGG = investors are getting cautious and 
+            moving money out of stocks into safer assets.<br><br>
+            <b>HYG — High Yield Credit:</b> Measures risk appetite in 
+            the credit market. Falling HYG = lenders are pulling back 
+            from risky companies — often the first warning sign of 
+            broader stress.<br><br>
+            <b>GLD — Gold:</b> Measures fear and uncertainty. 
+            Spiking gold = investors are nervous about everything 
+            else and looking for a safe hiding place.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+            <h3>Key Results</h3>
+            <p>
+            The AI strategy matched buy-and-hold returns over 12 years 
+            while significantly reducing risk:<br><br>
+            — Maximum drawdown reduced from <b>-33.7%</b> to 
+            <b>-24.0%</b> — protecting investors during the 
+            worst crashes<br><br>
+            — Sharpe ratio improved from <b>0.84</b> to <b>0.93</b> 
+            — more return per unit of risk taken<br><br>
+            — Portfolio volatility reduced from <b>17.1%</b> to 
+            <b>15.5%</b> — a smoother ride to the same destination<br><br>
+            The model correctly identified RISK-OFF conditions only 
+            1.8% of the time — rare but severe stress periods like 
+            the COVID-19 crash in March 2020 and the 2022 Federal 
+            Reserve rate hike cycle.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown("### Run the Model")
+        st.markdown("""
+        <p style="color:#D3D1C7;">
+        Select a date range below and click Run AI Model to see 
+        the regime detector in action for any time period.
+        </p>
         """, unsafe_allow_html=True)
 
         st.markdown("---")
