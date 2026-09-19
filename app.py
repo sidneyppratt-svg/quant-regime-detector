@@ -556,6 +556,8 @@ elif page == "AI Research":
                 ax.yaxis.label.set_color('#333333')
                 for spine in ax.spines.values():
                     spine.set_edgecolor('#CCCCCC')
+
+            # ── Chart 1: Portfolio Growth ──────────────────────
             (cum_s * 100).plot(ax=axes[0], color='#333333',
                 linewidth=2, label='AI Strategy')
             (cum_b * 100).plot(ax=axes[0], color='#AAAAAA',
@@ -566,18 +568,68 @@ elif page == "AI Research":
             axes[0].set_ylabel('Value ($)', color='#333333')
             axes[0].yaxis.set_major_formatter(
                 plt.FuncFormatter(lambda x, _: f'${x:.0f}'))
+
+            # ── Chart 2: Regime Timeline with SPY overlay ──────
             risk_on_mask  = smooth['label'] == 'RISK-ON'
             risk_off_mask = smooth['label'] == 'RISK-OFF'
+
+            # Normalize SPY price to 0-1 for overlay
+            spy_price = prices['SPY'].loc[smooth.index]
+            spy_norm  = (spy_price - spy_price.min()) / \
+                        (spy_price.max() - spy_price.min())
+
+            # Green RISK-ON, Red RISK-OFF background
             axes[1].fill_between(smooth.index, 0, 1,
-                where=risk_on_mask, color='#444444',
-                alpha=0.7, label='RISK-ON')
+                where=risk_on_mask,
+                color='#2E7D32', alpha=0.25, label='RISK-ON')
             axes[1].fill_between(smooth.index, 0, 1,
-                where=risk_off_mask, color='#AAAAAA',
-                alpha=0.9, label='RISK-OFF')
-            axes[1].set_title('Regime Detection Timeline',
+                where=risk_off_mask,
+                color='#C62828', alpha=0.45, label='RISK-OFF')
+
+            # SPY price line overlay
+            axes[1].plot(spy_norm.index, spy_norm.values,
+                color='#1A237E', linewidth=1.8,
+                label='SPY Price (normalized)', zorder=3)
+
+            # Annotate key RISK-OFF events
+            events = [
+                ('2020-03-01', 'COVID\nCrash'),
+                ('2022-02-01', 'Fed Rate\nHikes'),
+            ]
+            for date_str, label_text in events:
+                try:
+                    event_date = pd.Timestamp(date_str)
+                    idx = smooth.index.get_indexer(
+                        [event_date], method='nearest')[0]
+                    closest = smooth.index[idx]
+                    if smooth.loc[closest, 'label'] == 'RISK-OFF':
+                        axes[1].axvline(x=closest,
+                            color='#C62828', linewidth=1.2,
+                            linestyle='--', alpha=0.8, zorder=2)
+                        axes[1].text(closest, 0.88,
+                            label_text,
+                            fontsize=8, color='#C62828',
+                            ha='center', va='top',
+                            fontweight='bold',
+                            bbox=dict(
+                                boxstyle='round,pad=0.3',
+                                facecolor='white',
+                                edgecolor='#C62828',
+                                alpha=0.9))
+                except Exception:
+                    pass
+
+            axes[1].set_title(
+                'Regime Detection — SPY Price with RISK-ON / RISK-OFF Periods',
                 color='#333333', fontsize=13, fontweight='bold')
             axes[1].set_yticks([])
-            axes[1].legend(facecolor='#F9F9F9', labelcolor='#333333')
+            axes[1].set_ylim(0, 1.05)
+            axes[1].legend(facecolor='#F9F9F9',
+                labelcolor='#333333', fontsize=9,
+                loc='lower right')
+            axes[1].grid(axis='x', color='#DDDDDD',
+                linewidth=0.5, alpha=0.5)
+
             plt.tight_layout(pad=2.0)
             st.pyplot(fig)
 
