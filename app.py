@@ -237,9 +237,9 @@ elif page == "About":
         Sidney has already gained real world experience as an intern
         at the American Institute for Economic Research where he
         contributed to economic research, policy analysis, and data
-        collection. He has also built a live AI tool that detects
-        market regimes across four asset classes — stocks, bonds,
-        credit, and gold — using 12 years of real market data.
+        collection. He has also built live AI tools that detect
+        market regimes and credit stress across multiple asset classes
+        using over a decade of real market data.
         </p>
         <p>
         Beyond finance Sidney has summited Mount Kilimanjaro in
@@ -267,9 +267,9 @@ elif page == "About":
         <div class="card">
             <h3>Quantitative Skills</h3>
             <p>Python, SQL, financial analysis, machine learning,
-            backtesting, and market data analysis. Built a live
-            AI regime detector trained on 12 years of real market
-            data.</p>
+            backtesting, and market data analysis. Built two live
+            AI tools trained on real market data — a regime detector
+            and a credit spread monitor.</p>
         </div>
         <div class="card">
             <h3>Athletic Discipline</h3>
@@ -404,9 +404,10 @@ elif page == "AI Research":
 
     model = st.selectbox("Select a model:", [
         "Multi-Asset Market Regime Detector",
-        "More models coming soon..."
+        "Credit Spread Monitor",
     ])
 
+# ── Model 1: Regime Detector ───────────────────────────────────
     if model == "Multi-Asset Market Regime Detector":
         st.markdown("## Multi-Asset Market Regime Detector")
 
@@ -656,14 +657,263 @@ elif page == "AI Research":
             plt.tight_layout(pad=2.0)
             st.pyplot(fig)
 
-    else:
+# ── Model 2: Credit Spread Monitor ────────────────────────────
+    elif model == "Credit Spread Monitor":
+        st.markdown("## Credit Spread Monitor")
+
         st.markdown("""
         <div class="card">
-            <h3>More Models Coming Soon</h3>
-            <p>New AI research models are currently being developed.
-            Check back regularly for updates including credit spread
-            analysis, volatility forecasting, and sector rotation
-            models.
+            <h3>Overview</h3>
+            <p>
+            This model tracks the credit spread between High Yield
+            bonds (HYG) and Investment Grade bonds (LQD) to detect
+            building stress in credit markets. The spread is converted
+            into a stress score from 1 to 5 and monitored daily using
+            16 years of real market data from 2010 to 2026.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+            <h3>Stress Scale</h3>
+            <p>
+            <b>Score 1 — Very Calm:</b> Credit markets are extremely
+            relaxed. Favorable environment for risk assets.<br><br>
+            <b>Score 2 — Calm:</b> Normal market conditions.
+            No unusual stress detected.<br><br>
+            <b>Score 3 — Moderate:</b> Some caution warranted.
+            Monitor conditions closely.<br><br>
+            <b>Score 4 — Elevated:</b> Credit stress is building.
+            Investors pulling back from risky bonds.<br><br>
+            <b>Score 5 — High Stress:</b> Significant credit risk
+            detected. Consider reducing risk exposure.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("""
+            <div class="card">
+                <h3>What is HYG?</h3>
+                <p>
+                High Yield bonds are loans given to riskier companies.
+                When HYG falls it means investors are pulling back from
+                risky lending — often the first warning sign of broader
+                market stress. Wall Street calls these junk bonds.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        with col2:
+            st.markdown("""
+            <div class="card">
+                <h3>What is LQD?</h3>
+                <p>
+                Investment Grade bonds are loans to safer higher
+                quality companies. When LQD outperforms HYG it means
+                investors are moving away from risk and toward safety
+                — a classic early warning signal.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+            <h3>Key Stress Periods Detected</h3>
+            <p>
+            <b>2011</b> — European Sovereign Debt Crisis<br><br>
+            <b>2016</b> — Oil Price Crash and China Slowdown<br><br>
+            <b>2020</b> — COVID-19 Pandemic Crash — largest spike
+            on record<br><br>
+            <b>2022</b> — Federal Reserve Rate Hike Cycle<br><br>
+            <b>2026</b> — Current Elevated Stress Period
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+            <h3>Current Reading — September 17, 2026</h3>
+            <p>
+            Credit Spread: <b>1.2 basis points</b><br><br>
+            Stress Score: <b>4 out of 5 — ELEVATED</b><br><br>
+            The current spread is higher than <b>63%</b> of all
+            readings since 2010.<br><br>
+            Credit stress is building. Investors are pulling back
+            from risky bonds. This signal is consistent with gold
+            outperforming and the regime detector showing caution.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown("### Combined Signal")
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Regime Detector", "RISK-ON", "Cautious")
+        c2.metric("Credit Monitor", "4 / 5", "Elevated")
+        c3.metric("Gold Signal", "+2.58%", "Outperforming")
+
+        st.markdown("---")
+        st.markdown("### Run the Credit Spread Model")
+        st.markdown("""
+        <p style="color:#333333;">
+        Select a date range below and click Run Model to see
+        the credit spread monitor in action for any time period.
+        </p>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            start_date_cs = st.date_input("Start Date",
+                value=datetime.date(2010, 1, 1),
+                key="cs_start")
+        with col2:
+            end_date_cs = st.date_input("End Date",
+                value=datetime.date(2026, 9, 18),
+                key="cs_end")
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        if st.button("Run Credit Spread Model"):
+            with st.spinner("Downloading data and running model..."):
+
+                cs_tickers = ['HYG', 'LQD', 'SPY']
+                cs_prices = yf.download(cs_tickers,
+                    start=str(start_date_cs),
+                    end=str(end_date_cs),
+                    auto_adjust=True)['Close']
+                cs_prices  = cs_prices.dropna()
+                cs_returns = cs_prices.pct_change().dropna()
+
+                hyg_roll = cs_returns['HYG'].rolling(21).mean()
+                lqd_roll = cs_returns['LQD'].rolling(21).mean()
+                spread   = (lqd_roll - hyg_roll) * 10000
+                spread   = spread.dropna()
+
+                spread_df = pd.DataFrame({
+                    'spread': spread,
+                    'stress_score': pd.cut(
+                        spread.rank(pct=True) * 100,
+                        bins=[0, 20, 40, 60, 80, 100],
+                        labels=[1, 2, 3, 4, 5]
+                    ).astype(float),
+                    'spread_smooth': spread.rolling(21).mean()
+                })
+
+                cs_current_spread = spread.iloc[-1]
+                cs_current_score  = spread_df['stress_score'].iloc[-1]
+                cs_current_date   = spread.index[-1].strftime('%B %d, %Y')
+
+            st.markdown("---")
+            st.markdown("### Current Credit Signal")
+            if cs_current_score <= 2:
+                st.success(
+                    f"CALM — As of {cs_current_date} credit markets "
+                    f"are relaxed. Stress score {cs_current_score:.0f}/5.")
+            elif cs_current_score <= 3:
+                st.warning(
+                    f"MODERATE — As of {cs_current_date} some caution "
+                    f"warranted. Stress score {cs_current_score:.0f}/5.")
+            else:
+                st.error(
+                    f"ELEVATED — As of {cs_current_date} credit stress "
+                    f"is building. Stress score {cs_current_score:.0f}/5.")
+
+            st.markdown("---")
+            st.markdown("### Credit Spread Metrics")
+            m1, m2, m3 = st.columns(3)
+            m1.metric("Credit Spread",
+                f"{cs_current_spread:.1f} bps")
+            m2.metric("Stress Score",
+                f"{cs_current_score:.0f} / 5")
+            pct_rank = (spread < cs_current_spread).mean() * 100
+            m3.metric("Percentile Rank",
+                f"{pct_rank:.0f}%",
+                "vs history since 2010")
+
+            st.markdown("---")
+            st.markdown("### Charts")
+
+            fig, axes = plt.subplots(2, 1, figsize=(12, 10))
+            fig.patch.set_facecolor('#FFFFFF')
+
+            for ax in axes:
+                ax.set_facecolor('#F9F9F9')
+                ax.tick_params(colors='#333333')
+                ax.xaxis.label.set_color('#333333')
+                ax.yaxis.label.set_color('#333333')
+                for spine in ax.spines.values():
+                    spine.set_edgecolor('#CCCCCC')
+
+            axes[0].axhspan(
+                spread_df['spread'].quantile(0.80),
+                spread_df['spread'].max(),
+                alpha=0.08, color='#D85A30',
+                label='High Stress Zone')
+            axes[0].axhspan(
+                spread_df['spread'].min(),
+                spread_df['spread'].quantile(0.20),
+                alpha=0.08, color='#1D9E75',
+                label='Low Stress Zone')
+            axes[0].plot(spread_df.index,
+                spread_df['spread'],
+                color='#CCCCCC', linewidth=0.5, alpha=0.5)
+            axes[0].plot(spread_df.index,
+                spread_df['spread_smooth'],
+                color='#333333', linewidth=2,
+                label='Credit Spread (21-day avg)')
+            axes[0].scatter(spread_df.index[-1],
+                spread_df['spread_smooth'].iloc[-1],
+                color='#D85A30', s=80, zorder=5,
+                label=f'Today: {cs_current_spread:.1f} bps')
+            axes[0].set_title(
+                'Credit Spread — HYG vs LQD (Basis Points)',
+                color='#333333', fontsize=13, fontweight='bold')
+            axes[0].set_ylabel('Spread (bps)', color='#333333')
+            axes[0].legend(facecolor='#F9F9F9',
+                labelcolor='#333333', fontsize=9)
+            axes[0].grid(axis='y', color='#DDDDDD', linewidth=0.5)
+
+            stress_smooth = spread_df['stress_score'].rolling(21).mean()
+            axes[1].fill_between(stress_smooth.index, 0, stress_smooth,
+                where=stress_smooth <= 2,
+                color='#1D9E75', alpha=0.5, label='Low (1-2)')
+            axes[1].fill_between(stress_smooth.index, 0, stress_smooth,
+                where=(stress_smooth > 2) & (stress_smooth <= 3),
+                color='#F5A623', alpha=0.5, label='Moderate (3)')
+            axes[1].fill_between(stress_smooth.index, 0, stress_smooth,
+                where=(stress_smooth > 3) & (stress_smooth <= 4),
+                color='#E8722A', alpha=0.5, label='Elevated (4)')
+            axes[1].fill_between(stress_smooth.index, 0, stress_smooth,
+                where=stress_smooth > 4,
+                color='#D85A30', alpha=0.5, label='High (5)')
+            axes[1].plot(stress_smooth.index, stress_smooth,
+                color='#333333', linewidth=1.5)
+            axes[1].axhline(y=cs_current_score,
+                color='#D85A30', linestyle='--', linewidth=1.2,
+                label=f'Current: {cs_current_score:.0f}/5')
+            axes[1].set_title(
+                'Credit Stress Score — 21-Day Smoothed',
+                color='#333333', fontsize=13, fontweight='bold')
+            axes[1].set_ylabel('Stress Score', color='#333333')
+            axes[1].set_ylim(0, 5.5)
+            axes[1].set_yticks([1, 2, 3, 4, 5])
+            axes[1].legend(facecolor='#F9F9F9',
+                labelcolor='#333333', fontsize=9)
+            axes[1].grid(axis='y', color='#DDDDDD', linewidth=0.5)
+
+            plt.tight_layout(pad=2.0)
+            st.pyplot(fig)
+
+        st.markdown("---")
+        st.markdown("""
+        <div class="card">
+            <h3>Full Research Notebook</h3>
+            <p>
+            View the complete Credit Spread Monitor research notebook
+            including all code, charts, and analysis on GitHub:
+            github.com/sidneyppratt-svg/credit-spread-monitor
             </p>
         </div>
         """, unsafe_allow_html=True)
