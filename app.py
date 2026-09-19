@@ -81,17 +81,17 @@ st.markdown("""
         margin: 4px;
     }
     .profile-placeholder {
-        width: 140px;
-        height: 140px;
-        background: linear-gradient(135deg, #444444, #888888);
+        width: 110px;
+        height: 110px;
+        background: linear-gradient(135deg, #666666, #999999);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 48px;
+        font-size: 36px;
         color: white;
-        margin: 0 auto;
-        border: 4px solid #CCCCCC;
+        margin: 0 auto 0.75rem auto;
+        border: 3px solid #AAAAAA;
     }
     .seeking-card {
         background-color: #F9F9F9;
@@ -120,6 +120,11 @@ st.markdown("""
 
 # ── Sidebar ────────────────────────────────────────────────────
 with st.sidebar:
+    st.markdown("""
+    <div class="profile-placeholder">SP</div>
+    <p style="text-align:center; color:#CCCCCC; font-size:11px;
+    margin-bottom:0.5rem;">Photo coming soon</p>
+    """, unsafe_allow_html=True)
     st.markdown("## Sidney Pratt")
     st.markdown("*Quant Researcher*")
     st.markdown("---")
@@ -145,76 +150,64 @@ with st.sidebar:
 # HOME
 # ══════════════════════════════════════════════════════════════
 if page == "Home":
-    col1, col2 = st.columns([0.4, 2], gap="large")
+    st.markdown("# Sidney Pratt")
+    st.markdown("""
+    <div style="margin-bottom:1rem;">
+        <span class="tag">Finance & Economics</span>
+        <span class="tag">ACHA D1 Hockey</span>
+        <span class="tag">AI Researcher</span>
+        <span class="tag">World Explorer</span>
+    </div>
+    """, unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown("""
+    <p style="color:#333333; font-size:16px; line-height:1.8;">
+    Finance and Economics student combining quantitative research,
+    AI tools, and real-world market experience to build the next
+    generation of trading strategies.
+    </p>
+    """, unsafe_allow_html=True)
 
-    with col1:
-        st.markdown("""
-        <div class="profile-placeholder">SP</div>
-        <br>
-        <p style="text-align:center; color:#888888; font-size:12px;">
-        Photo coming soon
+    st.markdown("""
+    <div class="seeking-card">
+        <h4>Currently Seeking</h4>
+        <p>
+        Internship opportunities in:<br>
+        - Cross-Asset Trading<br>
+        - Quantitative Research<br>
+        - Portfolio Management<br>
+        - Economic Research<br>
+        - Financial Analysis
         </p>
-        """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
-    with col2:
-        st.markdown("# Sidney Pratt")
+    st.markdown("---")
+    c1, c2, c3 = st.columns(3)
+    with c1:
         st.markdown("""
-        <div style="margin-bottom:1rem;">
-            <span class="tag">Finance & Economics</span>
-            <span class="tag">ACHA D1 Hockey</span>
-            <span class="tag">AI Researcher</span>
-            <span class="tag">World Explorer</span>
+        <div class="card" style="text-align:center;">
+            <h3>Education</h3>
+            <p>Western Michigan University<br>
+            Finance & Economics<br>GPA: 3.25</p>
         </div>
         """, unsafe_allow_html=True)
-        st.markdown("---")
+    with c2:
         st.markdown("""
-        <p style="color:#333333; font-size:16px; line-height:1.8;">
-        Finance and Economics student combining quantitative research,
-        AI tools, and real-world market experience to build the next
-        generation of trading strategies.
-        </p>
-        """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="seeking-card">
-            <h4>Currently Seeking</h4>
-            <p>
-            Internship opportunities in:<br>
-            - Cross-Asset Trading<br>
-            - Quantitative Research<br>
-            - Portfolio Management<br>
-            - Economic Research<br>
-            - Financial Analysis
-            </p>
+        <div class="card" style="text-align:center;">
+            <h3>Experience</h3>
+            <p>AIER Intern<br>
+            Economic Research<br>Policy Analysis</p>
         </div>
         """, unsafe_allow_html=True)
-
-        st.markdown("---")
-        c1, c2, c3 = st.columns(3)
-        with c1:
-            st.markdown("""
-            <div class="card" style="text-align:center;">
-                <h3>Education</h3>
-                <p>Western Michigan University<br>
-                Finance & Economics<br>GPA: 3.25</p>
-            </div>
-            """, unsafe_allow_html=True)
-        with c2:
-            st.markdown("""
-            <div class="card" style="text-align:center;">
-                <h3>Experience</h3>
-                <p>AIER Intern<br>
-                Economic Research<br>Policy Analysis</p>
-            </div>
-            """, unsafe_allow_html=True)
-        with c3:
-            st.markdown("""
-            <div class="card" style="text-align:center;">
-                <h3>Global</h3>
-                <p>Mt. Kilimanjaro<br>
-                Amazon Rainforest<br>Tanzania Volunteer</p>
-            </div>
-            """, unsafe_allow_html=True)
+    with c3:
+        st.markdown("""
+        <div class="card" style="text-align:center;">
+            <h3>Global</h3>
+            <p>Mt. Kilimanjaro<br>
+            Amazon Rainforest<br>Tanzania Volunteer</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
 # ABOUT
