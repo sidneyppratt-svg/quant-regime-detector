@@ -81,17 +81,39 @@ st.markdown("""
         margin: 4px;
     }
     .profile-placeholder {
-        width: 220px;
-        height: 220px;
+        width: 140px;
+        height: 140px;
         background: linear-gradient(135deg, #444444, #888888);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 72px;
+        font-size: 48px;
         color: white;
         margin: 0 auto;
         border: 4px solid #CCCCCC;
+    }
+    .seeking-card {
+        background-color: #F9F9F9;
+        border: 1px solid #DDDDDD;
+        border-radius: 12px;
+        padding: 1.2rem 1.5rem;
+        margin-top: 1rem;
+    }
+    .seeking-card h4 {
+        color: #444444 !important;
+        margin-bottom: 0.5rem;
+        font-size: 15px;
+    }
+    .seeking-card p {
+        color: #333333 !important;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+    .sidebar-contact {
+        font-size: 13px;
+        color: white !important;
+        line-height: 2;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -106,23 +128,30 @@ with st.sidebar:
         "About",
         "Resume",
         "AI Research",
-        "Contact"
     ])
     st.markdown("---")
-    st.markdown("📧 sidneyppratt@gmail.com")
-    st.markdown("📍 San Francisco, CA")
+    st.markdown("### Contact")
+    st.markdown("""
+    <div class="sidebar-contact">
+    📧 sidneyppratt@gmail.com<br>
+    📍 San Francisco, CA<br>
+    🔗 linkedin.com/in/sidney-pratt<br>
+    💻 github.com/sidneyppratt-svg<br>
+    🌐 sidneyppratt.com
+    </div>
+    """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
 # HOME
 # ══════════════════════════════════════════════════════════════
 if page == "Home":
-    col1, col2 = st.columns([1, 2], gap="large")
+    col1, col2 = st.columns([0.4, 2], gap="large")
 
     with col1:
         st.markdown("""
         <div class="profile-placeholder">SP</div>
         <br>
-        <p style="text-align:center; color:#888888; font-size:14px;">
+        <p style="text-align:center; color:#888888; font-size:12px;">
         Photo coming soon
         </p>
         """, unsafe_allow_html=True)
@@ -145,8 +174,22 @@ if page == "Home":
         generation of trading strategies.
         </p>
         """, unsafe_allow_html=True)
-        st.markdown("---")
 
+        st.markdown("""
+        <div class="seeking-card">
+            <h4>Currently Seeking</h4>
+            <p>
+            Internship opportunities in:<br>
+            - Cross-Asset Trading<br>
+            - Quantitative Research<br>
+            - Portfolio Management<br>
+            - Economic Research<br>
+            - Financial Analysis
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("---")
         c1, c2, c3 = st.columns(3)
         with c1:
             st.markdown("""
@@ -628,42 +671,6 @@ elif page == "AI Research":
             Check back regularly for updates including credit spread
             analysis, volatility forecasting, and sector rotation
             models.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-
-# ══════════════════════════════════════════════════════════════
-# CONTACT
-# ══════════════════════════════════════════════════════════════
-elif page == "Contact":
-    st.markdown("# Contact")
-    st.markdown("---")
-
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("""
-        <div class="card">
-            <h3>Get In Touch</h3>
-            <p>
-            Email: sidneyppratt@gmail.com<br><br>
-            LinkedIn: linkedin.com/in/sidney-pratt<br><br>
-            GitHub: github.com/sidneyppratt-svg<br><br>
-            Website: sidneyppratt.com<br><br>
-            Location: San Francisco, CA
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown("""
-        <div class="card">
-            <h3>Currently Seeking</h3>
-            <p>
-            Internship opportunities in:<br><br>
-            - Cross-Asset Trading<br>
-            - Quantitative Research<br>
-            - Portfolio Management<br>
-            - Economic Research<br>
-            - Financial Analysis
             </p>
         </div>
         """, unsafe_allow_html=True)
