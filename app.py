@@ -17,33 +17,31 @@ st.set_page_config(
 st.markdown("""
 <style>
     .stApp {
-        background-color: #0C2340;
+        background-color: #FFFFFF;
     }
     [data-testid="stSidebar"] {
-        background-color: #091929;
+        background-color: #4A4A4A;
     }
     [data-testid="stSidebar"] * {
         color: white !important;
     }
-    .stMarkdown, .stMarkdown p, .stMarkdown h1,
-    .stMarkdown h2, .stMarkdown h3, label {
-        color: white !important;
+    .stMarkdown, .stMarkdown p, label {
+        color: #1a1a1a !important;
     }
-    h1 { color: #9FE1CB !important; font-size: 2.5rem !important; }
-    h2 { color: #9FE1CB !important; }
-    h3 { color: #9FE1CB !important; }
+    h1 { color: #333333 !important; font-size: 2.5rem !important; }
+    h2 { color: #444444 !important; }
+    h3 { color: #555555 !important; }
     [data-testid="metric-container"] {
-        background-color: #142B4A;
-        border: 1px solid #1D9E75;
+        background-color: #F5F5F5;
+        border: 1px solid #CCCCCC;
         border-radius: 8px;
         padding: 1rem;
-        color: white !important;
     }
     [data-testid="metric-container"] * {
-        color: white !important;
+        color: #1a1a1a !important;
     }
     .stButton > button {
-        background-color: #0F6E56 !important;
+        background-color: #444444 !important;
         color: white !important;
         border: none !important;
         padding: 12px 28px !important;
@@ -53,30 +51,29 @@ st.markdown("""
         width: 100%;
     }
     .stButton > button:hover {
-        background-color: #1D9E75 !important;
+        background-color: #222222 !important;
     }
     hr {
-        border-color: #1D9E75 !important;
+        border-color: #CCCCCC !important;
     }
     .card {
-        background-color: #142B4A;
-        border: 1px solid #1D9E75;
+        background-color: #F9F9F9;
+        border: 1px solid #DDDDDD;
         border-radius: 12px;
         padding: 1.5rem;
         margin-bottom: 1rem;
-        color: white;
     }
     .card h3 {
-        color: #9FE1CB !important;
+        color: #444444 !important;
         margin-bottom: 0.5rem;
     }
     .card p {
-        color: #D3D1C7 !important;
+        color: #1a1a1a !important;
         line-height: 1.6;
     }
     .tag {
         display: inline-block;
-        background-color: #0F6E56;
+        background-color: #444444;
         color: white;
         padding: 4px 12px;
         border-radius: 20px;
@@ -86,14 +83,15 @@ st.markdown("""
     .profile-placeholder {
         width: 220px;
         height: 220px;
-        background: linear-gradient(135deg, #0F6E56, #185FA5);
+        background: linear-gradient(135deg, #444444, #888888);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 72px;
+        color: white;
         margin: 0 auto;
-        border: 4px solid #1D9E75;
+        border: 4px solid #CCCCCC;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -124,7 +122,7 @@ if page == "Home":
         st.markdown("""
         <div class="profile-placeholder">SP</div>
         <br>
-        <p style="text-align:center; color:#9FE1CB; font-size:14px;">
+        <p style="text-align:center; color:#888888; font-size:14px;">
         Photo coming soon
         </p>
         """, unsafe_allow_html=True)
@@ -141,7 +139,7 @@ if page == "Home":
         """, unsafe_allow_html=True)
         st.markdown("---")
         st.markdown("""
-        <p style="color:#D3D1C7; font-size:16px; line-height:1.8;">
+        <p style="color:#333333; font-size:16px; line-height:1.8;">
         Finance and Economics student combining quantitative research,
         AI tools, and real-world market experience to build the next
         generation of trading strategies.
@@ -361,7 +359,7 @@ elif page == "Resume":
 elif page == "AI Research":
     st.markdown("# AI Research")
     st.markdown("""
-    <p style="color:#D3D1C7; font-size:16px;">
+    <p style="color:#333333; font-size:16px;">
     Using machine learning to find signals in financial markets.
     Each model is trained on real market data and fully interactive.
     </p>
@@ -494,7 +492,7 @@ elif page == "AI Research":
         st.markdown("---")
         st.markdown("### Run the Model")
         st.markdown("""
-        <p style="color:#D3D1C7;">
+        <p style="color:#333333;">
         Select a date range below and click Run AI Model to see
         the regime detector in action for any time period.
         </p>
@@ -585,24 +583,24 @@ elif page == "AI Research":
             st.markdown("### Charts")
 
             fig, axes = plt.subplots(2, 1, figsize=(12, 10))
-            fig.patch.set_facecolor('#0C2340')
+            fig.patch.set_facecolor('#FFFFFF')
 
             for ax in axes:
-                ax.set_facecolor('#142B4A')
-                ax.tick_params(colors='white')
-                ax.xaxis.label.set_color('white')
-                ax.yaxis.label.set_color('white')
+                ax.set_facecolor('#F9F9F9')
+                ax.tick_params(colors='#333333')
+                ax.xaxis.label.set_color('#333333')
+                ax.yaxis.label.set_color('#333333')
                 for spine in ax.spines.values():
-                    spine.set_edgecolor('#444441')
+                    spine.set_edgecolor('#CCCCCC')
 
-            (cum_s * 100).plot(ax=axes[0], color='#9FE1CB',
+            (cum_s * 100).plot(ax=axes[0], color='#333333',
                 linewidth=2, label='AI Strategy')
-            (cum_b * 100).plot(ax=axes[0], color='#888780',
+            (cum_b * 100).plot(ax=axes[0], color='#AAAAAA',
                 linewidth=1.5, linestyle='--', label='Buy & Hold')
             axes[0].set_title('Portfolio Growth — $100 invested',
-                color='white', fontsize=13, fontweight='bold')
-            axes[0].legend(facecolor='#142B4A', labelcolor='white')
-            axes[0].set_ylabel('Value ($)', color='white')
+                color='#333333', fontsize=13, fontweight='bold')
+            axes[0].legend(facecolor='#F9F9F9', labelcolor='#333333')
+            axes[0].set_ylabel('Value ($)', color='#333333')
             axes[0].yaxis.set_major_formatter(
                 plt.FuncFormatter(lambda x, _: f'${x:.0f}'))
 
@@ -610,14 +608,14 @@ elif page == "AI Research":
             risk_off_mask = smooth['label'] == 'RISK-OFF'
             axes[1].fill_between(smooth.index, 0, 1,
                 where=risk_on_mask,
-                color='#1D9E75', alpha=0.7, label='RISK-ON')
+                color='#444444', alpha=0.7, label='RISK-ON')
             axes[1].fill_between(smooth.index, 0, 1,
                 where=risk_off_mask,
-                color='#D85A30', alpha=0.9, label='RISK-OFF')
+                color='#AAAAAA', alpha=0.9, label='RISK-OFF')
             axes[1].set_title('Regime Detection Timeline',
-                color='white', fontsize=13, fontweight='bold')
+                color='#333333', fontsize=13, fontweight='bold')
             axes[1].set_yticks([])
-            axes[1].legend(facecolor='#142B4A', labelcolor='white')
+            axes[1].legend(facecolor='#F9F9F9', labelcolor='#333333')
 
             plt.tight_layout(pad=2.0)
             st.pyplot(fig)
