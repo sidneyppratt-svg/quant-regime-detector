@@ -772,168 +772,6 @@ elif page == "AI Research":
                      hide_index=True)
 
         st.markdown("---")
-        st.markdown("### NHL Player Spotlights — Real Paths to the Pros")
-        st.markdown("""
-        <p style="color:#555555; font-size:14px;">
-        These are the actual pathways taken by five of today's
-        top young NHL players. Every path is different —
-        and all of them worked.
-        </p>
-        """, unsafe_allow_html=True)
-
-        players = [
-            {
-                'name':   'Connor Bedard',
-                'team':   'Chicago Blackhawks — #1 Overall Pick 2023',
-                'born':   'North Vancouver, BC, Canada — Born 2005',
-                'path': [
-                    'Youth Hockey — North Vancouver minor hockey',
-                    'WHL — Regina Pats (granted exceptional status at age 15)',
-                    'WHL — 71 goals 143 points in 57 games (2022-23)',
-                    'NHL Draft — #1 Overall — Chicago Blackhawks 2023',
-                    'NHL — Chicago Blackhawks',
-                ],
-                'key_fact': 'Bedard was granted WHL exceptional status at 15 — '
-                            'meaning he was so advanced he skipped the normal '
-                            'age requirement entirely. He took the Canadian '
-                            'major junior route through the WHL rather than '
-                            'the US college route. His 143 points in one WHL '
-                            'season was the most by any player since 1995-96.',
-                'lesson': 'The Canadian major junior route (WHL, OHL, QMJHL) '
-                          'is a direct path to the NHL Draft without college. '
-                          'Players go pro immediately after junior hockey.',
-            },
-            {
-                'name':   'Macklin Celebrini',
-                'team':   'San Jose Sharks — #1 Overall Pick 2024',
-                'born':   'North Vancouver, BC, Canada — Born 2006',
-                'path': [
-                    'Youth Hockey — Jr. Sharks program San Jose',
-                    'Prep School — Shattuck St. Marys Minnesota',
-                    'USHL — Chicago Steel',
-                    'NCAA D1 — Boston University (Hobey Baker Award winner)',
-                    'NHL Draft — #1 Overall — San Jose Sharks 2024',
-                    'NHL — San Jose Sharks',
-                ],
-                'key_fact': 'Celebrini chose the US college route over Canadian '
-                            'major junior — a road less travelled for a Canadian '
-                            'player. He went to Shattuck St. Marys prep school, '
-                            'then the USHL with Chicago Steel, then Boston '
-                            'University where he won the Hobey Baker Award '
-                            'as the best player in college hockey at just 17 '
-                            'years old. He was the youngest Hobey Baker winner ever.',
-                'lesson': 'Shattuck St. Marys → USHL → NCAA D1 is one of the '
-                          'most powerful pathways in US hockey. This exact route '
-                          'has produced multiple #1 overall picks.',
-            },
-            {
-                'name':   'Will Smith',
-                'team':   'San Jose Sharks — #4 Overall Pick 2023',
-                'born':   'Lexington, Massachusetts, USA — Born 2005',
-                'path': [
-                    'Youth Hockey — Lexington MA youth hockey',
-                    'Prep School — Saint Sebastian\'s School Boston',
-                    'USNTDP — US National Team Development Program Michigan',
-                    'NCAA D1 — Boston College (led nation with 71 points)',
-                    'NHL Draft — #4 Overall — San Jose Sharks 2023',
-                    'NHL — San Jose Sharks',
-                ],
-                'key_fact': 'Smith took the USNTDP route — the US National '
-                            'Team Development Program in Plymouth Michigan '
-                            'is the absolute elite of US youth hockey. '
-                            'Only the top 40 or so players in the country '
-                            'aged 16-17 are invited. From there he went to '
-                            'Boston College where he led all of college hockey '
-                            'with 71 points as a freshman before signing with '
-                            'San Jose.',
-                'lesson': 'The USNTDP is the pinnacle of US youth hockey '
-                          'development. If your son or daughter gets an invite '
-                          'to Plymouth Michigan — you go. The family moved '
-                          'from Boston to Michigan to make it happen.',
-            },
-            {
-                'name':   'Jack Hughes',
-                'team':   'New Jersey Devils — #1 Overall Pick 2019',
-                'born':   'Orlando, Florida, USA — Born 2001',
-                'path': [
-                    'Youth Hockey — multiple cities due to family moves',
-                    'USNTDP — US National Team Development Program Michigan',
-                    'NHL Draft — #1 Overall — New Jersey Devils 2019',
-                    'NHL — New Jersey Devils (did not play college hockey)',
-                ],
-                'key_fact': 'Jack Hughes went directly from the USNTDP to the '
-                            'NHL Draft without playing college or major junior '
-                            'hockey — one of the few players in history to do '
-                            'this. His performance at the USNTDP was so dominant '
-                            'that he was considered ready for the NHL at 18. '
-                            'He set USNTDP scoring records that still stand.',
-                'lesson': 'The USNTDP can lead directly to the NHL Draft '
-                          'without college or major junior. This is extremely '
-                          'rare and requires generational talent — but it '
-                          'shows there is no single right path.',
-            },
-            {
-                'name':   'Quinn Hughes',
-                'team':   'Vancouver Canucks — #7 Overall Pick 2018',
-                'born':   'Orlando, Florida, USA — Born 1999',
-                'path': [
-                    'Youth Hockey — multiple cities due to family moves',
-                    'USNTDP — US National Team Development Program Michigan',
-                    'NCAA D1 — University of Michigan (one season)',
-                    'NHL Draft — #7 Overall — Vancouver Canucks 2018',
-                    'NHL — Vancouver Canucks',
-                ],
-                'key_fact': 'Quinn Hughes played just one season at the '
-                            'University of Michigan before declaring for the '
-                            'NHL Draft. He used his freshman year at Michigan '
-                            'to develop against older competition before going '
-                            'pro. He has since become one of the top offensive '
-                            'defensemen in the NHL and a Norris Trophy finalist.',
-                'lesson': 'Even one year of NCAA D1 hockey can be enough '
-                          'to develop and declare for the NHL Draft. '
-                          'The University of Michigan is one of the most '
-                          'prestigious programs in the country and has '
-                          'produced a remarkable number of NHL players.',
-            },
-        ]
-
-        for player in players:
-            st.markdown(f"""
-            <div class="player-card">
-                <h3>{player['name']}</h3>
-                <p style="color:#666666; font-size:13px; margin-bottom:0.5rem;">
-                {player['team']}<br>{player['born']}
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-            st.markdown("**Pathway:**")
-            path_html = " → ".join([
-                f'<span class="pathway-step">{step}</span>'
-                for step in player['path']
-            ])
-            st.markdown(
-                f'<div style="margin-bottom:0.75rem;">{path_html}</div>',
-                unsafe_allow_html=True)
-
-            col1, col2 = st.columns(2)
-            with col1:
-                st.markdown(f"""
-                <div class="card">
-                    <h3>Key Fact</h3>
-                    <p>{player['key_fact']}</p>
-                </div>
-                """, unsafe_allow_html=True)
-            with col2:
-                st.markdown(f"""
-                <div class="card">
-                    <h3>Lesson for Families</h3>
-                    <p>{player['lesson']}</p>
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.markdown("---")
-
         st.markdown("### Personalized Pathway Finder")
         col1, col2 = st.columns(2)
         with col1:
@@ -1180,6 +1018,164 @@ elif page == "AI Research":
                 """, unsafe_allow_html=True)
 
         st.markdown("---")
+        st.markdown("### NHL Player Spotlights — Real Paths to the Pros")
+        st.markdown("""
+        <p style="color:#555555; font-size:14px;">
+        These are the actual pathways taken by five of today's
+        top young NHL players. Every path is different —
+        and all of them worked.
+        </p>
+        """, unsafe_allow_html=True)
+
+        players = [
+            {
+                'name':   'Connor Bedard',
+                'team':   'Chicago Blackhawks — #1 Overall Pick 2023',
+                'born':   'North Vancouver, BC, Canada — Born 2005',
+                'path': [
+                    'Youth Hockey — North Vancouver minor hockey',
+                    'WHL — Regina Pats (exceptional status at age 15)',
+                    'WHL — 71 goals 143 points in 57 games (2022-23)',
+                    'NHL Draft — #1 Overall — Chicago Blackhawks 2023',
+                    'NHL — Chicago Blackhawks',
+                ],
+                'key_fact': 'Bedard was granted WHL exceptional status at 15 '
+                            'meaning he was so advanced he skipped the normal '
+                            'age requirement entirely. He took the Canadian '
+                            'major junior route through the WHL rather than '
+                            'the US college route. His 143 points in one WHL '
+                            'season was the most by any player since 1995-96.',
+                'lesson': 'The Canadian major junior route (WHL, OHL, QMJHL) '
+                          'is a direct path to the NHL Draft without college. '
+                          'Players go pro immediately after junior hockey.',
+            },
+            {
+                'name':   'Macklin Celebrini',
+                'team':   'San Jose Sharks — #1 Overall Pick 2024',
+                'born':   'North Vancouver, BC, Canada — Born 2006',
+                'path': [
+                    'Youth Hockey — Jr. Sharks program San Jose CA',
+                    'Prep School — Shattuck St. Marys Minnesota',
+                    'USHL — Chicago Steel',
+                    'NCAA D1 — Boston University (Hobey Baker Award)',
+                    'NHL Draft — #1 Overall — San Jose Sharks 2024',
+                    'NHL — San Jose Sharks',
+                ],
+                'key_fact': 'Celebrini chose the US college route over Canadian '
+                            'major junior — a road less travelled for a Canadian. '
+                            'He went to Shattuck St. Marys prep school then the '
+                            'USHL with Chicago Steel then Boston University where '
+                            'he won the Hobey Baker Award as the best player in '
+                            'college hockey at just 17 years old — the youngest '
+                            'Hobey Baker winner ever.',
+                'lesson': 'Shattuck St. Marys → USHL → NCAA D1 is one of the '
+                          'most powerful pathways in US hockey. This exact route '
+                          'has produced multiple number 1 overall picks.',
+            },
+            {
+                'name':   'Will Smith',
+                'team':   'San Jose Sharks — #4 Overall Pick 2023',
+                'born':   'Lexington, Massachusetts, USA — Born 2005',
+                'path': [
+                    'Youth Hockey — Lexington MA youth hockey',
+                    'Prep School — Saint Sebastians School Boston',
+                    'USNTDP — US National Team Development Program Michigan',
+                    'NCAA D1 — Boston College (led nation with 71 points)',
+                    'NHL Draft — #4 Overall — San Jose Sharks 2023',
+                    'NHL — San Jose Sharks',
+                ],
+                'key_fact': 'Smith took the USNTDP route — the US National '
+                            'Team Development Program in Plymouth Michigan '
+                            'is the absolute elite of US youth hockey. '
+                            'Only the top 40 players in the country aged 16-17 '
+                            'are invited. His family moved from Boston to Michigan '
+                            'to make it happen. He then led all of college '
+                            'hockey with 71 points as a Boston College freshman.',
+                'lesson': 'The USNTDP is the pinnacle of US youth hockey. '
+                          'If your player gets an invite to Plymouth Michigan '
+                          'you go. The family moved across the country to '
+                          'make it happen and it led to a top 5 NHL pick.',
+            },
+            {
+                'name':   'Jack Hughes',
+                'team':   'New Jersey Devils — #1 Overall Pick 2019',
+                'born':   'Orlando, Florida, USA — Born 2001',
+                'path': [
+                    'Youth Hockey — multiple cities due to family moves',
+                    'USNTDP — US National Team Development Program Michigan',
+                    'NHL Draft — #1 Overall — New Jersey Devils 2019',
+                    'NHL — New Jersey Devils',
+                ],
+                'key_fact': 'Jack Hughes went directly from the USNTDP to the '
+                            'NHL Draft without playing college or major junior '
+                            'hockey — one of the few players in history to do '
+                            'this. His performance at the USNTDP was so dominant '
+                            'that he was considered ready for the NHL at 18. '
+                            'He set USNTDP scoring records that still stand today.',
+                'lesson': 'The USNTDP can lead directly to the NHL Draft '
+                          'without college or major junior. This is extremely '
+                          'rare and requires generational talent — but it '
+                          'shows there is no single correct path.',
+            },
+            {
+                'name':   'Quinn Hughes',
+                'team':   'Vancouver Canucks — #7 Overall Pick 2018',
+                'born':   'Orlando, Florida, USA — Born 1999',
+                'path': [
+                    'Youth Hockey — multiple cities due to family moves',
+                    'USNTDP — US National Team Development Program Michigan',
+                    'NCAA D1 — University of Michigan (one season)',
+                    'NHL Draft — #7 Overall — Vancouver Canucks 2018',
+                    'NHL — Vancouver Canucks',
+                ],
+                'key_fact': 'Quinn Hughes played just one season at the '
+                            'University of Michigan before declaring for the '
+                            'NHL Draft. He used his freshman year at Michigan '
+                            'to develop against older competition before going '
+                            'pro. He has since become one of the top offensive '
+                            'defensemen in the NHL and a Norris Trophy finalist.',
+                'lesson': 'Even one year of NCAA D1 hockey can be enough '
+                          'to develop before declaring for the NHL Draft. '
+                          'The University of Michigan is one of the most '
+                          'prestigious programs in the country and has '
+                          'produced a remarkable number of NHL players.',
+            },
+        ]
+
+        for player in players:
+            st.markdown(f"""
+            <div class="player-card">
+                <h3>{player['name']}</h3>
+                <p style="color:#666666; font-size:13px; margin-bottom:0.5rem;">
+                {player['team']}<br>{player['born']}
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            st.markdown("**Pathway:**")
+            path_html = " → ".join([
+                f'<span class="pathway-step">{step}</span>'
+                for step in player['path']
+            ])
+            st.markdown(
+                f'<div style="margin-bottom:0.75rem;">{path_html}</div>',
+                unsafe_allow_html=True)
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown(f"""
+                <div class="card">
+                    <h3>Key Fact</h3>
+                    <p>{player['key_fact']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+            with col2:
+                st.markdown(f"""
+                <div class="card">
+                    <h3>Lesson for Families</h3>
+                    <p>{player['lesson']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+            st.markdown("---")
+
         st.markdown("""
         <div class="card">
             <h3>Full Research Notebook & Team Directory</h3>
