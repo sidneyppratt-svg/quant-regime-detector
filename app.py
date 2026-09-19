@@ -5,6 +5,9 @@ import numpy as np
 from sklearn.mixture import GaussianMixture
 import matplotlib.pyplot as plt
 import datetime
+import requests
+from PIL import Image
+from io import BytesIO
 
 st.set_page_config(
     page_title="Sidney Pratt | Quant Research",
@@ -986,6 +989,57 @@ elif page == "AI Research":
             """, unsafe_allow_html=True)
 
         st.markdown("---")
+        st.markdown("### Official League & Team Directories")
+        st.markdown("""
+        <p style="color:#555555; font-size:14px;">
+        Team rosters change every season. Click each league
+        below to see current teams directly from the official
+        league website. Always verify before making decisions.
+        </p>
+        """, unsafe_allow_html=True)
+
+        league_links = [
+            ("USHL",          "Tier 1 — Top US Junior",
+             "FREE",          "https://www.ushl.com/teams"),
+            ("AJHL",          "Tier 1 — Top Canadian Junior",
+             "Under $3,000",  "https://www.ajhl.ca/teams"),
+            ("NAHL",          "Tier 2",
+             "$5,000-8,000",  "https://www.nahl.com/teams"),
+            ("USPHL NCDC",    "Tier 2 — Top of USPHL",
+             "$8,000-12,000", "https://www.usphl.com/ncdc"),
+            ("EHL",           "Tier 2 — East Coast",
+             "$8,000-12,000", "https://www.ehlhockey.com/teams"),
+            ("USPHL Premier", "Tier 3 — Mid USPHL",
+             "$7,000-10,000", "https://www.usphl.com/premier"),
+            ("USPHL Elite",   "Tier 3 — Entry USPHL",
+             "$5,000-8,000",  "https://www.usphl.com/elite"),
+            ("NA3HL",         "Tier 3 — Development",
+             "$4,000-7,000",  "https://www.na3hl.com/teams"),
+        ]
+
+        for league, tier, cost, url in league_links:
+            st.markdown(f"""
+            <div class="card" style="padding: 1rem 1.5rem;">
+                <div style="display:flex; justify-content:space-between;
+                align-items:center;">
+                    <div>
+                        <h3 style="margin-bottom:0.2rem;">{league}</h3>
+                        <p style="margin:0; font-size:13px;
+                        color:#666666;">{tier} &nbsp;|&nbsp;
+                        Annual Cost: {cost}</p>
+                    </div>
+                    <a href="{url}" target="_blank"
+                    style="background-color:#333333; color:white;
+                    padding:8px 18px; border-radius:8px;
+                    text-decoration:none; font-size:13px;
+                    font-weight:bold; white-space:nowrap;">
+                    View Teams →
+                    </a>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
         st.markdown("### Key Things Nobody Tells You")
         tips = [
             ("USHL is completely FREE",
@@ -1018,6 +1072,22 @@ elif page == "AI Research":
                 """, unsafe_allow_html=True)
 
         st.markdown("---")
+        st.markdown("### Complete Hockey Pathway Map")
+        st.markdown("""
+        <p style="color:#555555; font-size:14px;">
+        Every pathway from youth hockey to the pros —
+        all 10 routes mapped in one visual.
+        </p>
+        """, unsafe_allow_html=True)
+        try:
+            img_url = "https://raw.githubusercontent.com/sidneyppratt-svg/hockey-pathway-navigator/main/hockey_pathway_map.png"
+            response = requests.get(img_url)
+            img = Image.open(BytesIO(response.content))
+            st.image(img, use_column_width=True)
+        except:
+            st.info("Pathway map loading — check back shortly.")
+
+        st.markdown("---")
         st.markdown("### NHL Player Spotlights — Real Paths to the Pros")
         st.markdown("""
         <p style="color:#555555; font-size:14px;">
@@ -1041,10 +1111,8 @@ elif page == "AI Research":
                 ],
                 'key_fact': 'Bedard was granted WHL exceptional status at 15 '
                             'meaning he was so advanced he skipped the normal '
-                            'age requirement entirely. He took the Canadian '
-                            'major junior route through the WHL rather than '
-                            'the US college route. His 143 points in one WHL '
-                            'season was the most by any player since 1995-96.',
+                            'age requirement entirely. His 143 points in one '
+                            'WHL season was the most by any player since 1995-96.',
                 'lesson': 'The Canadian major junior route (WHL, OHL, QMJHL) '
                           'is a direct path to the NHL Draft without college. '
                           'Players go pro immediately after junior hockey.',
@@ -1062,12 +1130,10 @@ elif page == "AI Research":
                     'NHL — San Jose Sharks',
                 ],
                 'key_fact': 'Celebrini chose the US college route over Canadian '
-                            'major junior — a road less travelled for a Canadian. '
-                            'He went to Shattuck St. Marys prep school then the '
-                            'USHL with Chicago Steel then Boston University where '
-                            'he won the Hobey Baker Award as the best player in '
-                            'college hockey at just 17 years old — the youngest '
-                            'Hobey Baker winner ever.',
+                            'major junior. He went to Shattuck St. Marys then '
+                            'the USHL with Chicago Steel then Boston University '
+                            'where he won the Hobey Baker Award at just 17 — '
+                            'the youngest winner ever.',
                 'lesson': 'Shattuck St. Marys → USHL → NCAA D1 is one of the '
                           'most powerful pathways in US hockey. This exact route '
                           'has produced multiple number 1 overall picks.',
@@ -1084,17 +1150,15 @@ elif page == "AI Research":
                     'NHL Draft — #4 Overall — San Jose Sharks 2023',
                     'NHL — San Jose Sharks',
                 ],
-                'key_fact': 'Smith took the USNTDP route — the US National '
-                            'Team Development Program in Plymouth Michigan '
-                            'is the absolute elite of US youth hockey. '
-                            'Only the top 40 players in the country aged 16-17 '
-                            'are invited. His family moved from Boston to Michigan '
-                            'to make it happen. He then led all of college '
-                            'hockey with 71 points as a Boston College freshman.',
+                'key_fact': 'Smith took the USNTDP route — only the top 40 '
+                            'players in the country aged 16-17 are invited. '
+                            'His family moved from Boston to Michigan to make '
+                            'it happen. He then led all of college hockey '
+                            'with 71 points as a Boston College freshman.',
                 'lesson': 'The USNTDP is the pinnacle of US youth hockey. '
                           'If your player gets an invite to Plymouth Michigan '
-                          'you go. The family moved across the country to '
-                          'make it happen and it led to a top 5 NHL pick.',
+                          'you go. The family moved across the country and '
+                          'it led to a top 5 NHL pick.',
             },
             {
                 'name':   'Jack Hughes',
@@ -1107,15 +1171,13 @@ elif page == "AI Research":
                     'NHL — New Jersey Devils',
                 ],
                 'key_fact': 'Jack Hughes went directly from the USNTDP to the '
-                            'NHL Draft without playing college or major junior '
-                            'hockey — one of the few players in history to do '
-                            'this. His performance at the USNTDP was so dominant '
-                            'that he was considered ready for the NHL at 18. '
-                            'He set USNTDP scoring records that still stand today.',
+                            'NHL Draft without college or major junior hockey. '
+                            'His performance at the USNTDP was so dominant he '
+                            'was considered ready for the NHL at 18. He set '
+                            'USNTDP scoring records that still stand today.',
                 'lesson': 'The USNTDP can lead directly to the NHL Draft '
-                          'without college or major junior. This is extremely '
-                          'rare and requires generational talent — but it '
-                          'shows there is no single correct path.',
+                          'without college or major junior. Extremely rare '
+                          'but shows there is no single correct path.',
             },
             {
                 'name':   'Quinn Hughes',
@@ -1130,15 +1192,14 @@ elif page == "AI Research":
                 ],
                 'key_fact': 'Quinn Hughes played just one season at the '
                             'University of Michigan before declaring for the '
-                            'NHL Draft. He used his freshman year at Michigan '
-                            'to develop against older competition before going '
-                            'pro. He has since become one of the top offensive '
-                            'defensemen in the NHL and a Norris Trophy finalist.',
+                            'NHL Draft. He used one year at Michigan to develop '
+                            'against older competition then went pro. He has '
+                            'since become one of the top offensive defensemen '
+                            'in the NHL and a Norris Trophy finalist.',
                 'lesson': 'Even one year of NCAA D1 hockey can be enough '
-                          'to develop before declaring for the NHL Draft. '
-                          'The University of Michigan is one of the most '
-                          'prestigious programs in the country and has '
-                          'produced a remarkable number of NHL players.',
+                          'before declaring for the NHL Draft. The University '
+                          'of Michigan has produced a remarkable number '
+                          'of NHL players.',
             },
         ]
 
@@ -1146,7 +1207,8 @@ elif page == "AI Research":
             st.markdown(f"""
             <div class="player-card">
                 <h3>{player['name']}</h3>
-                <p style="color:#666666; font-size:13px; margin-bottom:0.5rem;">
+                <p style="color:#666666; font-size:13px;
+                margin-bottom:0.5rem;">
                 {player['team']}<br>{player['born']}
                 </p>
             </div>
@@ -1181,8 +1243,8 @@ elif page == "AI Research":
             <h3>Full Research Notebook & Team Directory</h3>
             <p>
             View the complete Hockey Pathway Navigator including
-            all 10 pathways, full league and team directory with
-            200+ teams, and personalized recommendation engine:<br><br>
+            all 10 pathways, full league and team directory,
+            and personalized recommendation engine on GitHub:<br><br>
             github.com/sidneyppratt-svg/hockey-pathway-navigator
             </p>
         </div>
