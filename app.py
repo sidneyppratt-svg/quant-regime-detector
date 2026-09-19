@@ -6,28 +6,18 @@ from sklearn.mixture import GaussianMixture
 import matplotlib.pyplot as plt
 import datetime
 
-# ── Page config ────────────────────────────────────────────────
 st.set_page_config(
     page_title="Sidney Pratt | Quant Research",
     page_icon="📈",
     layout="wide"
 )
 
-# ── Custom styling ─────────────────────────────────────────────
 st.markdown("""
 <style>
-    .stApp {
-        background-color: #FFFFFF;
-    }
-    [data-testid="stSidebar"] {
-        background-color: #4A4A4A;
-    }
-    [data-testid="stSidebar"] * {
-        color: white !important;
-    }
-    .stMarkdown, .stMarkdown p, label {
-        color: #1a1a1a !important;
-    }
+    .stApp { background-color: #FFFFFF; }
+    [data-testid="stSidebar"] { background-color: #4A4A4A; }
+    [data-testid="stSidebar"] * { color: white !important; }
+    .stMarkdown, .stMarkdown p, label { color: #1a1a1a !important; }
     h1 { color: #333333 !important; font-size: 2.5rem !important; }
     h2 { color: #444444 !important; }
     h3 { color: #555555 !important; }
@@ -37,9 +27,7 @@ st.markdown("""
         border-radius: 8px;
         padding: 1rem;
     }
-    [data-testid="metric-container"] * {
-        color: #1a1a1a !important;
-    }
+    [data-testid="metric-container"] * { color: #1a1a1a !important; }
     .stButton > button {
         background-color: #444444 !important;
         color: white !important;
@@ -50,12 +38,8 @@ st.markdown("""
         font-weight: bold !important;
         width: 100%;
     }
-    .stButton > button:hover {
-        background-color: #222222 !important;
-    }
-    hr {
-        border-color: #CCCCCC !important;
-    }
+    .stButton > button:hover { background-color: #222222 !important; }
+    hr { border-color: #CCCCCC !important; }
     .card {
         background-color: #F9F9F9;
         border: 1px solid #DDDDDD;
@@ -63,14 +47,8 @@ st.markdown("""
         padding: 1.5rem;
         margin-bottom: 1rem;
     }
-    .card h3 {
-        color: #444444 !important;
-        margin-bottom: 0.5rem;
-    }
-    .card p {
-        color: #1a1a1a !important;
-        line-height: 1.6;
-    }
+    .card h3 { color: #444444 !important; margin-bottom: 0.5rem; }
+    .card p { color: #1a1a1a !important; line-height: 1.6; }
     .tag {
         display: inline-block;
         background-color: #444444;
@@ -81,15 +59,11 @@ st.markdown("""
         margin: 4px;
     }
     .profile-placeholder {
-        width: 110px;
-        height: 110px;
+        width: 110px; height: 110px;
         background: linear-gradient(135deg, #666666, #999999);
         border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 36px;
-        color: white;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 36px; color: white;
         margin: 0 auto 0.75rem auto;
         border: 3px solid #AAAAAA;
     }
@@ -100,25 +74,12 @@ st.markdown("""
         padding: 1.2rem 1.5rem;
         margin-top: 1rem;
     }
-    .seeking-card h4 {
-        color: #444444 !important;
-        margin-bottom: 0.5rem;
-        font-size: 15px;
-    }
-    .seeking-card p {
-        color: #333333 !important;
-        font-size: 14px;
-        line-height: 1.8;
-    }
-    .sidebar-contact {
-        font-size: 13px;
-        color: white !important;
-        line-height: 2;
-    }
+    .seeking-card h4 { color: #444444 !important; margin-bottom: 0.5rem; font-size: 15px; }
+    .seeking-card p { color: #333333 !important; font-size: 14px; line-height: 1.8; }
+    .sidebar-contact { font-size: 13px; color: white !important; line-height: 2; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Sidebar ────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
     <div class="profile-placeholder">SP</div>
@@ -128,12 +89,7 @@ with st.sidebar:
     st.markdown("## Sidney Pratt")
     st.markdown("*Quant Researcher*")
     st.markdown("---")
-    page = st.radio("", [
-        "Home",
-        "About",
-        "Resume",
-        "AI Research",
-    ])
+    page = st.radio("", ["Home", "About", "Resume", "AI Research"])
     st.markdown("---")
     st.markdown("### Contact")
     st.markdown("""
@@ -167,7 +123,6 @@ if page == "Home":
     generation of trading strategies.
     </p>
     """, unsafe_allow_html=True)
-
     st.markdown("""
     <div class="seeking-card">
         <h4>Currently Seeking</h4>
@@ -181,7 +136,6 @@ if page == "Home":
         </p>
     </div>
     """, unsafe_allow_html=True)
-
     st.markdown("---")
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -215,7 +169,6 @@ if page == "Home":
 elif page == "About":
     st.markdown("# About Me")
     st.markdown("---")
-
     st.markdown("""
     <div class="card">
         <p>
@@ -257,10 +210,8 @@ elif page == "About":
         </p>
     </div>
     """, unsafe_allow_html=True)
-
     st.markdown("---")
     st.markdown("## What I Bring to the Table")
-
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("""
@@ -268,8 +219,7 @@ elif page == "About":
             <h3>Quantitative Skills</h3>
             <p>Python, SQL, financial analysis, machine learning,
             backtesting, and market data analysis. Built two live
-            AI tools trained on real market data — a regime detector
-            and a credit spread monitor.</p>
+            AI tools trained on real market data.</p>
         </div>
         <div class="card">
             <h3>Athletic Discipline</h3>
@@ -284,8 +234,7 @@ elif page == "About":
             <h3>Research Experience</h3>
             <p>Interned at the American Institute of Economic
             Research — contributing to real economic policy analysis,
-            literature review, and data-driven research in a
-            professional setting.</p>
+            literature review, and data-driven research.</p>
         </div>
         <div class="card">
             <h3>Global Perspective</h3>
@@ -301,7 +250,6 @@ elif page == "About":
 elif page == "Resume":
     st.markdown("# Resume")
     st.markdown("---")
-
     st.markdown("""
     <div class="card">
         <h3>Education</h3>
@@ -312,7 +260,6 @@ elif page == "Resume":
         </p>
     </div>
     """, unsafe_allow_html=True)
-
     st.markdown("""
     <div class="card">
         <h3>Certifications</h3>
@@ -323,7 +270,6 @@ elif page == "Resume":
         </p>
     </div>
     """, unsafe_allow_html=True)
-
     st.markdown("""
     <div class="card">
         <h3>Experience</h3>
@@ -344,12 +290,10 @@ elif page == "Resume":
         <p>
         <b>Assistant Coach | San Francisco Sabercats Hockey Club</b><br>
         May 2025 – July 2025 | San Francisco, CA<br>
-        Supported player development, game strategy, and team
-        coordination.
+        Supported player development, game strategy, and team coordination.
         </p>
     </div>
     """, unsafe_allow_html=True)
-
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("""
@@ -374,7 +318,6 @@ elif page == "Resume":
             </p>
         </div>
         """, unsafe_allow_html=True)
-
     st.markdown("""
     <div class="card">
         <h3>Volunteer & International Service</h3>
@@ -396,8 +339,9 @@ elif page == "AI Research":
     st.markdown("# AI Research")
     st.markdown("""
     <p style="color:#333333; font-size:16px;">
-    Using machine learning to find signals in financial markets.
-    Each model is trained on real market data and fully interactive.
+    Using machine learning to find signals in financial markets
+    and solve real world problems.
+    Each model is built on real data and fully interactive.
     </p>
     """, unsafe_allow_html=True)
     st.markdown("---")
@@ -405,12 +349,12 @@ elif page == "AI Research":
     model = st.selectbox("Select a model:", [
         "Multi-Asset Market Regime Detector",
         "Credit Spread Monitor",
+        "Hockey Pathway Navigator",
     ])
 
 # ── Model 1: Regime Detector ───────────────────────────────────
     if model == "Multi-Asset Market Regime Detector":
         st.markdown("## Multi-Asset Market Regime Detector")
-
         st.markdown("""
         <div class="card">
             <h3>Overview</h3>
@@ -420,121 +364,69 @@ elif page == "AI Research":
             <b>RISK-ON</b> or <b>RISK-OFF</b> regime by analyzing
             four asset classes simultaneously — US Equities (SPY),
             Investment Grade Bonds (AGG), High Yield Credit (HYG),
-            and Gold (GLD). The model was trained on 12 years of
-            real daily market data from 2014 to 2026.
+            and Gold (GLD). Trained on 12 years of real market data.
             </p>
         </div>
         """, unsafe_allow_html=True)
-
         st.markdown("""
         <div class="card">
             <h3>Methodology</h3>
             <p>
-            <b>Data:</b> 12 years of daily price data across 4 asset
-            classes (2014-2026)<br><br>
-            <b>Model:</b> Gaussian Mixture Model (GMM) — unsupervised
-            machine learning that finds hidden patterns in data without
-            being told what to look for<br><br>
-            <b>Signal:</b> 21-day rolling mean returns used as input
-            features — this smooths out daily noise so the AI sees
-            trends instead of random fluctuations<br><br>
-            <b>Strategy:</b> Long SPY during RISK-ON regimes, move to
-            cash during RISK-OFF regimes<br><br>
-            <b>Backtest:</b> Chronological train/test split to prevent
-            lookahead bias — the model never uses future data to make
-            past decisions
+            <b>Data:</b> 12 years of daily price data (2014-2026)<br><br>
+            <b>Model:</b> Gaussian Mixture Model — unsupervised machine
+            learning that finds hidden patterns without being told
+            what to look for<br><br>
+            <b>Signal:</b> 21-day rolling mean returns — smooths daily
+            noise so the AI sees trends<br><br>
+            <b>Strategy:</b> Long SPY during RISK-ON, cash during RISK-OFF<br><br>
+            <b>Backtest:</b> Chronological split — no lookahead bias
             </p>
         </div>
         """, unsafe_allow_html=True)
-
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("""
             <div class="card">
                 <h3>RISK-ON — Markets Are Calm</h3>
                 <p>
-                All four asset classes are behaving normally.
-                Stocks are rising, credit is tight, gold is steady.
-                Investors are confident and willing to take risk.<br><br>
-                <b>What this means:</b> Stay invested in equities.
-                The environment is favorable for growth.<br><br>
-                <b>Real world example:</b> 2021 post-COVID recovery —
-                stocks surged, credit was cheap, and investors poured
-                money into risk assets. The model correctly identified
-                this as a sustained RISK-ON period.
+                All four asset classes behaving normally.
+                Stocks rising, credit tight, gold steady.
+                Investors confident.<br><br>
+                <b>Action:</b> Stay invested in equities.<br><br>
+                <b>Example:</b> 2021 post-COVID recovery —
+                the model correctly identified this as a
+                sustained RISK-ON period.
                 </p>
             </div>
             """, unsafe_allow_html=True)
         with col2:
             st.markdown("""
             <div class="card">
-                <h3>RISK-OFF — Market Stress Detected</h3>
+                <h3>RISK-OFF — Stress Detected</h3>
                 <p>
-                Something is wrong across multiple asset classes
-                simultaneously. Stocks are falling, credit is
-                widening, gold is spiking. Investors are scared
-                and moving to safety.<br><br>
-                <b>What this means:</b> Move to cash. Protect
-                capital until conditions stabilize.<br><br>
-                <b>Real world example:</b> March 2020 COVID crash —
-                stocks dropped 34% in 23 days, credit markets froze,
-                and gold spiked. The model flagged RISK-OFF and moved
-                to cash before the worst of the decline.
+                Multiple asset classes under stress simultaneously.
+                Stocks falling, credit widening, gold spiking.<br><br>
+                <b>Action:</b> Move to cash.<br><br>
+                <b>Example:</b> March 2020 COVID crash —
+                stocks dropped 34% in 23 days. Model flagged
+                RISK-OFF before the worst of the decline.
                 </p>
             </div>
             """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="card">
-            <h3>The Four Asset Class Sensors</h3>
-            <p>
-            <b>SPY — US Stock Market:</b> Measures overall investor
-            confidence. Rising SPY means investors are optimistic
-            about the economy.<br><br>
-            <b>AGG — Investment Grade Bonds:</b> Measures flight to
-            safety. Rising AGG means investors are getting cautious
-            and moving money out of stocks into safer assets.<br><br>
-            <b>HYG — High Yield Credit:</b> Measures risk appetite
-            in the credit market. Falling HYG means lenders are
-            pulling back from risky companies — often the first
-            warning sign of broader stress.<br><br>
-            <b>GLD — Gold:</b> Measures fear and uncertainty.
-            Spiking gold means investors are nervous about everything
-            else and looking for a safe place to hide their money.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-
         st.markdown("""
         <div class="card">
             <h3>Key Results</h3>
             <p>
-            The AI strategy matched buy-and-hold returns over 12 years
-            while significantly reducing risk:<br><br>
-            Maximum drawdown reduced from <b>-33.7%</b> to
-            <b>-24.0%</b> — protecting investors during the worst
-            crashes<br><br>
-            Sharpe ratio improved from <b>0.84</b> to <b>0.93</b>
-            — more return per unit of risk taken<br><br>
-            Portfolio volatility reduced from <b>17.1%</b> to
-            <b>15.5%</b> — a smoother ride to the same destination<br><br>
-            The model identified RISK-OFF conditions only 1.8% of
-            the time — correctly flagging rare but severe stress
-            periods like the COVID-19 crash in March 2020 and the
-            2022 Federal Reserve rate hike cycle.
+            Max drawdown reduced from <b>-33.7%</b> to <b>-24.0%</b><br><br>
+            Sharpe ratio improved from <b>0.84</b> to <b>0.93</b><br><br>
+            Volatility reduced from <b>17.1%</b> to <b>15.5%</b><br><br>
+            RISK-OFF flagged only 1.8% of the time — correctly
+            identifying rare but severe stress periods.
             </p>
         </div>
         """, unsafe_allow_html=True)
-
         st.markdown("---")
         st.markdown("### Run the Model")
-        st.markdown("""
-        <p style="color:#333333;">
-        Select a date range below and click Run AI Model to see
-        the regime detector in action for any time period.
-        </p>
-        """, unsafe_allow_html=True)
-
         col1, col2 = st.columns(2)
         with col1:
             start_date = st.date_input("Start Date",
@@ -542,12 +434,9 @@ elif page == "AI Research":
         with col2:
             end_date = st.date_input("End Date",
                 value=datetime.date(2026, 9, 18))
-
         st.markdown("<br>", unsafe_allow_html=True)
-
         if st.button("Run AI Model"):
             with st.spinner("Downloading data and running AI model..."):
-
                 tickers = ['SPY', 'AGG', 'HYG', 'GLD']
                 prices = yf.download(tickers,
                     start=str(start_date),
@@ -556,26 +445,20 @@ elif page == "AI Research":
                 prices = prices.dropna()
                 returns = prices.pct_change().dropna()
                 smooth = returns.rolling(21).mean().dropna()
-
                 gmm = GaussianMixture(n_components=2,
                     covariance_type='full', random_state=42)
                 smooth['regime'] = gmm.fit_predict(
                     smooth[['SPY', 'AGG', 'HYG', 'GLD']])
-
                 equity_by_regime = smooth.groupby('regime')['SPY'].mean()
                 risk_on  = int(equity_by_regime.idxmax())
                 risk_off = int(equity_by_regime.idxmin())
                 smooth['label'] = smooth['regime'].map({
-                    risk_on:  'RISK-ON',
-                    risk_off: 'RISK-OFF'
-                })
-
+                    risk_on: 'RISK-ON', risk_off: 'RISK-OFF'})
                 spy_returns = returns['SPY'].loc[smooth.index]
                 signal = (smooth['label'] == 'RISK-ON').astype(int)
                 strat  = signal.shift(1) * spy_returns
                 strat  = strat.dropna()
                 bh     = spy_returns.loc[strat.index]
-
                 def get_metrics(r):
                     cum     = (1 + r).cumprod()
                     total   = cum.iloc[-1] - 1
@@ -584,44 +467,30 @@ elif page == "AI Research":
                     sharpe  = ann_ret / ann_vol
                     max_dd  = (cum / cum.cummax() - 1).min()
                     return cum, total, ann_ret, ann_vol, sharpe, max_dd
-
                 cum_s, tot_s, ret_s, vol_s, sh_s, dd_s = get_metrics(strat)
                 cum_b, tot_b, ret_b, vol_b, sh_b, dd_b = get_metrics(bh)
-
                 latest      = smooth['label'].iloc[-1]
                 latest_date = smooth.index[-1].strftime('%B %d, %Y')
-
             st.markdown("---")
             st.markdown("### Current Market Signal")
             if latest == 'RISK-ON':
-                st.success(
-                    f"RISK-ON — As of {latest_date} markets are calm. "
-                    f"Model suggests staying INVESTED in equities.")
+                st.success(f"RISK-ON — As of {latest_date} markets are calm. "
+                           f"Model suggests staying INVESTED.")
             else:
-                st.error(
-                    f"RISK-OFF — As of {latest_date} market stress "
-                    f"detected. Model suggests moving to CASH.")
-
+                st.error(f"RISK-OFF — As of {latest_date} stress detected. "
+                         f"Model suggests moving to CASH.")
             st.markdown("---")
             st.markdown("### Performance Results")
             c1, c2, c3, c4, c5 = st.columns(5)
-            c1.metric("Total Return",  f"{tot_s:.1%}",
-                f"{tot_s-tot_b:+.1%} vs BH")
-            c2.metric("Ann. Return",   f"{ret_s:.1%}",
-                f"{ret_s-ret_b:+.1%} vs BH")
-            c3.metric("Volatility",    f"{vol_s:.1%}",
-                f"{vol_s-vol_b:+.1%} vs BH")
-            c4.metric("Sharpe Ratio",  f"{sh_s:.2f}",
-                f"{sh_s-sh_b:+.2f} vs BH")
-            c5.metric("Max Drawdown",  f"{dd_s:.1%}",
-                f"{dd_s-dd_b:+.1%} vs BH")
-
+            c1.metric("Total Return",  f"{tot_s:.1%}", f"{tot_s-tot_b:+.1%} vs BH")
+            c2.metric("Ann. Return",   f"{ret_s:.1%}", f"{ret_s-ret_b:+.1%} vs BH")
+            c3.metric("Volatility",    f"{vol_s:.1%}", f"{vol_s-vol_b:+.1%} vs BH")
+            c4.metric("Sharpe Ratio",  f"{sh_s:.2f}",  f"{sh_s-sh_b:+.2f} vs BH")
+            c5.metric("Max Drawdown",  f"{dd_s:.1%}",  f"{dd_s-dd_b:+.1%} vs BH")
             st.markdown("---")
             st.markdown("### Charts")
-
             fig, axes = plt.subplots(2, 1, figsize=(12, 10))
             fig.patch.set_facecolor('#FFFFFF')
-
             for ax in axes:
                 ax.set_facecolor('#F9F9F9')
                 ax.tick_params(colors='#333333')
@@ -629,7 +498,6 @@ elif page == "AI Research":
                 ax.yaxis.label.set_color('#333333')
                 for spine in ax.spines.values():
                     spine.set_edgecolor('#CCCCCC')
-
             (cum_s * 100).plot(ax=axes[0], color='#333333',
                 linewidth=2, label='AI Strategy')
             (cum_b * 100).plot(ax=axes[0], color='#AAAAAA',
@@ -640,144 +508,92 @@ elif page == "AI Research":
             axes[0].set_ylabel('Value ($)', color='#333333')
             axes[0].yaxis.set_major_formatter(
                 plt.FuncFormatter(lambda x, _: f'${x:.0f}'))
-
             risk_on_mask  = smooth['label'] == 'RISK-ON'
             risk_off_mask = smooth['label'] == 'RISK-OFF'
             axes[1].fill_between(smooth.index, 0, 1,
-                where=risk_on_mask,
-                color='#444444', alpha=0.7, label='RISK-ON')
+                where=risk_on_mask, color='#444444',
+                alpha=0.7, label='RISK-ON')
             axes[1].fill_between(smooth.index, 0, 1,
-                where=risk_off_mask,
-                color='#AAAAAA', alpha=0.9, label='RISK-OFF')
+                where=risk_off_mask, color='#AAAAAA',
+                alpha=0.9, label='RISK-OFF')
             axes[1].set_title('Regime Detection Timeline',
                 color='#333333', fontsize=13, fontweight='bold')
             axes[1].set_yticks([])
             axes[1].legend(facecolor='#F9F9F9', labelcolor='#333333')
-
             plt.tight_layout(pad=2.0)
             st.pyplot(fig)
 
 # ── Model 2: Credit Spread Monitor ────────────────────────────
     elif model == "Credit Spread Monitor":
         st.markdown("## Credit Spread Monitor")
-
         st.markdown("""
         <div class="card">
             <h3>Overview</h3>
             <p>
             This model tracks the credit spread between High Yield
             bonds (HYG) and Investment Grade bonds (LQD) to detect
-            building stress in credit markets. The spread is converted
-            into a stress score from 1 to 5 and monitored daily using
-            16 years of real market data from 2010 to 2026.
+            building stress in credit markets. Converted into a
+            stress score from 1 to 5 using 16 years of real data.
             </p>
         </div>
         """, unsafe_allow_html=True)
-
         st.markdown("""
         <div class="card">
             <h3>Stress Scale</h3>
             <p>
-            <b>Score 1 — Very Calm:</b> Credit markets are extremely
-            relaxed. Favorable environment for risk assets.<br><br>
-            <b>Score 2 — Calm:</b> Normal market conditions.
-            No unusual stress detected.<br><br>
-            <b>Score 3 — Moderate:</b> Some caution warranted.
-            Monitor conditions closely.<br><br>
-            <b>Score 4 — Elevated:</b> Credit stress is building.
-            Investors pulling back from risky bonds.<br><br>
-            <b>Score 5 — High Stress:</b> Significant credit risk
-            detected. Consider reducing risk exposure.
+            <b>Score 1 — Very Calm:</b> Extremely relaxed credit markets.<br><br>
+            <b>Score 2 — Calm:</b> Normal conditions.<br><br>
+            <b>Score 3 — Moderate:</b> Some caution warranted.<br><br>
+            <b>Score 4 — Elevated:</b> Credit stress building.<br><br>
+            <b>Score 5 — High Stress:</b> Significant credit risk.
             </p>
         </div>
         """, unsafe_allow_html=True)
-
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("""
             <div class="card">
                 <h3>What is HYG?</h3>
-                <p>
-                High Yield bonds are loans given to riskier companies.
-                When HYG falls it means investors are pulling back from
-                risky lending — often the first warning sign of broader
-                market stress. Wall Street calls these junk bonds.
-                </p>
+                <p>High Yield bonds are loans to riskier companies.
+                When HYG falls investors are pulling back from risky
+                lending — often the first warning sign of stress.
+                Wall Street calls these junk bonds.</p>
             </div>
             """, unsafe_allow_html=True)
         with col2:
             st.markdown("""
             <div class="card">
                 <h3>What is LQD?</h3>
-                <p>
-                Investment Grade bonds are loans to safer higher
-                quality companies. When LQD outperforms HYG it means
-                investors are moving away from risk and toward safety
-                — a classic early warning signal.
-                </p>
+                <p>Investment Grade bonds are loans to safer companies.
+                When LQD outperforms HYG investors are moving toward
+                safety — a classic early warning signal.</p>
             </div>
             """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="card">
-            <h3>Key Stress Periods Detected</h3>
-            <p>
-            <b>2011</b> — European Sovereign Debt Crisis<br><br>
-            <b>2016</b> — Oil Price Crash and China Slowdown<br><br>
-            <b>2020</b> — COVID-19 Pandemic Crash — largest spike
-            on record<br><br>
-            <b>2022</b> — Federal Reserve Rate Hike Cycle<br><br>
-            <b>2026</b> — Current Elevated Stress Period
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-
         st.markdown("""
         <div class="card">
             <h3>Current Reading — September 17, 2026</h3>
             <p>
             Credit Spread: <b>1.2 basis points</b><br><br>
             Stress Score: <b>4 out of 5 — ELEVATED</b><br><br>
-            The current spread is higher than <b>63%</b> of all
-            readings since 2010.<br><br>
-            Credit stress is building. Investors are pulling back
-            from risky bonds. This signal is consistent with gold
-            outperforming and the regime detector showing caution.
+            Higher than <b>63%</b> of all readings since 2010.<br><br>
+            Two independent AI models flagging caution simultaneously
+            — regime detector showing RISK-ON but gold outperforming
+            and credit stress elevated.
             </p>
         </div>
         """, unsafe_allow_html=True)
-
-        st.markdown("---")
-        st.markdown("### Combined Signal")
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Regime Detector", "RISK-ON", "Cautious")
-        c2.metric("Credit Monitor", "4 / 5", "Elevated")
-        c3.metric("Gold Signal", "+2.58%", "Outperforming")
-
         st.markdown("---")
         st.markdown("### Run the Credit Spread Model")
-        st.markdown("""
-        <p style="color:#333333;">
-        Select a date range below and click Run Model to see
-        the credit spread monitor in action for any time period.
-        </p>
-        """, unsafe_allow_html=True)
-
         col1, col2 = st.columns(2)
         with col1:
             start_date_cs = st.date_input("Start Date",
-                value=datetime.date(2010, 1, 1),
-                key="cs_start")
+                value=datetime.date(2010, 1, 1), key="cs_start")
         with col2:
             end_date_cs = st.date_input("End Date",
-                value=datetime.date(2026, 9, 18),
-                key="cs_end")
-
+                value=datetime.date(2026, 9, 18), key="cs_end")
         st.markdown("<br>", unsafe_allow_html=True)
-
         if st.button("Run Credit Spread Model"):
             with st.spinner("Downloading data and running model..."):
-
                 cs_tickers = ['HYG', 'LQD', 'SPY']
                 cs_prices = yf.download(cs_tickers,
                     start=str(start_date_cs),
@@ -785,59 +601,44 @@ elif page == "AI Research":
                     auto_adjust=True)['Close']
                 cs_prices  = cs_prices.dropna()
                 cs_returns = cs_prices.pct_change().dropna()
-
                 hyg_roll = cs_returns['HYG'].rolling(21).mean()
                 lqd_roll = cs_returns['LQD'].rolling(21).mean()
                 spread   = (lqd_roll - hyg_roll) * 10000
                 spread   = spread.dropna()
-
                 spread_df = pd.DataFrame({
                     'spread': spread,
                     'stress_score': pd.cut(
                         spread.rank(pct=True) * 100,
                         bins=[0, 20, 40, 60, 80, 100],
-                        labels=[1, 2, 3, 4, 5]
-                    ).astype(float),
+                        labels=[1, 2, 3, 4, 5]).astype(float),
                     'spread_smooth': spread.rolling(21).mean()
                 })
-
                 cs_current_spread = spread.iloc[-1]
                 cs_current_score  = spread_df['stress_score'].iloc[-1]
                 cs_current_date   = spread.index[-1].strftime('%B %d, %Y')
-
             st.markdown("---")
             st.markdown("### Current Credit Signal")
             if cs_current_score <= 2:
-                st.success(
-                    f"CALM — As of {cs_current_date} credit markets "
-                    f"are relaxed. Stress score {cs_current_score:.0f}/5.")
+                st.success(f"CALM — As of {cs_current_date} credit markets "
+                           f"are relaxed. Stress score {cs_current_score:.0f}/5.")
             elif cs_current_score <= 3:
-                st.warning(
-                    f"MODERATE — As of {cs_current_date} some caution "
-                    f"warranted. Stress score {cs_current_score:.0f}/5.")
+                st.warning(f"MODERATE — As of {cs_current_date} some caution "
+                           f"warranted. Stress score {cs_current_score:.0f}/5.")
             else:
-                st.error(
-                    f"ELEVATED — As of {cs_current_date} credit stress "
-                    f"is building. Stress score {cs_current_score:.0f}/5.")
-
+                st.error(f"ELEVATED — As of {cs_current_date} credit stress "
+                         f"building. Stress score {cs_current_score:.0f}/5.")
             st.markdown("---")
             st.markdown("### Credit Spread Metrics")
             m1, m2, m3 = st.columns(3)
-            m1.metric("Credit Spread",
-                f"{cs_current_spread:.1f} bps")
-            m2.metric("Stress Score",
-                f"{cs_current_score:.0f} / 5")
+            m1.metric("Credit Spread", f"{cs_current_spread:.1f} bps")
+            m2.metric("Stress Score",  f"{cs_current_score:.0f} / 5")
             pct_rank = (spread < cs_current_spread).mean() * 100
-            m3.metric("Percentile Rank",
-                f"{pct_rank:.0f}%",
-                "vs history since 2010")
-
+            m3.metric("Percentile Rank", f"{pct_rank:.0f}%",
+                      "vs history since 2010")
             st.markdown("---")
             st.markdown("### Charts")
-
             fig, axes = plt.subplots(2, 1, figsize=(12, 10))
             fig.patch.set_facecolor('#FFFFFF')
-
             for ax in axes:
                 ax.set_facecolor('#F9F9F9')
                 ax.tick_params(colors='#333333')
@@ -845,36 +646,27 @@ elif page == "AI Research":
                 ax.yaxis.label.set_color('#333333')
                 for spine in ax.spines.values():
                     spine.set_edgecolor('#CCCCCC')
-
-            axes[0].axhspan(
-                spread_df['spread'].quantile(0.80),
+            axes[0].axhspan(spread_df['spread'].quantile(0.80),
                 spread_df['spread'].max(),
-                alpha=0.08, color='#D85A30',
-                label='High Stress Zone')
-            axes[0].axhspan(
-                spread_df['spread'].min(),
+                alpha=0.08, color='#D85A30', label='High Stress Zone')
+            axes[0].axhspan(spread_df['spread'].min(),
                 spread_df['spread'].quantile(0.20),
-                alpha=0.08, color='#1D9E75',
-                label='Low Stress Zone')
-            axes[0].plot(spread_df.index,
-                spread_df['spread'],
+                alpha=0.08, color='#1D9E75', label='Low Stress Zone')
+            axes[0].plot(spread_df.index, spread_df['spread'],
                 color='#CCCCCC', linewidth=0.5, alpha=0.5)
-            axes[0].plot(spread_df.index,
-                spread_df['spread_smooth'],
+            axes[0].plot(spread_df.index, spread_df['spread_smooth'],
                 color='#333333', linewidth=2,
                 label='Credit Spread (21-day avg)')
             axes[0].scatter(spread_df.index[-1],
                 spread_df['spread_smooth'].iloc[-1],
                 color='#D85A30', s=80, zorder=5,
                 label=f'Today: {cs_current_spread:.1f} bps')
-            axes[0].set_title(
-                'Credit Spread — HYG vs LQD (Basis Points)',
+            axes[0].set_title('Credit Spread — HYG vs LQD (Basis Points)',
                 color='#333333', fontsize=13, fontweight='bold')
             axes[0].set_ylabel('Spread (bps)', color='#333333')
             axes[0].legend(facecolor='#F9F9F9',
                 labelcolor='#333333', fontsize=9)
             axes[0].grid(axis='y', color='#DDDDDD', linewidth=0.5)
-
             stress_smooth = spread_df['stress_score'].rolling(21).mean()
             axes[1].fill_between(stress_smooth.index, 0, stress_smooth,
                 where=stress_smooth <= 2,
@@ -893,8 +685,7 @@ elif page == "AI Research":
             axes[1].axhline(y=cs_current_score,
                 color='#D85A30', linestyle='--', linewidth=1.2,
                 label=f'Current: {cs_current_score:.0f}/5')
-            axes[1].set_title(
-                'Credit Stress Score — 21-Day Smoothed',
+            axes[1].set_title('Credit Stress Score — 21-Day Smoothed',
                 color='#333333', fontsize=13, fontweight='bold')
             axes[1].set_ylabel('Stress Score', color='#333333')
             axes[1].set_ylim(0, 5.5)
@@ -902,18 +693,323 @@ elif page == "AI Research":
             axes[1].legend(facecolor='#F9F9F9',
                 labelcolor='#333333', fontsize=9)
             axes[1].grid(axis='y', color='#DDDDDD', linewidth=0.5)
-
             plt.tight_layout(pad=2.0)
             st.pyplot(fig)
-
         st.markdown("---")
         st.markdown("""
         <div class="card">
             <h3>Full Research Notebook</h3>
             <p>
-            View the complete Credit Spread Monitor research notebook
-            including all code, charts, and analysis on GitHub:
+            View the complete Credit Spread Monitor on GitHub:<br><br>
             github.com/sidneyppratt-svg/credit-spread-monitor
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+# ── Model 3: Hockey Pathway Navigator ─────────────────────────
+    elif model == "Hockey Pathway Navigator":
+        st.markdown("## Hockey Pathway Navigator")
+        st.markdown("""
+        <p style="color:#333333; font-size:16px;">
+        Every hockey pathway from youth to the pros —
+        personalized recommendations, honest cost breakdowns,
+        and realistic college outcomes for every junior league.
+        </p>
+        """, unsafe_allow_html=True)
+        st.markdown("""
+        <div class="card">
+            <h3>Overview</h3>
+            <p>
+            Hockey pathways are confusing. Families spend thousands
+            of dollars on junior hockey without understanding what
+            college level that league realistically leads to, whether
+            athletic scholarships are even available, or what
+            opportunities they may be missing entirely.<br><br>
+            This tool gives honest clear answers. Built by a player
+            who lived this experience firsthand as an ACHA D1 hockey
+            player at Western Michigan University and a member of the
+            Northern Cyclones junior program.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown("---")
+        st.markdown("### Junior League Cost & College Outcome Guide")
+        league_data = [
+            ("USHL",          "Tier 1", "FREE",
+             "NCAA D1 scholarship",     "✅ Yes"),
+            ("AJHL",          "Tier 1", "Under $3,000",
+             "NCAA D1 possible",        "✅ Possible"),
+            ("NAHL",          "Tier 2", "$5,000-8,000",
+             "NCAA D1 or D3",           "⚠️ Partial possible"),
+            ("USPHL NCDC",    "Tier 2", "$8,000-12,000",
+             "NCAA D3 small private",   "❌ Academic aid only"),
+            ("EHL",           "Tier 2", "$8,000-12,000",
+             "NCAA D3 small private",   "❌ Academic aid only"),
+            ("USPHL Premier", "Tier 3", "$7,000-10,000",
+             "NCAA D3 or ACHA D1",      "❌ Academic aid only"),
+            ("USPHL Elite",   "Tier 3", "$5,000-8,000",
+             "ACHA D1 or small D3",     "❌ Academic aid only"),
+            ("NA3HL",         "Tier 3", "$4,000-7,000",
+             "ACHA D1 or small D3",     "❌ Academic aid only"),
+        ]
+        header = ["League", "Tier", "Annual Cost",
+                  "Typical College Outcome", "Athletic Scholarship"]
+        df_leagues = pd.DataFrame(league_data, columns=header)
+        st.dataframe(df_leagues, use_container_width=True,
+                     hide_index=True)
+        st.markdown("---")
+        st.markdown("### Personalized Pathway Finder")
+        col1, col2 = st.columns(2)
+        with col1:
+            player_age = st.number_input("Player Age",
+                min_value=6, max_value=22, value=15)
+            player_location = st.selectbox("Location", [
+                "Midwest",
+                "East Coast / Northeast",
+                "West Coast",
+                "South",
+                "Canada",
+            ])
+        with col2:
+            player_level = st.selectbox("Current Level", [
+                "Learn to Skate / Mite",
+                "Squirt",
+                "Peewee AAA",
+                "Bantam AAA",
+                "Midget Minor",
+                "Midget Major",
+                "High School Varsity",
+                "Prep School",
+                "Junior Hockey",
+            ])
+            player_goal = st.selectbox("Goal", [
+                "NCAA D1 or Pro",
+                "NCAA D3 or ACHA",
+                "Just love the game",
+            ])
+            player_league = st.selectbox(
+                "Current Junior League (if applicable)", [
+                    "Not in junior hockey yet",
+                    "USHL", "AJHL", "NAHL",
+                    "USPHL NCDC", "EHL",
+                    "USPHL Premier", "USPHL Elite", "NA3HL",
+                ])
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("Get My Pathway Recommendation"):
+            junior_league = None if \
+                player_league == "Not in junior hockey yet" \
+                else player_league
+            league_outcomes = {
+                'USHL': {
+                    'college':    'NCAA D1 scholarship highly likely',
+                    'scholarship':'Full or partial athletic scholarship very common',
+                    'cost':       'FREE — teams pay stipends',
+                    'realistic':  'Over 90% of USHL players play college hockey. '
+                                  'D1 scholarship is the most common outcome.',
+                },
+                'AJHL': {
+                    'college':    'NCAA D1 possible, D3 common',
+                    'scholarship':'Athletic scholarship possible at D1',
+                    'cost':       'Under $3,000/year — billet family system',
+                    'realistic':  'Strong pipeline to US and Canadian college programs.',
+                },
+                'NAHL': {
+                    'college':    'NCAA D1 possible, D3 most common',
+                    'scholarship':'Partial athletic scholarship possible',
+                    'cost':       '$5,000 - $8,000 per year',
+                    'realistic':  'D3 is the most common outcome. '
+                                  'D1 offers happen but are not guaranteed.',
+                },
+                'USPHL NCDC': {
+                    'college':    'NCAA D3 most common — small private schools',
+                    'scholarship':'NO athletic scholarship. Academic merit aid only.',
+                    'cost':       '$8,000 - $12,000 per year',
+                    'realistic':  'Most players land at small private NCAA D3 schools. '
+                                  'Plan for academic scholarships not athletic scholarships.',
+                },
+                'EHL': {
+                    'college':    'NCAA D3 most common — northeast schools',
+                    'scholarship':'NO athletic scholarship. Academic merit aid only.',
+                    'cost':       '$8,000 - $12,000 per year',
+                    'realistic':  'Most players attend small private D3 schools '
+                                  'in New England.',
+                },
+                'USPHL Premier': {
+                    'college':    'NCAA D3 small private schools or ACHA D1',
+                    'scholarship':'NO athletic scholarship. Academic merit aid only.',
+                    'cost':       '$7,000 - $10,000 per year',
+                    'realistic':  'Players typically land at small private D3 '
+                                  'schools or ACHA D1 programs.',
+                },
+                'USPHL Elite': {
+                    'college':    'ACHA D1 or very small NCAA D3 schools',
+                    'scholarship':'NO athletic scholarship. Academic merit aid only.',
+                    'cost':       '$5,000 - $8,000 per year',
+                    'realistic':  'Entry level junior league. Moving up to '
+                                  'USPHL Premier or USPHL NCDC significantly '
+                                  'improves college options.',
+                },
+                'NA3HL': {
+                    'college':    'ACHA D1 or small NCAA D3 schools',
+                    'scholarship':'NO athletic scholarship. Academic merit aid only.',
+                    'cost':       '$4,000 - $7,000 per year',
+                    'realistic':  'Development league. Players who move up to '
+                                  'NAHL significantly improve college options.',
+                },
+            }
+            st.markdown("---")
+            st.markdown("### Your Personalized Pathway Report")
+            if junior_league and junior_league in league_outcomes:
+                li = league_outcomes[junior_league]
+                st.markdown(f"""
+                <div class="card">
+                    <h3>Your Junior League — {junior_league}</h3>
+                    <p>
+                    <b>Annual Cost:</b> {li['cost']}<br><br>
+                    <b>College Outlook:</b> {li['college']}<br><br>
+                    <b>Scholarship:</b> {li['scholarship']}<br><br>
+                    <b>Reality Check:</b> {li['realistic']}
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+            if player_age <= 12:
+                recs = [
+                    "Focus on skill development and fun above all else.",
+                    "Play multiple sports — do not specialize yet.",
+                    "Look for quality AAA programs in your area.",
+                    "Start researching prep schools if interested.",
+                ]
+                opps = [
+                    "AAA programs in your region",
+                    "USA Hockey national tournaments",
+                    "Summer development camps",
+                    "Prep school information sessions",
+                ]
+                next_step = "Attend one major showcase and focus on loving the game."
+            elif player_age <= 14:
+                recs = [
+                    "AAA Bantam is the most critical age for junior development.",
+                    "USHL scouts begin watching at this level.",
+                    "Start building a highlight reel now.",
+                    "Attend USHL and NAHL showcases.",
+                    "Research prep schools seriously.",
+                ]
+                opps = [
+                    "AAA Bantam Major programs",
+                    "Prep school hockey programs",
+                    "USHL and NAHL prospect showcases",
+                    "USA Hockey Select 15 and Select 16 camps",
+                    "Shattuck St. Marys — top prep school pipeline",
+                ]
+                next_step = "Get on a AAA Bantam team and attend at least one major showcase."
+            elif player_age <= 16:
+                recs = [
+                    "Critical decision point — junior hockey or high school.",
+                    "USHL draft eligible at 16 — this is your D1 window.",
+                    "NAHL is a strong Tier 2 option.",
+                    "USPHL NCDC and EHL lead to D3 not D1 scholarships.",
+                    "Email every junior coach with your highlight reel now.",
+                ]
+                opps = [
+                    "USHL Phase 1 and Phase 2 drafts",
+                    "NAHL Draft and free agent camps",
+                    "USPHL NCDC tryouts",
+                    "EHL tryouts",
+                    "Prep school for one more development year",
+                ]
+                next_step = "Email junior coaches directly. Do not wait to be discovered."
+            elif player_age <= 18:
+                recs = [
+                    "Junior hockey should be your priority.",
+                    "The league you play in determines your college level.",
+                    "USHL and NAHL are your best paths to D1.",
+                    "USPHL NCDC and EHL most commonly lead to D3 only.",
+                    "Email college coaches directly with your highlight reel.",
+                ]
+                opps = [
+                    "USHL free agent camps",
+                    "NAHL free agent camps",
+                    "USPHL NCDC tryouts",
+                    "EHL tryouts",
+                    "AJHL tryouts",
+                    "NCAA D3 coaches — email directly",
+                ]
+                next_step = "Junior hockey now. Email every coach. Cast a wide net."
+            else:
+                recs = [
+                    "ACHA D1 and D2 are great options to keep playing.",
+                    "Play at the school that fits you academically.",
+                    "Strong academics open more doors at this stage.",
+                    "Hockey is a lifelong sport — enjoy every level.",
+                ]
+                opps = [
+                    "ACHA D1 at your college",
+                    "ACHA D2 at your college",
+                    "Adult recreational leagues",
+                    "Intramural hockey",
+                ]
+                next_step = "Find an ACHA program at a school that fits academically."
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("""
+                <div class="card"><h3>Recommendations</h3>
+                """, unsafe_allow_html=True)
+                for r in recs:
+                    st.markdown(f"• {r}")
+                st.markdown("</div>", unsafe_allow_html=True)
+            with col2:
+                st.markdown("""
+                <div class="card"><h3>Opportunities Now</h3>
+                """, unsafe_allow_html=True)
+                for o in opps:
+                    st.markdown(f"• {o}")
+                st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="card">
+                <h3>Your Next Step</h3>
+                <p>{next_step}</p>
+            </div>
+            """, unsafe_allow_html=True)
+        st.markdown("---")
+        st.markdown("### Key Things Nobody Tells You")
+        tips = [
+            ("USHL is completely FREE",
+             "Teams pay player stipends. If drafted you pay nothing."),
+            ("USPHL NCDC is inside USPHL",
+             "You must be in the USPHL system to play USPHL NCDC."),
+            ("Email coaches directly",
+             "Do not wait to be discovered. Send your highlight reel now."),
+            ("Late bloomers have time",
+             "Junior hockey allows play until 20-21. Many commit at 19-20."),
+            ("D3 is not a consolation prize",
+             "Schools like Middlebury are elite. Academics plus hockey can beat D1."),
+            ("Prep school offers financial aid",
+             "Do not assume you cannot afford it. Apply before deciding."),
+            ("AJHL uses billet families",
+             "You live with a host family for free in Canadian junior hockey."),
+            ("NA3HL to NAHL is real",
+             "Players move up from Tier 3 to Tier 2 and earn D1 offers."),
+            ("ACHA lets you choose your school",
+             "Play hockey at whatever school fits you best academically."),
+        ]
+        col1, col2 = st.columns(2)
+        for i, (title, desc) in enumerate(tips):
+            with col1 if i % 2 == 0 else col2:
+                st.markdown(f"""
+                <div class="card">
+                    <h3>• {title}</h3>
+                    <p>{desc}</p>
+                </div>
+                """, unsafe_allow_html=True)
+        st.markdown("---")
+        st.markdown("""
+        <div class="card">
+            <h3>Full Research Notebook & Team Directory</h3>
+            <p>
+            View the complete Hockey Pathway Navigator including
+            all 10 pathways, full league and team directory,
+            and personalized recommendation engine on GitHub:<br><br>
+            github.com/sidneyppratt-svg/hockey-pathway-navigator
             </p>
         </div>
         """, unsafe_allow_html=True)
