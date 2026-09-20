@@ -140,6 +140,14 @@ st.markdown("""
         display: inline-block;
         margin-bottom: 1rem;
     }
+    .regime-badge {
+        display: inline-block;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -281,7 +289,7 @@ elif page == "About":
         <div class="card">
             <h3>Quantitative Skills</h3>
             <p>Python, SQL, financial analysis, machine learning,
-            backtesting, and market data analysis. Built two live
+            backtesting, and market data analysis. Built live
             AI tools trained on real market data.</p>
         </div>
         <div class="card">
@@ -410,13 +418,525 @@ elif page == "AI Research":
     st.markdown("---")
 
     model = st.selectbox("Select a model:", [
+        "Yield Curve Monitor",
         "Multi-Asset Market Regime Detector",
         "Credit Spread Monitor",
         "Hockey Pathway Navigator",
     ])
 
-# ── Model 1: Regime Detector ───────────────────────────────────
-    if model == "Multi-Asset Market Regime Detector":
+# ── Model 1: Yield Curve Monitor ──────────────────────────────
+    if model == "Yield Curve Monitor":
+        st.markdown("## Yield Curve Monitor")
+        st.markdown("""
+        <p style="color:#333333; font-size:16px;">
+        Tracking the US Treasury yield curve across four maturities —
+        classifying regimes, detecting inversions, and backtesting
+        a rates strategy. The single most watched indicator across
+        every fixed income trading desk.
+        </p>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+            <h3>Overview</h3>
+            <p>
+            The yield curve shows the relationship between short term
+            and long term interest rates. When long term rates are
+            higher than short term rates the curve is normal — healthy
+            for the economy. When short term rates exceed long term
+            rates the curve inverts — one of the most reliable
+            recession signals in all of finance.<br><br>
+            This model downloads live Treasury yield data, classifies
+            the current regime, provides plain English interpretation,
+            and backtests a TLT strategy using curve signals.
+            Directly relevant to rates, credit, and mortgage
+            trading desks.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("""
+            <div class="card">
+                <h3>Why It Matters</h3>
+                <p>
+                Every fixed income desk watches the yield curve daily.
+                The 10Y minus 2Y spread is the most cited indicator
+                in rates trading — it predicts recessions, Fed policy
+                shifts, and bond market direction.<br><br>
+                Every US recession since 1970 has been preceded by
+                a yield curve inversion.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        with col2:
+            st.markdown("""
+            <div class="card">
+                <h3>The 5 Regimes</h3>
+                <p>
+                <b>Steep:</b> Long rates well above short — strong growth<br><br>
+                <b>Normal:</b> Healthy upward slope — economy growing<br><br>
+                <b>Flat:</b> Rates nearly equal — transition zone<br><br>
+                <b>Inverted:</b> Short above long — recession warning<br><br>
+                <b>Deeply Inverted:</b> Severe inversion — high alert
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="card">
+            <h3>Methodology</h3>
+            <p>
+            <b>Data:</b> Live US Treasury yields — 3M, 5Y, 10Y, 30Y
+            downloaded fresh from Yahoo Finance on every run<br><br>
+            <b>Key Spread:</b> 10Y minus 3M — the classic inversion
+            signal used by the Federal Reserve<br><br>
+            <b>Regimes:</b> Five states from Deeply Inverted to Steep
+            based on spread thresholds<br><br>
+            <b>Strategy:</b> Hold TLT during Normal and Steep regimes,
+            move to cash during Flat and Inverted regimes<br><br>
+            <b>Backtest:</b> 2003 to present — no lookahead bias
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown("### Run the Model")
+        col1, col2 = st.columns(2)
+        with col1:
+            yc_start = st.date_input("Start Date",
+                value=datetime.date(2000, 1, 1), key="yc_start")
+        with col2:
+            yc_end = st.date_input("End Date",
+                value=datetime.date(2026, 9, 18), key="yc_end")
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        if st.button("Run Yield Curve Monitor"):
+            with st.spinner("Downloading Treasury yield data..."):
+
+                # Download yields
+                tickers = {
+                    '3M':  '^IRX',
+                    '5Y':  '^FVX',
+                    '10Y': '^TNX',
+                    '30Y': '^TYX',
+                }
+                yc_yields = pd.DataFrame()
+                for name, ticker in tickers.items():
+                    data = yf.download(ticker,
+                        start=str(yc_start),
+                        end=str(yc_end),
+                        auto_adjust=True,
+                        progress=False)['Close']
+                    yc_yields[name] = data
+                yc_yields = yc_yields.dropna()
+
+                # Spreads
+                yc_yields['10Y_3M']  = yc_yields['10Y'] - yc_yields['3M']
+                yc_yields['10Y_5Y']  = yc_yields['10Y'] - yc_yields['5Y']
+                yc_yields['30Y_10Y'] = yc_yields['30Y'] - yc_yields['10Y']
+                yc_yields['spread_smooth'] = \
+                    yc_yields['10Y_3M'].rolling(21).mean()
+
+                # Regime classification
+                def classify_regime(spread):
+                    if spread < -0.50:   return 'DEEPLY INVERTED'
+                    elif spread < 0:     return 'INVERTED'
+                    elif spread < 0.50:  return 'FLAT'
+                    elif spread < 1.50:  return 'NORMAL'
+                    else:                return 'STEEP'
+
+                yc_yields['regime'] = \
+                    yc_yields['10Y_3M'].apply(classify_regime)
+
+                # Current values
+                current_spread = float(yc_yields['10Y_3M'].iloc[-1])
+                current_regime = yc_yields['regime'].iloc[-1]
+                current_3m     = float(yc_yields['3M'].iloc[-1])
+                current_5y     = float(yc_yields['5Y'].iloc[-1])
+                current_10y    = float(yc_yields['10Y'].iloc[-1])
+                current_30y    = float(yc_yields['30Y'].iloc[-1])
+                current_date   = yc_yields.index[-1].strftime('%B %d, %Y')
+                pct_rank       = float(
+                    (yc_yields['10Y_3M'] < current_spread).mean() * 100)
+                avg_spread     = float(yc_yields['10Y_3M'].mean())
+                trend_30d      = float(yc_yields['10Y_3M'].iloc[-1] -
+                                       yc_yields['10Y_3M'].iloc[-22]) \
+                                 if len(yc_yields) > 22 else 0.0
+                trend_90d      = float(yc_yields['10Y_3M'].iloc[-1] -
+                                       yc_yields['10Y_3M'].iloc[-63]) \
+                                 if len(yc_yields) > 63 else 0.0
+
+            st.markdown("---")
+            st.markdown("### Current Yield Curve Signal")
+
+            # Regime badge color
+            regime_colors_map = {
+                'STEEP':           ('#1B5E20', '⬆️'),
+                'NORMAL':          ('#2E7D32', '✅'),
+                'FLAT':            ('#F57F17', '⚠️'),
+                'INVERTED':        ('#E64A19', '🔻'),
+                'DEEPLY INVERTED': ('#B71C1C', '🚨'),
+            }
+            color, emoji = regime_colors_map.get(
+                current_regime, ('#333333', ''))
+
+            if current_regime in ['NORMAL', 'STEEP']:
+                st.success(f"{emoji} {current_regime} — As of "
+                           f"{current_date} the yield curve is healthy. "
+                           f"Strategy signals: HOLD TLT.")
+            elif current_regime == 'FLAT':
+                st.warning(f"{emoji} {current_regime} — As of "
+                           f"{current_date} the curve is in transition. "
+                           f"Strategy signals: MOVE TO CASH.")
+            else:
+                st.error(f"{emoji} {current_regime} — As of "
+                         f"{current_date} the yield curve is inverted. "
+                         f"Strategy signals: MOVE TO CASH.")
+
+            st.markdown("---")
+            st.markdown("### Current Yields")
+            m1, m2, m3, m4 = st.columns(4)
+            m1.metric("3-Month",  f"{current_3m:.2f}%")
+            m2.metric("5-Year",   f"{current_5y:.2f}%")
+            m3.metric("10-Year",  f"{current_10y:.2f}%")
+            m4.metric("30-Year",  f"{current_30y:.2f}%")
+
+            st.markdown("### Curve Shape")
+            s1, s2, s3, s4 = st.columns(4)
+            s1.metric("10Y minus 3M",
+                f"{current_spread:+.2f}%", "Key spread")
+            s2.metric("Percentile",
+                f"{pct_rank:.0f}th", "vs history")
+            s3.metric("30-Day Trend",
+                f"{trend_30d:+.2f}%",
+                "Steepening" if trend_30d > 0 else "Flattening")
+            s4.metric("vs Average",
+                f"{current_spread - avg_spread:+.2f}%",
+                f"Avg: {avg_spread:.2f}%")
+
+            st.markdown("---")
+            st.markdown("### Interpretation")
+
+            interpretations = {
+                'DEEPLY INVERTED': {
+                    'summary': 'The yield curve is deeply inverted — '
+                               'one of the most reliable recession warning '
+                               'signals in finance.',
+                    'plain_english': [
+                        'Normally you get paid more interest to lock your '
+                        'money away for 10 years than for 3 months. Right '
+                        'now that is backwards — the 3 month rate is higher '
+                        'than the 10 year rate. That is called an inversion.',
+                        'This happens when the Federal Reserve has raised '
+                        'short term rates aggressively to fight inflation. '
+                        'The market now expects the Fed to cut rates in the '
+                        'future because the economy will slow.',
+                        'Every major US recession since 1970 has been '
+                        'preceded by an inverted yield curve. The recession '
+                        'typically arrives 12 to 18 months after inversion.',
+                    ],
+                    'watch': [
+                        'Watch for the Fed to start cutting rates — '
+                        'that uninverts the curve',
+                        'Watch unemployment claims — rising claims '
+                        'confirm the recession signal',
+                        'Watch credit spreads — if HYG falls sharply '
+                        'that is a double warning',
+                        'A rapid steepening from deep inversion often '
+                        'means the recession has already begun',
+                    ],
+                    'signal': 'MOVE TO CASH — avoid long duration bonds. '
+                              'The 2022-23 deep inversion saw TLT fall '
+                              'over 48% peak to trough.',
+                },
+                'INVERTED': {
+                    'summary': 'The yield curve is inverted — short term '
+                               'rates exceed long term rates. Classic '
+                               'recession warning signal.',
+                    'plain_english': [
+                        'Short term borrowing costs are higher than long '
+                        'term costs — the opposite of normal. Markets '
+                        'expect the economy to slow and the Fed to cut.',
+                        'Banks borrow short and lend long — an inverted '
+                        'curve squeezes their margins, reduces lending, '
+                        'and slows economic growth.',
+                        'Bond investors are accepting lower 10 year yields '
+                        'because they believe growth will slow and '
+                        'inflation will fall.',
+                    ],
+                    'watch': [
+                        'How long the inversion lasts — longer inversions '
+                        'historically produce deeper recessions',
+                        'Fed meetings — rate cuts are likely coming',
+                        'Credit markets for early stress signals',
+                        'A rapid steepening often means recession has begun',
+                    ],
+                    'signal': 'MOVE TO CASH — model signals caution on '
+                              'long duration bonds until the curve '
+                              'returns to flat or normal.',
+                },
+                'FLAT': {
+                    'summary': 'The yield curve is flat — short and long '
+                               'rates nearly equal. A critical transition '
+                               'zone — direction from here is everything.',
+                    'plain_english': [
+                        'Short and long term borrowing costs are almost '
+                        'identical. The market is uncertain about whether '
+                        'the economy will accelerate or slow down.',
+                        'Think of the flat curve as a crossroads. The '
+                        'direction it moves next tells you a lot about '
+                        'where the economy is headed.',
+                        'A flat curve flattening further toward inversion '
+                        'is a warning sign. A flat curve steepening '
+                        'toward normal is a healthy signal.',
+                    ],
+                    'watch': [
+                        'Direction is everything — steepening or '
+                        'flattening from here?',
+                        'Fed guidance on future rate moves',
+                        'Economic data — strong data steepens, '
+                        'weak data flattens further',
+                        'A flat curve tipping into inversion is a '
+                        'clear warning to reduce duration',
+                    ],
+                    'signal': 'MOVE TO CASH — model signals caution '
+                              'during flat curve periods. Risk of '
+                              'inversion is elevated.',
+                },
+                'NORMAL': {
+                    'summary': 'The yield curve is normal — long term '
+                               'rates above short term rates. Healthy '
+                               'baseline for a growing economy.',
+                    'plain_english': [
+                        'This is how the curve is supposed to look. '
+                        'You earn more for lending money for 10 years '
+                        'than for 3 months — that extra return '
+                        'compensates for uncertainty over time.',
+                        'Banks borrow cheap short term and lend at '
+                        'higher long term rates — profitable for banks '
+                        'which means more lending and economic growth.',
+                        'The Fed is likely in a neutral or accommodative '
+                        'stance. Growth is positive and inflation '
+                        'is manageable.',
+                    ],
+                    'watch': [
+                        f'Curve is currently '
+                        f'{"steepening" if trend_30d > 0 else "flattening"} '
+                        f'({trend_30d:+.2f}% last 30 days) — '
+                        f'watch the direction',
+                        'A steepening normal curve is a bullish signal',
+                        'Watch for flattening toward zero — early warning',
+                        'Long duration bonds perform well when rates '
+                        'are stable or falling in this regime',
+                    ],
+                    'signal': 'HOLD TLT — safe to hold long duration '
+                              'bonds. Monitor for any flattening trend '
+                              'which would be a warning to reduce exposure.',
+                },
+                'STEEP': {
+                    'summary': 'The yield curve is steep — long term '
+                               'rates well above short term rates. '
+                               'Strong growth or rising inflation signal.',
+                    'plain_english': [
+                        'A steep curve usually appears after a recession '
+                        'when the Fed has cut short rates to near zero '
+                        'and the economy is recovering — or when '
+                        'inflation expectations are rising sharply.',
+                        'The market demands much more compensation for '
+                        'lending long term — either because it fears '
+                        'inflation or expects strong future growth '
+                        'and higher rates.',
+                        'Historically a steep curve is one of the best '
+                        'environments for economic growth — banks are '
+                        'very profitable and lending is abundant.',
+                    ],
+                    'watch': [
+                        'Inflation data — steep curve driven by '
+                        'inflation fears can become risky for bonds',
+                        'Fed policy — they may hike short rates '
+                        'which gradually flattens the curve',
+                        'A steep curve after a recession is one of '
+                        'the best growth recovery signals',
+                        f'Currently '
+                        f'{"steepening" if trend_30d > 0 else "flattening"} '
+                        f'({trend_30d:+.2f}% last 30 days)',
+                    ],
+                    'signal': 'HOLD TLT — model signals holding long '
+                              'duration bonds. Monitor inflation closely '
+                              'as rising inflation can hurt bond prices '
+                              'even in a steep curve environment.',
+                },
+            }
+
+            info = interpretations.get(current_regime, {})
+
+            st.markdown(f"""
+            <div class="card">
+                <h3>Summary</h3>
+                <p>{info.get('summary', '')}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("**What This Means in Plain English:**")
+            for point in info.get('plain_english', []):
+                st.markdown(f"""
+                <div class="card" style="border-left: 4px solid #444444;
+                padding: 1rem 1.5rem;">
+                    <p>{point}</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.markdown("**What to Watch Right Now:**")
+            col1, col2 = st.columns(2)
+            watch_list = info.get('watch', [])
+            for i, point in enumerate(watch_list):
+                with col1 if i % 2 == 0 else col2:
+                    st.markdown(f"""
+                    <div class="card" style="padding: 0.8rem 1rem;">
+                        <p>➜ {point}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            if current_regime in ['NORMAL', 'STEEP']:
+                st.success(f"**Strategy Signal:** {info.get('signal', '')}")
+            elif current_regime == 'FLAT':
+                st.warning(f"**Strategy Signal:** {info.get('signal', '')}")
+            else:
+                st.error(f"**Strategy Signal:** {info.get('signal', '')}")
+
+            st.markdown("---")
+            st.markdown("### Historical Context")
+            h1, h2, h3, h4 = st.columns(4)
+            h1.metric("Avg Spread",
+                f"{avg_spread:.2f}%", "since 2000")
+            h2.metric("Deepest Inversion",
+                f"{float(yc_yields['10Y_3M'].min()):.2f}%",
+                yc_yields['10Y_3M'].idxmin().strftime('%b %Y'))
+            h3.metric("Steepest Curve",
+                f"{float(yc_yields['10Y_3M'].max()):.2f}%",
+                yc_yields['10Y_3M'].idxmax().strftime('%b %Y'))
+            inverted_pct = float(
+                (yc_yields['10Y_3M'] < 0).mean() * 100)
+            h4.metric("Time Inverted",
+                f"{inverted_pct:.1f}%", "of selected period")
+
+            st.markdown("---")
+            st.markdown("### Charts")
+
+            fig, axes = plt.subplots(3, 1, figsize=(13, 13))
+            fig.patch.set_facecolor('#FFFFFF')
+            fig.suptitle('Yield Curve Monitor',
+                fontsize=15, fontweight='bold',
+                color='#222222', y=0.99)
+
+            for ax in axes:
+                ax.set_facecolor('#F9F9F9')
+                ax.tick_params(colors='#333333', labelsize=9)
+                for spine in ax.spines.values():
+                    spine.set_edgecolor('#DDDDDD')
+                ax.grid(axis='y', color='#EEEEEE', linewidth=0.8)
+                ax.grid(axis='x', color='#EEEEEE',
+                    linewidth=0.5, alpha=0.5)
+
+            # Chart 1: Yields over time
+            axes[0].plot(yc_yields.index, yc_yields['10Y'],
+                color='#1A237E', linewidth=1.5, label='10-Year')
+            axes[0].plot(yc_yields.index, yc_yields['3M'],
+                color='#B71C1C', linewidth=1.5, label='3-Month')
+            axes[0].plot(yc_yields.index, yc_yields['30Y'],
+                color='#2E7D32', linewidth=1.0,
+                linestyle='--', alpha=0.7, label='30-Year')
+            axes[0].fill_between(yc_yields.index,
+                yc_yields['3M'], yc_yields['10Y'],
+                where=yc_yields['10Y'] >= yc_yields['3M'],
+                color='#2E7D32', alpha=0.08, label='Normal')
+            axes[0].fill_between(yc_yields.index,
+                yc_yields['3M'], yc_yields['10Y'],
+                where=yc_yields['10Y'] < yc_yields['3M'],
+                color='#C62828', alpha=0.15, label='Inverted')
+            axes[0].set_title('Treasury Yields — 3M, 10Y, 30Y',
+                color='#333333', fontsize=12, fontweight='bold')
+            axes[0].set_ylabel('Yield (%)', color='#333333')
+            axes[0].legend(facecolor='#F9F9F9',
+                labelcolor='#333333', fontsize=8)
+            axes[0].yaxis.set_major_formatter(
+                plt.FuncFormatter(lambda x, _: f'{x:.1f}%'))
+
+            # Chart 2: Spread with regime shading
+            spread_series = yc_yields['10Y_3M']
+            smooth_series = yc_yields['spread_smooth']
+            axes[1].axhspan(1.50, 6.00,
+                color='#1B5E20', alpha=0.08, label='Steep')
+            axes[1].axhspan(0.50, 1.50,
+                color='#2E7D32', alpha=0.08, label='Normal')
+            axes[1].axhspan(-0.50, 0.50,
+                color='#F9A825', alpha=0.08, label='Flat')
+            axes[1].axhspan(-3.00, -0.50,
+                color='#C62828', alpha=0.10, label='Inverted')
+            axes[1].axhline(y=0, color='#C62828',
+                linewidth=1.5, linestyle='--', alpha=0.8)
+            axes[1].plot(spread_series.index, spread_series.values,
+                color='#CCCCCC', linewidth=0.6, alpha=0.7)
+            axes[1].plot(smooth_series.index, smooth_series.values,
+                color='#1A237E', linewidth=2.0,
+                label='Spread (21-day avg)', zorder=4)
+            axes[1].scatter(yc_yields.index[-1],
+                spread_series.iloc[-1],
+                color='#1A237E', s=80, zorder=5)
+            axes[1].annotate(
+                f'  Today: {spread_series.iloc[-1]:.2f}%',
+                xy=(yc_yields.index[-1], spread_series.iloc[-1]),
+                fontsize=8, color='#1A237E', fontweight='bold')
+            axes[1].set_title(
+                '10Y minus 3M Spread — Inversion Monitor',
+                color='#333333', fontsize=12, fontweight='bold')
+            axes[1].set_ylabel('Spread (%)', color='#333333')
+            axes[1].legend(facecolor='#F9F9F9',
+                labelcolor='#333333', fontsize=8)
+            axes[1].yaxis.set_major_formatter(
+                plt.FuncFormatter(lambda x, _: f'{x:.1f}%'))
+
+            # Chart 3: Regime timeline
+            regime_colors_fill = {
+                'STEEP':           '#1B5E20',
+                'NORMAL':          '#2E7D32',
+                'FLAT':            '#F9A825',
+                'INVERTED':        '#E64A19',
+                'DEEPLY INVERTED': '#B71C1C',
+            }
+            for regime, rcolor in regime_colors_fill.items():
+                mask = yc_yields['regime'] == regime
+                axes[2].fill_between(yc_yields.index, 0, 1,
+                    where=mask, color=rcolor,
+                    alpha=0.7, label=regime)
+            axes[2].set_title(
+                'Regime Timeline — STEEP to DEEPLY INVERTED',
+                color='#333333', fontsize=12, fontweight='bold')
+            axes[2].set_yticks([])
+            axes[2].set_ylim(0, 1)
+            axes[2].legend(facecolor='#F9F9F9',
+                labelcolor='#333333', fontsize=8,
+                loc='lower right', ncol=5)
+
+            plt.tight_layout(pad=2.5)
+            st.pyplot(fig)
+
+            st.markdown("---")
+            st.markdown("""
+            <div class="card">
+                <h3>Full Research Notebook</h3>
+                <p>
+                View the complete Yield Curve Monitor including all
+                code, charts, backtest results, and analysis on GitHub:<br><br>
+                github.com/sidneyppratt-svg/yield-curve-monitor
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+# ── Model 2: Regime Detector ───────────────────────────────────
+    elif model == "Multi-Asset Market Regime Detector":
         st.markdown("## Multi-Asset Market Regime Detector")
         st.markdown("""
         <div class="card">
@@ -556,8 +1076,6 @@ elif page == "AI Research":
                 ax.yaxis.label.set_color('#333333')
                 for spine in ax.spines.values():
                     spine.set_edgecolor('#CCCCCC')
-
-            # ── Chart 1: Portfolio Growth ──────────────────────
             (cum_s * 100).plot(ax=axes[0], color='#333333',
                 linewidth=2, label='AI Strategy')
             (cum_b * 100).plot(ax=axes[0], color='#AAAAAA',
@@ -568,30 +1086,20 @@ elif page == "AI Research":
             axes[0].set_ylabel('Value ($)', color='#333333')
             axes[0].yaxis.set_major_formatter(
                 plt.FuncFormatter(lambda x, _: f'${x:.0f}'))
-
-            # ── Chart 2: Regime Timeline with SPY overlay ──────
             risk_on_mask  = smooth['label'] == 'RISK-ON'
             risk_off_mask = smooth['label'] == 'RISK-OFF'
-
-            # Normalize SPY price to 0-1 for overlay
             spy_price = prices['SPY'].loc[smooth.index]
             spy_norm  = (spy_price - spy_price.min()) / \
                         (spy_price.max() - spy_price.min())
-
-            # Green RISK-ON, Red RISK-OFF background
             axes[1].fill_between(smooth.index, 0, 1,
                 where=risk_on_mask,
                 color='#2E7D32', alpha=0.25, label='RISK-ON')
             axes[1].fill_between(smooth.index, 0, 1,
                 where=risk_off_mask,
                 color='#C62828', alpha=0.45, label='RISK-OFF')
-
-            # SPY price line overlay
             axes[1].plot(spy_norm.index, spy_norm.values,
                 color='#1A237E', linewidth=1.8,
                 label='SPY Price (normalized)', zorder=3)
-
-            # Annotate key RISK-OFF events
             events = [
                 ('2020-03-01', 'COVID\nCrash'),
                 ('2022-02-01', 'Fed Rate\nHikes'),
@@ -618,7 +1126,6 @@ elif page == "AI Research":
                                 alpha=0.9))
                 except Exception:
                     pass
-
             axes[1].set_title(
                 'Regime Detection — SPY Price with RISK-ON / RISK-OFF Periods',
                 color='#333333', fontsize=13, fontweight='bold')
@@ -629,11 +1136,10 @@ elif page == "AI Research":
                 loc='lower right')
             axes[1].grid(axis='x', color='#DDDDDD',
                 linewidth=0.5, alpha=0.5)
-
             plt.tight_layout(pad=2.0)
             st.pyplot(fig)
 
-# ── Model 2: Credit Spread Monitor ────────────────────────────
+# ── Model 3: Credit Spread Monitor ────────────────────────────
     elif model == "Credit Spread Monitor":
         st.markdown("## Credit Spread Monitor")
         st.markdown("""
@@ -812,7 +1318,7 @@ elif page == "AI Research":
         </div>
         """, unsafe_allow_html=True)
 
-# ── Model 3: Hockey Pathway Navigator ─────────────────────────
+# ── Model 4: Hockey Pathway Navigator ─────────────────────────
     elif model == "Hockey Pathway Navigator":
         st.markdown("## Hockey Pathway Navigator")
         st.markdown("""
@@ -1190,7 +1696,6 @@ elif page == "AI Research":
         </p>
         """, unsafe_allow_html=True)
 
-        # ── THE NHL ROUTE ──────────────────────────────────────
         st.markdown("""
         <div class="section-label">⭐ The NHL Route</div>
         """, unsafe_allow_html=True)
@@ -1336,7 +1841,6 @@ elif page == "AI Research":
                 """, unsafe_allow_html=True)
             st.markdown("---")
 
-        # ── THE COLLEGE ROUTE ──────────────────────────────────
         st.markdown("""
         <div class="section-label-college">🎓 The College Route</div>
         """, unsafe_allow_html=True)
@@ -1397,9 +1901,8 @@ elif page == "AI Research":
                             'Championship and earned All-Rookie Team honors. '
                             'He has been an iron man — playing in every single '
                             'Saints game since arriving in 2022 — and carries '
-                            'a 4.0 GPA in Accounting and Business Analytics. '
-                            'In 2025-26 he earned NE10 Second Team All-Conference '
-                            'as a senior with 29 points in 32 games.',
+                            'a 4.0 GPA. In 2025-26 he earned NE10 Second Team '
+                            'All-Conference as a senior with 29 points in 32 games.',
                 'lesson':  'USPHL Premier leads to real NCAA D3 opportunities '
                            'at strong academic schools. Luke went from Northern '
                            'Cyclones to a championship program at Saint Anselm '
@@ -1419,13 +1922,11 @@ elif page == "AI Research":
                 ],
                 'key_fact': 'Eddie spent four full seasons in the NAHL — '
                             'one of the best Tier 2 junior leagues in the US — '
-                            'playing 191 games across three different teams '
-                            'including the Bismarck Bobcats, Minnesota '
-                            'Wilderness, and El Paso Rhinos. He was a captain '
-                            'at the AAA youth level with Honeybaked and kept '
-                            'grinding through junior hockey until landing at '
-                            'Milwaukee School of Engineering where he scored '
-                            '11 goals in his first NCAA season.',
+                            'playing 191 games across three different teams. '
+                            'He was a captain at the AAA youth level with '
+                            'Honeybaked and kept grinding through junior hockey '
+                            'until landing at Milwaukee School of Engineering '
+                            'where he scored 11 goals in his first NCAA season.',
                 'lesson':  'The NAHL is a serious Tier 2 league and four '
                            'seasons there is no small thing. Eddie proves '
                            'that the path to college hockey is not always '
