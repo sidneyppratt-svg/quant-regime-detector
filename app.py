@@ -140,14 +140,24 @@ st.markdown("""
         display: inline-block;
         margin-bottom: 1rem;
     }
-    .regime-badge {
-        display: inline-block;
-        padding: 6px 16px;
-        border-radius: 20px;
-        font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
+    .static-section {
+        background-color: #F0F4FF;
+        border: 1px solid #CCDDFF;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
     }
+    .static-section h3 { color: #1A237E !important; margin-bottom: 0.5rem; }
+    .static-section p { color: #1a1a1a !important; line-height: 1.6; }
+    .dynamic-section {
+        background-color: #F9F9F9;
+        border: 1px solid #DDDDDD;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .dynamic-section h3 { color: #444444 !important; margin-bottom: 0.5rem; }
+    .dynamic-section p { color: #1a1a1a !important; line-height: 1.6; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -424,33 +434,44 @@ elif page == "AI Research":
         "Hockey Pathway Navigator",
     ])
 
-# ── Model 1: Yield Curve Monitor ──────────────────────────────
+# ══════════════════════════════════════════════════════════════
+# MODEL 1 — YIELD CURVE MONITOR
+# ══════════════════════════════════════════════════════════════
     if model == "Yield Curve Monitor":
         st.markdown("## Yield Curve Monitor")
+        st.markdown("*Fixed Income Relative Value Tool | Sidney Pratt*")
+        st.markdown("---")
+
+        # ── STATIC SECTION ─────────────────────────────────────
         st.markdown("""
-        <p style="color:#333333; font-size:16px;">
-        Tracking the US Treasury yield curve across four maturities —
-        classifying regimes, detecting inversions, and backtesting
-        a rates strategy. The single most watched indicator across
-        every fixed income trading desk.
-        </p>
+        <div class="static-section">
+            <h3>Overview</h3>
+            <p>
+            This model tracks the US Treasury yield curve across four
+            maturities — 3-month, 5-year, 10-year, and 30-year — and
+            classifies the current regime as Steep, Normal, Flat,
+            Inverted, or Deeply Inverted based on the classic
+            10Y minus 3M spread.<br><br>
+            Built specifically to complement a fixed income relative
+            value research portfolio. The yield curve is the single
+            most watched indicator across every fixed income trading
+            desk — rates, credit, and mortgages.
+            </p>
+        </div>
         """, unsafe_allow_html=True)
 
         st.markdown("""
-        <div class="card">
-            <h3>Overview</h3>
+        <div class="static-section">
+            <h3>Key Features</h3>
             <p>
-            The yield curve shows the relationship between short term
-            and long term interest rates. When long term rates are
-            higher than short term rates the curve is normal — healthy
-            for the economy. When short term rates exceed long term
-            rates the curve inverts — one of the most reliable
-            recession signals in all of finance.<br><br>
-            This model downloads live Treasury yield data, classifies
-            the current regime, provides plain English interpretation,
-            and backtests a TLT strategy using curve signals.
-            Directly relevant to rates, credit, and mortgage
-            trading desks.
+            • Live Treasury yield data downloaded fresh on every run<br><br>
+            • Regime classification across 5 curve states —
+            Steep, Normal, Flat, Inverted, Deeply Inverted<br><br>
+            • Plain language interpretation of what the curve is saying<br><br>
+            • Dynamic signal and strategy that updates with the regime<br><br>
+            • 30-day and 90-day trend detection — steepening or flattening<br><br>
+            • Backtest of a TLT bond strategy using curve signals 2003-2026<br><br>
+            • Key historical event annotations — 2001, 2006, 2020, 2022-23
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -458,45 +479,51 @@ elif page == "AI Research":
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("""
-            <div class="card">
+            <div class="static-section">
                 <h3>Why It Matters</h3>
                 <p>
-                Every fixed income desk watches the yield curve daily.
-                The 10Y minus 2Y spread is the most cited indicator
-                in rates trading — it predicts recessions, Fed policy
-                shifts, and bond market direction.<br><br>
-                Every US recession since 1970 has been preceded by
-                a yield curve inversion.
+                The yield curve is the most cited indicator in fixed
+                income markets. Every rates, credit, and mortgage desk
+                watches the 10Y minus 3M spread daily because it predicts
+                recessions, Fed policy shifts, and bond market direction
+                before they happen.<br><br>
+                Every major US recession since 1970 has been preceded
+                by a yield curve inversion. The 2022-23 inversion was
+                the deepest since the 1980s at -1.70%.
                 </p>
             </div>
             """, unsafe_allow_html=True)
         with col2:
             st.markdown("""
-            <div class="card">
-                <h3>The 5 Regimes</h3>
+            <div class="static-section">
+                <h3>Methodology</h3>
                 <p>
-                <b>Steep:</b> Long rates well above short — strong growth<br><br>
-                <b>Normal:</b> Healthy upward slope — economy growing<br><br>
-                <b>Flat:</b> Rates nearly equal — transition zone<br><br>
-                <b>Inverted:</b> Short above long — recession warning<br><br>
-                <b>Deeply Inverted:</b> Severe inversion — high alert
+                Downloads live US Treasury yields across four maturities
+                and calculates the 10Y minus 3M spread — the classic
+                Federal Reserve inversion signal. A 21-day rolling average
+                smooths daily noise.<br><br>
+                Strategy holds TLT during Normal and Steep regimes and
+                moves to cash during Flat and Inverted regimes.
+                Backtest runs from 2003 to present with no lookahead bias.<br><br>
+                <b>Methodology never changes regardless of date range.</b>
                 </p>
             </div>
             """, unsafe_allow_html=True)
 
         st.markdown("""
-        <div class="card">
-            <h3>Methodology</h3>
+        <div class="static-section">
+            <h3>Regime Classification</h3>
             <p>
-            <b>Data:</b> Live US Treasury yields — 3M, 5Y, 10Y, 30Y
-            downloaded fresh from Yahoo Finance on every run<br><br>
-            <b>Key Spread:</b> 10Y minus 3M — the classic inversion
-            signal used by the Federal Reserve<br><br>
-            <b>Regimes:</b> Five states from Deeply Inverted to Steep
-            based on spread thresholds<br><br>
-            <b>Strategy:</b> Hold TLT during Normal and Steep regimes,
-            move to cash during Flat and Inverted regimes<br><br>
-            <b>Backtest:</b> 2003 to present — no lookahead bias
+            <b>Steep</b> (above +1.50%) — Strong growth signal →
+            <span style="color:#2E7D32; font-weight:bold;">HOLD TLT</span><br><br>
+            <b>Normal</b> (+0.50% to +1.50%) — Healthy economy →
+            <span style="color:#2E7D32; font-weight:bold;">HOLD TLT</span><br><br>
+            <b>Flat</b> (-0.50% to +0.50%) — Transition zone →
+            <span style="color:#E65100; font-weight:bold;">MOVE TO CASH</span><br><br>
+            <b>Inverted</b> (-0.50% to 0%) — Recession warning →
+            <span style="color:#C62828; font-weight:bold;">MOVE TO CASH</span><br><br>
+            <b>Deeply Inverted</b> (below -0.50%) — High alert →
+            <span style="color:#B71C1C; font-weight:bold;">MOVE TO CASH</span>
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -514,8 +541,6 @@ elif page == "AI Research":
 
         if st.button("Run Yield Curve Monitor"):
             with st.spinner("Downloading Treasury yield data..."):
-
-                # Download yields
                 tickers = {
                     '3M':  '^IRX',
                     '5Y':  '^FVX',
@@ -531,15 +556,12 @@ elif page == "AI Research":
                         progress=False)['Close']
                     yc_yields[name] = data
                 yc_yields = yc_yields.dropna()
-
-                # Spreads
                 yc_yields['10Y_3M']  = yc_yields['10Y'] - yc_yields['3M']
                 yc_yields['10Y_5Y']  = yc_yields['10Y'] - yc_yields['5Y']
                 yc_yields['30Y_10Y'] = yc_yields['30Y'] - yc_yields['10Y']
                 yc_yields['spread_smooth'] = \
                     yc_yields['10Y_3M'].rolling(21).mean()
 
-                # Regime classification
                 def classify_regime(spread):
                     if spread < -0.50:   return 'DEEPLY INVERTED'
                     elif spread < 0:     return 'INVERTED'
@@ -550,7 +572,6 @@ elif page == "AI Research":
                 yc_yields['regime'] = \
                     yc_yields['10Y_3M'].apply(classify_regime)
 
-                # Current values
                 current_spread = float(yc_yields['10Y_3M'].iloc[-1])
                 current_regime = yc_yields['regime'].iloc[-1]
                 current_3m     = float(yc_yields['3M'].iloc[-1])
@@ -568,42 +589,46 @@ elif page == "AI Research":
                                        yc_yields['10Y_3M'].iloc[-63]) \
                                  if len(yc_yields) > 63 else 0.0
 
+            # ── DYNAMIC SECTION ────────────────────────────────
             st.markdown("---")
-            st.markdown("### Current Yield Curve Signal")
 
-            # Regime badge color
-            regime_colors_map = {
-                'STEEP':           ('#1B5E20', '⬆️'),
-                'NORMAL':          ('#2E7D32', '✅'),
-                'FLAT':            ('#F57F17', '⚠️'),
-                'INVERTED':        ('#E64A19', '🔻'),
-                'DEEPLY INVERTED': ('#B71C1C', '🚨'),
-            }
-            color, emoji = regime_colors_map.get(
-                current_regime, ('#333333', ''))
-
+            # Signal
+            st.markdown("### Signal")
             if current_regime in ['NORMAL', 'STEEP']:
-                st.success(f"{emoji} {current_regime} — As of "
-                           f"{current_date} the yield curve is healthy. "
-                           f"Strategy signals: HOLD TLT.")
+                st.success(f"✅ {current_regime} — As of {current_date} "
+                           f"the yield curve is healthy. "
+                           f"10Y minus 3M: {current_spread:+.2f}%")
             elif current_regime == 'FLAT':
-                st.warning(f"{emoji} {current_regime} — As of "
-                           f"{current_date} the curve is in transition. "
-                           f"Strategy signals: MOVE TO CASH.")
+                st.warning(f"⚠️ {current_regime} — As of {current_date} "
+                           f"the curve is in transition. "
+                           f"10Y minus 3M: {current_spread:+.2f}%")
             else:
-                st.error(f"{emoji} {current_regime} — As of "
-                         f"{current_date} the yield curve is inverted. "
-                         f"Strategy signals: MOVE TO CASH.")
+                st.error(f"🚨 {current_regime} — As of {current_date} "
+                         f"the yield curve is inverted. "
+                         f"10Y minus 3M: {current_spread:+.2f}%")
 
+            # Strategy Signal
+            st.markdown("### Strategy Signal")
+            if current_regime in ['NORMAL', 'STEEP']:
+                st.success("HOLD TLT — Long duration bonds are safe "
+                           "to hold in this regime.")
+            elif current_regime == 'FLAT':
+                st.warning("MOVE TO CASH — Curve is in transition zone. "
+                           "Reduce long duration bond exposure.")
+            else:
+                st.error("MOVE TO CASH — Avoid long duration bonds "
+                         "during inversion. History shows significant "
+                         "drawdown risk.")
+
+            # Results
             st.markdown("---")
-            st.markdown("### Current Yields")
+            st.markdown("### Results")
             m1, m2, m3, m4 = st.columns(4)
-            m1.metric("3-Month",  f"{current_3m:.2f}%")
-            m2.metric("5-Year",   f"{current_5y:.2f}%")
-            m3.metric("10-Year",  f"{current_10y:.2f}%")
-            m4.metric("30-Year",  f"{current_30y:.2f}%")
+            m1.metric("3-Month Yield",  f"{current_3m:.2f}%")
+            m2.metric("5-Year Yield",   f"{current_5y:.2f}%")
+            m3.metric("10-Year Yield",  f"{current_10y:.2f}%")
+            m4.metric("30-Year Yield",  f"{current_30y:.2f}%")
 
-            st.markdown("### Curve Shape")
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("10Y minus 3M",
                 f"{current_spread:+.2f}%", "Key spread")
@@ -612,205 +637,181 @@ elif page == "AI Research":
             s3.metric("30-Day Trend",
                 f"{trend_30d:+.2f}%",
                 "Steepening" if trend_30d > 0 else "Flattening")
-            s4.metric("vs Average",
+            s4.metric("vs Avg Spread",
                 f"{current_spread - avg_spread:+.2f}%",
                 f"Avg: {avg_spread:.2f}%")
 
+            # Summary & Key Findings
             st.markdown("---")
-            st.markdown("### Interpretation")
+            st.markdown("### Summary & Key Findings")
 
-            interpretations = {
-                'DEEPLY INVERTED': {
-                    'summary': 'The yield curve is deeply inverted — '
-                               'one of the most reliable recession warning '
-                               'signals in finance.',
-                    'plain_english': [
-                        'Normally you get paid more interest to lock your '
-                        'money away for 10 years than for 3 months. Right '
-                        'now that is backwards — the 3 month rate is higher '
-                        'than the 10 year rate. That is called an inversion.',
-                        'This happens when the Federal Reserve has raised '
-                        'short term rates aggressively to fight inflation. '
-                        'The market now expects the Fed to cut rates in the '
-                        'future because the economy will slow.',
-                        'Every major US recession since 1970 has been '
-                        'preceded by an inverted yield curve. The recession '
-                        'typically arrives 12 to 18 months after inversion.',
-                    ],
-                    'watch': [
-                        'Watch for the Fed to start cutting rates — '
-                        'that uninverts the curve',
-                        'Watch unemployment claims — rising claims '
-                        'confirm the recession signal',
-                        'Watch credit spreads — if HYG falls sharply '
-                        'that is a double warning',
-                        'A rapid steepening from deep inversion often '
-                        'means the recession has already begun',
-                    ],
-                    'signal': 'MOVE TO CASH — avoid long duration bonds. '
-                              'The 2022-23 deep inversion saw TLT fall '
-                              'over 48% peak to trough.',
-                },
-                'INVERTED': {
-                    'summary': 'The yield curve is inverted — short term '
-                               'rates exceed long term rates. Classic '
-                               'recession warning signal.',
-                    'plain_english': [
-                        'Short term borrowing costs are higher than long '
-                        'term costs — the opposite of normal. Markets '
-                        'expect the economy to slow and the Fed to cut.',
-                        'Banks borrow short and lend long — an inverted '
-                        'curve squeezes their margins, reduces lending, '
-                        'and slows economic growth.',
-                        'Bond investors are accepting lower 10 year yields '
-                        'because they believe growth will slow and '
-                        'inflation will fall.',
-                    ],
-                    'watch': [
-                        'How long the inversion lasts — longer inversions '
-                        'historically produce deeper recessions',
-                        'Fed meetings — rate cuts are likely coming',
-                        'Credit markets for early stress signals',
-                        'A rapid steepening often means recession has begun',
-                    ],
-                    'signal': 'MOVE TO CASH — model signals caution on '
-                              'long duration bonds until the curve '
-                              'returns to flat or normal.',
-                },
-                'FLAT': {
-                    'summary': 'The yield curve is flat — short and long '
-                               'rates nearly equal. A critical transition '
-                               'zone — direction from here is everything.',
-                    'plain_english': [
-                        'Short and long term borrowing costs are almost '
-                        'identical. The market is uncertain about whether '
-                        'the economy will accelerate or slow down.',
-                        'Think of the flat curve as a crossroads. The '
-                        'direction it moves next tells you a lot about '
-                        'where the economy is headed.',
-                        'A flat curve flattening further toward inversion '
-                        'is a warning sign. A flat curve steepening '
-                        'toward normal is a healthy signal.',
-                    ],
-                    'watch': [
-                        'Direction is everything — steepening or '
-                        'flattening from here?',
-                        'Fed guidance on future rate moves',
-                        'Economic data — strong data steepens, '
-                        'weak data flattens further',
-                        'A flat curve tipping into inversion is a '
-                        'clear warning to reduce duration',
-                    ],
-                    'signal': 'MOVE TO CASH — model signals caution '
-                              'during flat curve periods. Risk of '
-                              'inversion is elevated.',
-                },
-                'NORMAL': {
-                    'summary': 'The yield curve is normal — long term '
-                               'rates above short term rates. Healthy '
-                               'baseline for a growing economy.',
-                    'plain_english': [
-                        'This is how the curve is supposed to look. '
-                        'You earn more for lending money for 10 years '
-                        'than for 3 months — that extra return '
-                        'compensates for uncertainty over time.',
-                        'Banks borrow cheap short term and lend at '
-                        'higher long term rates — profitable for banks '
-                        'which means more lending and economic growth.',
-                        'The Fed is likely in a neutral or accommodative '
-                        'stance. Growth is positive and inflation '
-                        'is manageable.',
-                    ],
-                    'watch': [
-                        f'Curve is currently '
-                        f'{"steepening" if trend_30d > 0 else "flattening"} '
-                        f'({trend_30d:+.2f}% last 30 days) — '
-                        f'watch the direction',
-                        'A steepening normal curve is a bullish signal',
-                        'Watch for flattening toward zero — early warning',
-                        'Long duration bonds perform well when rates '
-                        'are stable or falling in this regime',
-                    ],
-                    'signal': 'HOLD TLT — safe to hold long duration '
-                              'bonds. Monitor for any flattening trend '
-                              'which would be a warning to reduce exposure.',
-                },
-                'STEEP': {
-                    'summary': 'The yield curve is steep — long term '
-                               'rates well above short term rates. '
-                               'Strong growth or rising inflation signal.',
-                    'plain_english': [
-                        'A steep curve usually appears after a recession '
-                        'when the Fed has cut short rates to near zero '
-                        'and the economy is recovering — or when '
-                        'inflation expectations are rising sharply.',
-                        'The market demands much more compensation for '
-                        'lending long term — either because it fears '
-                        'inflation or expects strong future growth '
-                        'and higher rates.',
-                        'Historically a steep curve is one of the best '
-                        'environments for economic growth — banks are '
-                        'very profitable and lending is abundant.',
-                    ],
-                    'watch': [
-                        'Inflation data — steep curve driven by '
-                        'inflation fears can become risky for bonds',
-                        'Fed policy — they may hike short rates '
-                        'which gradually flattens the curve',
-                        'A steep curve after a recession is one of '
-                        'the best growth recovery signals',
-                        f'Currently '
-                        f'{"steepening" if trend_30d > 0 else "flattening"} '
-                        f'({trend_30d:+.2f}% last 30 days)',
-                    ],
-                    'signal': 'HOLD TLT — model signals holding long '
-                              'duration bonds. Monitor inflation closely '
-                              'as rising inflation can hurt bond prices '
-                              'even in a steep curve environment.',
-                },
+            summaries = {
+                'DEEPLY INVERTED': 'The yield curve is deeply inverted — '
+                    'one of the most reliable recession warning signals '
+                    'in finance. Short term rates are significantly above '
+                    'long term rates. Every major US recession since 1970 '
+                    'has been preceded by this signal.',
+                'INVERTED': 'The yield curve is inverted — short term rates '
+                    'exceed long term rates. A classic recession warning. '
+                    'Markets are pricing in future Fed rate cuts as the '
+                    'economy is expected to slow.',
+                'FLAT': 'The yield curve is flat — short and long term rates '
+                    'are nearly equal. This is a critical transition zone. '
+                    'Direction from here matters enormously — steepening '
+                    'is healthy, further flattening is a warning.',
+                'NORMAL': 'The yield curve is normal — long term rates are '
+                    'above short term rates. This is the healthy baseline '
+                    'for a growing economy. Banks are profitable, lending '
+                    'is abundant, and the Fed is in a neutral stance.',
+                'STEEP': 'The yield curve is steep — long term rates are '
+                    'well above short term rates. This typically appears '
+                    'after a recession during recovery, or when inflation '
+                    'expectations are rising. Historically a strong '
+                    'growth signal.',
             }
-
-            info = interpretations.get(current_regime, {})
-
             st.markdown(f"""
-            <div class="card">
+            <div class="dynamic-section">
                 <h3>Summary</h3>
-                <p>{info.get('summary', '')}</p>
+                <p>{summaries.get(current_regime, '')}</p>
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("**What This Means in Plain English:**")
-            for point in info.get('plain_english', []):
+            # What It Means
+            st.markdown("### What It Means")
+            plain_english = {
+                'DEEPLY INVERTED': [
+                    'Normally you get paid more to lock your money away '
+                    'for 10 years than for 3 months. Right now that is '
+                    'backwards — the 3 month rate is higher than the '
+                    '10 year rate.',
+                    'This happens when the Fed has raised short term rates '
+                    'aggressively to fight inflation. The market now expects '
+                    'the Fed to cut rates because the economy will slow.',
+                    'This signal has preceded every major US recession since '
+                    '1970. The recession typically arrives 12 to 18 months '
+                    'after the inversion begins.',
+                ],
+                'INVERTED': [
+                    'Short term borrowing costs are higher than long term '
+                    'costs — the opposite of normal. Markets expect the '
+                    'economy to slow and the Fed to cut rates.',
+                    'Banks borrow short and lend long — an inverted curve '
+                    'squeezes their margins, reduces lending, and slows '
+                    'economic growth.',
+                    'Bond investors are accepting lower 10 year yields '
+                    'because they believe growth will slow and '
+                    'inflation will fall.',
+                ],
+                'FLAT': [
+                    'Short and long term borrowing costs are almost '
+                    'identical. The market is uncertain about the future '
+                    'direction of the economy.',
+                    'Think of the flat curve as a crossroads. The direction '
+                    'it moves next tells you a lot about where the economy '
+                    'is headed.',
+                    'A flat curve flattening further toward inversion is a '
+                    'warning. A flat curve steepening toward normal is '
+                    'a healthy signal.',
+                ],
+                'NORMAL': [
+                    'This is how the curve is supposed to look. You earn '
+                    'more for lending money for 10 years than for 3 months '
+                    '— that extra return compensates for uncertainty '
+                    'over time.',
+                    'Banks borrow cheap short term and lend at higher long '
+                    'term rates — profitable for banks which means more '
+                    'lending and economic growth.',
+                    'The Fed is likely in a neutral or accommodative stance. '
+                    'Growth is positive and inflation is manageable.',
+                ],
+                'STEEP': [
+                    'A steep curve usually appears after a recession when '
+                    'the Fed has cut short rates to near zero and the '
+                    'economy is recovering — or when inflation '
+                    'expectations are rising sharply.',
+                    'The market demands much more compensation for lending '
+                    'long term — either because it fears inflation or '
+                    'expects strong future growth and higher rates.',
+                    'Historically a steep curve is one of the best '
+                    'environments for economic growth — banks are very '
+                    'profitable and lending is abundant.',
+                ],
+            }
+            for point in plain_english.get(current_regime, []):
                 st.markdown(f"""
-                <div class="card" style="border-left: 4px solid #444444;
-                padding: 1rem 1.5rem;">
+                <div class="dynamic-section"
+                style="border-left: 4px solid #1A237E;">
                     <p>{point}</p>
                 </div>
                 """, unsafe_allow_html=True)
 
-            st.markdown("**What to Watch Right Now:**")
+            # What to Watch
+            st.markdown("### What to Watch")
+            watch_points = {
+                'DEEPLY INVERTED': [
+                    'Watch for the Fed to start cutting rates — '
+                    'that uninverts the curve',
+                    'Watch unemployment claims — rising claims '
+                    'confirm the recession signal',
+                    'Watch credit spreads — if HYG falls sharply '
+                    'alongside the inversion that is a double warning',
+                    'A rapid steepening from deep inversion often '
+                    'signals the recession has already begun',
+                ],
+                'INVERTED': [
+                    'How long the inversion lasts — longer inversions '
+                    'historically produce deeper recessions',
+                    'Fed meetings — rate cuts are likely coming',
+                    'Credit markets for early stress signals',
+                    'A rapid steepening often means recession has begun',
+                ],
+                'FLAT': [
+                    'Direction is everything — is the curve steepening '
+                    'or flattening from here?',
+                    'Fed guidance on future rate moves',
+                    'Economic data — strong data steepens, '
+                    'weak data flattens further',
+                    'A flat curve tipping into inversion is a clear '
+                    'warning to reduce duration exposure',
+                ],
+                'NORMAL': [
+                    f'Curve is currently '
+                    f'{"steepening" if trend_30d > 0 else "flattening"} '
+                    f'({trend_30d:+.2f}% last 30 days) — watch direction',
+                    'A steepening normal curve is a bullish economic signal',
+                    'Watch for flattening toward zero — early warning sign',
+                    'Long duration bonds perform well when rates are '
+                    'stable or falling in this regime',
+                ],
+                'STEEP': [
+                    'Inflation data — steep curve driven by inflation '
+                    'fears can become risky for bonds',
+                    'Fed policy — they may hike short rates which '
+                    'gradually flattens the curve',
+                    'A steep curve after a recession is one of the '
+                    'best growth recovery signals',
+                    f'Currently '
+                    f'{"steepening" if trend_30d > 0 else "flattening"} '
+                    f'({trend_30d:+.2f}% last 30 days)',
+                ],
+            }
             col1, col2 = st.columns(2)
-            watch_list = info.get('watch', [])
-            for i, point in enumerate(watch_list):
+            for i, point in enumerate(
+                    watch_points.get(current_regime, [])):
                 with col1 if i % 2 == 0 else col2:
                     st.markdown(f"""
-                    <div class="card" style="padding: 0.8rem 1rem;">
+                    <div class="dynamic-section"
+                    style="padding: 0.8rem 1rem;">
                         <p>➜ {point}</p>
                     </div>
                     """, unsafe_allow_html=True)
 
-            if current_regime in ['NORMAL', 'STEEP']:
-                st.success(f"**Strategy Signal:** {info.get('signal', '')}")
-            elif current_regime == 'FLAT':
-                st.warning(f"**Strategy Signal:** {info.get('signal', '')}")
-            else:
-                st.error(f"**Strategy Signal:** {info.get('signal', '')}")
-
+            # Historical Context
             st.markdown("---")
             st.markdown("### Historical Context")
             h1, h2, h3, h4 = st.columns(4)
             h1.metric("Avg Spread",
-                f"{avg_spread:.2f}%", "since 2000")
+                f"{avg_spread:.2f}%", "since selected start")
             h2.metric("Deepest Inversion",
                 f"{float(yc_yields['10Y_3M'].min()):.2f}%",
                 yc_yields['10Y_3M'].idxmin().strftime('%b %Y'))
@@ -822,15 +823,14 @@ elif page == "AI Research":
             h4.metric("Time Inverted",
                 f"{inverted_pct:.1f}%", "of selected period")
 
+            # Charts
             st.markdown("---")
             st.markdown("### Charts")
-
             fig, axes = plt.subplots(3, 1, figsize=(13, 13))
             fig.patch.set_facecolor('#FFFFFF')
             fig.suptitle('Yield Curve Monitor',
                 fontsize=15, fontweight='bold',
                 color='#222222', y=0.99)
-
             for ax in axes:
                 ax.set_facecolor('#F9F9F9')
                 ax.tick_params(colors='#333333', labelsize=9)
@@ -839,8 +839,6 @@ elif page == "AI Research":
                 ax.grid(axis='y', color='#EEEEEE', linewidth=0.8)
                 ax.grid(axis='x', color='#EEEEEE',
                     linewidth=0.5, alpha=0.5)
-
-            # Chart 1: Yields over time
             axes[0].plot(yc_yields.index, yc_yields['10Y'],
                 color='#1A237E', linewidth=1.5, label='10-Year')
             axes[0].plot(yc_yields.index, yc_yields['3M'],
@@ -863,8 +861,6 @@ elif page == "AI Research":
                 labelcolor='#333333', fontsize=8)
             axes[0].yaxis.set_major_formatter(
                 plt.FuncFormatter(lambda x, _: f'{x:.1f}%'))
-
-            # Chart 2: Spread with regime shading
             spread_series = yc_yields['10Y_3M']
             smooth_series = yc_yields['spread_smooth']
             axes[1].axhspan(1.50, 6.00,
@@ -897,8 +893,6 @@ elif page == "AI Research":
                 labelcolor='#333333', fontsize=8)
             axes[1].yaxis.set_major_formatter(
                 plt.FuncFormatter(lambda x, _: f'{x:.1f}%'))
-
-            # Chart 3: Regime timeline
             regime_colors_fill = {
                 'STEEP':           '#1B5E20',
                 'NORMAL':          '#2E7D32',
@@ -919,90 +913,117 @@ elif page == "AI Research":
             axes[2].legend(facecolor='#F9F9F9',
                 labelcolor='#333333', fontsize=8,
                 loc='lower right', ncol=5)
-
             plt.tight_layout(pad=2.5)
             st.pyplot(fig)
 
-            st.markdown("---")
-            st.markdown("""
-            <div class="card">
-                <h3>Full Research Notebook</h3>
-                <p>
-                View the complete Yield Curve Monitor including all
-                code, charts, backtest results, and analysis on GitHub:<br><br>
-                github.com/sidneyppratt-svg/yield-curve-monitor
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
+        # ── FULL RESEARCH NOTEBOOK ─────────────────────────────
+        st.markdown("---")
+        st.markdown("""
+        <div class="card">
+            <h3>Full Research Notebook</h3>
+            <p>
+            View the complete Yield Curve Monitor including all code,
+            charts, backtest results, and analysis on GitHub:<br><br>
+            github.com/sidneyppratt-svg/yield-curve-monitor
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
-# ── Model 2: Regime Detector ───────────────────────────────────
+# ══════════════════════════════════════════════════════════════
+# MODEL 2 — MULTI-ASSET MARKET REGIME DETECTOR
+# ══════════════════════════════════════════════════════════════
     elif model == "Multi-Asset Market Regime Detector":
         st.markdown("## Multi-Asset Market Regime Detector")
+        st.markdown("*Cross-Asset Quantitative Research Tool | Sidney Pratt*")
+        st.markdown("---")
+
+        # ── STATIC SECTION ─────────────────────────────────────
         st.markdown("""
-        <div class="card">
+        <div class="static-section">
             <h3>Overview</h3>
             <p>
-            This model uses unsupervised machine learning (Gaussian
-            Mixture Model) to detect whether markets are in a
-            <b>RISK-ON</b> or <b>RISK-OFF</b> regime by analyzing
-            four asset classes simultaneously — US Equities (SPY),
-            Investment Grade Bonds (AGG), High Yield Credit (HYG),
-            and Gold (GLD). Trained on 12 years of real market data.
+            This model uses unsupervised machine learning to detect
+            whether markets are in a RISK-ON or RISK-OFF regime by
+            analyzing four asset classes simultaneously — US Equities
+            (SPY), Investment Grade Bonds (AGG), High Yield Credit
+            (HYG), and Gold (GLD).<br><br>
+            Rather than looking at one asset in isolation the model
+            finds hidden patterns across all four asset classes at
+            once — the same way professional cross-asset traders
+            think about markets. Built on 12 years of real daily
+            price data from 2014 to 2026.
             </p>
         </div>
         """, unsafe_allow_html=True)
+
         st.markdown("""
-        <div class="card">
-            <h3>Methodology</h3>
+        <div class="static-section">
+            <h3>Key Features</h3>
             <p>
-            <b>Data:</b> 12 years of daily price data (2014-2026)<br><br>
-            <b>Model:</b> Gaussian Mixture Model — unsupervised machine
-            learning that finds hidden patterns without being told
-            what to look for<br><br>
-            <b>Signal:</b> 21-day rolling mean returns — smooths daily
-            noise so the AI sees trends<br><br>
-            <b>Strategy:</b> Long SPY during RISK-ON, cash during RISK-OFF<br><br>
-            <b>Backtest:</b> Chronological split — no lookahead bias
+            • Live multi-asset price data downloaded fresh on every run<br><br>
+            • Gaussian Mixture Model — unsupervised machine learning<br><br>
+            • Simultaneous analysis of four asset classes<br><br>
+            • RISK-ON and RISK-OFF regime classification<br><br>
+            • 21-day rolling return smoothing to filter daily noise<br><br>
+            • Full backtest of a SPY strategy using regime signals<br><br>
+            • Regime detection timeline with key event annotations
             </p>
         </div>
         """, unsafe_allow_html=True)
+
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("""
-            <div class="card">
-                <h3>RISK-ON — Markets Are Calm</h3>
+            <div class="static-section">
+                <h3>Why It Matters</h3>
                 <p>
-                All four asset classes behaving normally.
-                Stocks rising, credit tight, gold steady.<br><br>
-                <b>Action:</b> Stay invested in equities.<br><br>
-                <b>Example:</b> 2021 post-COVID recovery —
-                correctly identified as sustained RISK-ON.
+                Markets do not move in isolation. When stress hits it
+                shows up across multiple asset classes simultaneously —
+                stocks fall, credit widens, and gold spikes at the same
+                time. A model that watches only one asset misses the
+                full picture.<br><br>
+                This model detects those cross-asset stress patterns
+                using machine learning — no rules, no assumptions.
+                The algorithm finds the patterns itself from 12 years
+                of real data.
                 </p>
             </div>
             """, unsafe_allow_html=True)
         with col2:
             st.markdown("""
-            <div class="card">
-                <h3>RISK-OFF — Stress Detected</h3>
+            <div class="static-section">
+                <h3>Methodology</h3>
                 <p>
-                Multiple asset classes under stress.
-                Stocks falling, credit widening, gold spiking.<br><br>
-                <b>Action:</b> Move to cash.<br><br>
-                <b>Example:</b> March 2020 COVID crash —
-                model flagged RISK-OFF before worst decline.
+                Downloads daily prices for SPY, AGG, HYG, and GLD.
+                Calculates 21-day rolling mean returns for each asset
+                — smoothing noise to reveal trends.<br><br>
+                A Gaussian Mixture Model finds two hidden clusters in
+                the four-dimensional return data. The cluster with
+                higher average SPY returns is RISK-ON. The cluster
+                with lower average SPY returns is RISK-OFF.<br><br>
+                Backtest goes long SPY during RISK-ON and cash during
+                RISK-OFF using prior day signal — no lookahead bias.<br><br>
+                <b>Methodology never changes regardless of date range.</b>
                 </p>
             </div>
             """, unsafe_allow_html=True)
+
         st.markdown("""
-        <div class="card">
-            <h3>Key Results</h3>
+        <div class="static-section">
+            <h3>Asset Classes Covered</h3>
             <p>
-            Max drawdown reduced from <b>-33.7%</b> to <b>-24.0%</b><br><br>
-            Sharpe ratio improved from <b>0.84</b> to <b>0.93</b><br><br>
-            Volatility reduced from <b>17.1%</b> to <b>15.5%</b>
+            <b>SPY — US Equities:</b> S&P 500 — broad US stock market.
+            Primary return driver in RISK-ON environments.<br><br>
+            <b>AGG — Investment Grade Bonds:</b> High quality corporate
+            and government bonds. Safe haven during RISK-OFF.<br><br>
+            <b>HYG — High Yield Credit:</b> Riskier corporate bonds.
+            Falls sharply during stress — early warning signal.<br><br>
+            <b>GLD — Gold:</b> Safe haven asset. Spikes during stress
+            and geopolitical uncertainty.
             </p>
         </div>
         """, unsafe_allow_html=True)
+
         st.markdown("---")
         st.markdown("### Run the Model")
         col1, col2 = st.columns(2)
@@ -1013,6 +1034,7 @@ elif page == "AI Research":
             end_date = st.date_input("End Date",
                 value=datetime.date(2026, 9, 18))
         st.markdown("<br>", unsafe_allow_html=True)
+
         if st.button("Run AI Model"):
             with st.spinner("Downloading data and running AI model..."):
                 tickers = ['SPY', 'AGG', 'HYG', 'GLD']
@@ -1038,33 +1060,177 @@ elif page == "AI Research":
                 strat  = strat.dropna()
                 bh     = spy_returns.loc[strat.index]
                 def get_metrics(r):
-                    cum     = (1 + r).cumprod()
-                    total   = cum.iloc[-1] - 1
-                    ann_ret = (1 + total) ** (252/len(r)) - 1
-                    ann_vol = r.std() * np.sqrt(252)
-                    sharpe  = ann_ret / ann_vol
-                    max_dd  = (cum / cum.cummax() - 1).min()
+                    r   = r.dropna()
+                    cum = (1 + r).cumprod()
+                    total   = float(cum.iloc[-1]) - 1
+                    ann_ret = float((1 + total) ** (252/len(r)) - 1)
+                    ann_vol = float(r.std() * np.sqrt(252))
+                    sharpe  = float(ann_ret/ann_vol) if ann_vol > 0 else 0.0
+                    max_dd  = float((cum/cum.cummax()-1).min())
                     return cum, total, ann_ret, ann_vol, sharpe, max_dd
-                cum_s, tot_s, ret_s, vol_s, sh_s, dd_s = get_metrics(strat)
-                cum_b, tot_b, ret_b, vol_b, sh_b, dd_b = get_metrics(bh)
+                cum_s, tot_s, ret_s, vol_s, sh_s, dd_s = \
+                    get_metrics(strat)
+                cum_b, tot_b, ret_b, vol_b, sh_b, dd_b = \
+                    get_metrics(bh)
                 latest      = smooth['label'].iloc[-1]
                 latest_date = smooth.index[-1].strftime('%B %d, %Y')
+                risk_off_pct = float(
+                    (smooth['label'] == 'RISK-OFF').mean() * 100)
+
+            # ── DYNAMIC SECTION ────────────────────────────────
             st.markdown("---")
-            st.markdown("### Current Market Signal")
+
+            # Signal
+            st.markdown("### Signal")
             if latest == 'RISK-ON':
-                st.success(f"RISK-ON — As of {latest_date} markets are calm. "
-                           f"Model suggests staying INVESTED.")
+                st.success(f"✅ RISK-ON — As of {latest_date} all four "
+                           f"asset classes are behaving normally. "
+                           f"Markets are calm.")
             else:
-                st.error(f"RISK-OFF — As of {latest_date} stress detected. "
-                         f"Model suggests moving to CASH.")
+                st.error(f"🚨 RISK-OFF — As of {latest_date} stress "
+                         f"detected across multiple asset classes.")
+
+            # Strategy Signal
+            st.markdown("### Strategy Signal")
+            if latest == 'RISK-ON':
+                st.success("STAY INVESTED — Model signals holding SPY. "
+                           "Cross-asset conditions support equity exposure.")
+            else:
+                st.error("MOVE TO CASH — Model signals reducing equity "
+                         "exposure. Cross-asset stress detected.")
+
+            # Results
             st.markdown("---")
-            st.markdown("### Performance Results")
+            st.markdown("### Results")
             c1, c2, c3, c4, c5 = st.columns(5)
-            c1.metric("Total Return",  f"{tot_s:.1%}", f"{tot_s-tot_b:+.1%} vs BH")
-            c2.metric("Ann. Return",   f"{ret_s:.1%}", f"{ret_s-ret_b:+.1%} vs BH")
-            c3.metric("Volatility",    f"{vol_s:.1%}", f"{vol_s-vol_b:+.1%} vs BH")
-            c4.metric("Sharpe Ratio",  f"{sh_s:.2f}",  f"{sh_s-sh_b:+.2f} vs BH")
-            c5.metric("Max Drawdown",  f"{dd_s:.1%}",  f"{dd_s-dd_b:+.1%} vs BH")
+            c1.metric("Total Return",
+                f"{tot_s:.1%}", f"{tot_s-tot_b:+.1%} vs BH")
+            c2.metric("Ann. Return",
+                f"{ret_s:.1%}", f"{ret_s-ret_b:+.1%} vs BH")
+            c3.metric("Volatility",
+                f"{vol_s:.1%}", f"{vol_s-vol_b:+.1%} vs BH")
+            c4.metric("Sharpe Ratio",
+                f"{sh_s:.2f}", f"{sh_s-sh_b:+.2f} vs BH")
+            c5.metric("Max Drawdown",
+                f"{dd_s:.1%}", f"{dd_s-dd_b:+.1%} vs BH")
+
+            # Summary & Key Findings
+            st.markdown("---")
+            st.markdown("### Summary & Key Findings")
+            if latest == 'RISK-ON':
+                summary = (
+                    f"Markets are currently in a RISK-ON regime as of "
+                    f"{latest_date}. All four asset classes — equities, "
+                    f"investment grade bonds, high yield credit, and gold "
+                    f"— are behaving in patterns consistent with calm, "
+                    f"risk-seeking market conditions. The AI model flagged "
+                    f"RISK-OFF only {risk_off_pct:.1f}% of the time in "
+                    f"the selected period — correctly identifying rare "
+                    f"but severe stress events."
+                )
+            else:
+                summary = (
+                    f"Markets are currently in a RISK-OFF regime as of "
+                    f"{latest_date}. The AI model has detected stress "
+                    f"patterns across multiple asset classes simultaneously. "
+                    f"This signal has historically preceded significant "
+                    f"equity drawdowns. The model flagged RISK-OFF "
+                    f"{risk_off_pct:.1f}% of the time in the selected "
+                    f"period."
+                )
+            st.markdown(f"""
+            <div class="dynamic-section">
+                <h3>Summary</h3>
+                <p>{summary}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # What It Means
+            st.markdown("### What It Means")
+            if latest == 'RISK-ON':
+                meanings = [
+                    'Stocks are rising or stable, credit spreads are '
+                    'tight, and gold is not spiking. All four asset '
+                    'classes are moving in patterns the model has '
+                    'learned to associate with calm markets.',
+                    'The Gaussian Mixture Model found that today\'s '
+                    'four-dimensional return pattern matches the '
+                    'RISK-ON cluster it identified from 12 years '
+                    'of training data.',
+                    'RISK-ON does not mean markets cannot fall — it '
+                    'means the cross-asset stress signals that '
+                    'historically precede major drawdowns are '
+                    'not present right now.',
+                ]
+            else:
+                meanings = [
+                    'Multiple asset classes are moving in patterns '
+                    'the model has learned to associate with stress. '
+                    'This could mean stocks falling, credit widening, '
+                    'gold spiking, or some combination.',
+                    'The Gaussian Mixture Model found that today\'s '
+                    'four-dimensional return pattern matches the '
+                    'RISK-OFF cluster — the same pattern seen during '
+                    'COVID March 2020 and the 2022 rate hike cycle.',
+                    'RISK-OFF signals have historically preceded the '
+                    'worst equity drawdowns. The model moves to cash '
+                    'to avoid these periods.',
+                ]
+            for point in meanings:
+                st.markdown(f"""
+                <div class="dynamic-section"
+                style="border-left: 4px solid #333333;">
+                    <p>{point}</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # What to Watch
+            st.markdown("### What to Watch")
+            if latest == 'RISK-ON':
+                watch = [
+                    'HYG — if high yield credit starts falling that '
+                    'is the first warning sign of regime change',
+                    'VIX — a spike above 25-30 often coincides with '
+                    'RISK-OFF regime shifts',
+                    'Gold — a sharp rally in gold alongside falling '
+                    'stocks is a classic RISK-OFF signal',
+                    'Credit spreads — widening spreads between HYG '
+                    'and LQD signal building stress',
+                ]
+            else:
+                watch = [
+                    'Watch for all four asset classes to stabilize '
+                    'together — that signals a potential regime shift back',
+                    'VIX — a sustained decline below 20 often '
+                    'precedes RISK-ON regime return',
+                    'Fed policy — rate cuts or liquidity support '
+                    'often trigger RISK-ON regime shifts',
+                    'Credit spreads — tightening HYG vs LQD spread '
+                    'is an early RISK-ON signal',
+                ]
+            col1, col2 = st.columns(2)
+            for i, point in enumerate(watch):
+                with col1 if i % 2 == 0 else col2:
+                    st.markdown(f"""
+                    <div class="dynamic-section"
+                    style="padding: 0.8rem 1rem;">
+                        <p>➜ {point}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            # Historical Context
+            st.markdown("---")
+            st.markdown("### Historical Context")
+            h1, h2, h3 = st.columns(3)
+            h1.metric("Time RISK-ON",
+                f"{100-risk_off_pct:.1f}%", "of selected period")
+            h2.metric("Time RISK-OFF",
+                f"{risk_off_pct:.1f}%", "of selected period")
+            h3.metric("Drawdown Improvement",
+                f"{abs(dd_b)-abs(dd_s):.1%}",
+                "less max drawdown vs BH")
+
+            # Charts
             st.markdown("---")
             st.markdown("### Charts")
             fig, axes = plt.subplots(2, 1, figsize=(12, 10))
@@ -1079,8 +1245,8 @@ elif page == "AI Research":
             (cum_s * 100).plot(ax=axes[0], color='#333333',
                 linewidth=2, label='AI Strategy')
             (cum_b * 100).plot(ax=axes[0], color='#AAAAAA',
-                linewidth=1.5, linestyle='--', label='Buy & Hold')
-            axes[0].set_title('Portfolio Growth — $100 invested',
+                linewidth=1.5, linestyle='--', label='Buy & Hold SPY')
+            axes[0].set_title('Portfolio Growth — $100 Invested',
                 color='#333333', fontsize=13, fontweight='bold')
             axes[0].legend(facecolor='#F9F9F9', labelcolor='#333333')
             axes[0].set_ylabel('Value ($)', color='#333333')
@@ -1127,7 +1293,7 @@ elif page == "AI Research":
                 except Exception:
                     pass
             axes[1].set_title(
-                'Regime Detection — SPY Price with RISK-ON / RISK-OFF Periods',
+                'Regime Detection — SPY Price with RISK-ON / RISK-OFF',
                 color='#333333', fontsize=13, fontweight='bold')
             axes[1].set_yticks([])
             axes[1].set_ylim(0, 1.05)
@@ -1139,63 +1305,123 @@ elif page == "AI Research":
             plt.tight_layout(pad=2.0)
             st.pyplot(fig)
 
-# ── Model 3: Credit Spread Monitor ────────────────────────────
-    elif model == "Credit Spread Monitor":
-        st.markdown("## Credit Spread Monitor")
+        # ── FULL RESEARCH NOTEBOOK ─────────────────────────────
+        st.markdown("---")
         st.markdown("""
         <div class="card">
+            <h3>Full Research Notebook</h3>
+            <p>
+            View the complete Multi-Asset Market Regime Detector
+            including all code, charts, backtest results, and
+            analysis on GitHub:<br><br>
+            github.com/sidneyppratt-svg/quant-regime-detector
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+# ══════════════════════════════════════════════════════════════
+# MODEL 3 — CREDIT SPREAD MONITOR
+# ══════════════════════════════════════════════════════════════
+    elif model == "Credit Spread Monitor":
+        st.markdown("## Credit Spread Monitor")
+        st.markdown("*Fixed Income Credit Research Tool | Sidney Pratt*")
+        st.markdown("---")
+
+        # ── STATIC SECTION ─────────────────────────────────────
+        st.markdown("""
+        <div class="static-section">
             <h3>Overview</h3>
             <p>
             This model tracks the credit spread between High Yield
             bonds (HYG) and Investment Grade bonds (LQD) to detect
-            building stress in credit markets. Converted into a
-            stress score from 1 to 5 using 16 years of real data.
+            building stress in credit markets. The spread is converted
+            into a stress score from 1 to 5 using 16 years of real
+            daily data from 2010 to 2026.<br><br>
+            When investors flee from risky High Yield bonds toward
+            safer Investment Grade bonds the spread widens — one of
+            the earliest and most reliable warning signals of financial
+            stress. This model detects that widening in real time and
+            classifies it against historical context.
             </p>
         </div>
         """, unsafe_allow_html=True)
+
         st.markdown("""
-        <div class="card">
-            <h3>Stress Scale</h3>
+        <div class="static-section">
+            <h3>Key Features</h3>
             <p>
-            <b>Score 1 — Very Calm:</b> Extremely relaxed credit markets.<br><br>
-            <b>Score 2 — Calm:</b> Normal conditions.<br><br>
-            <b>Score 3 — Moderate:</b> Some caution warranted.<br><br>
-            <b>Score 4 — Elevated:</b> Credit stress building.<br><br>
-            <b>Score 5 — High Stress:</b> Significant credit risk.
+            • Live High Yield and Investment Grade bond data on every run<br><br>
+            • Credit stress score from 1 (very calm) to 5 (high stress)<br><br>
+            • Percentile ranking against full history since 2010<br><br>
+            • 21-day rolling spread smoothing to filter daily noise<br><br>
+            • Key stress period identification and annotation<br><br>
+            • Two chart visualization — raw spread and stress score<br><br>
+            • Dynamic signal and interpretation that updates every run
             </p>
         </div>
         """, unsafe_allow_html=True)
+
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("""
-            <div class="card">
-                <h3>What is HYG?</h3>
-                <p>High Yield bonds are loans to riskier companies.
-                When HYG falls investors are pulling back from risky
-                lending — often the first warning sign of stress.</p>
+            <div class="static-section">
+                <h3>Why It Matters</h3>
+                <p>
+                Credit spreads are one of the most important leading
+                indicators in fixed income markets. When High Yield
+                bonds underperform Investment Grade bonds it signals
+                investors are pulling back from risk — often weeks or
+                months before stress shows up in equity markets.<br><br>
+                The 2008 crisis, 2011 EU debt crisis, 2016 oil crash,
+                2020 COVID, and 2022 Fed rate hike cycle all showed up
+                first in credit spreads.
+                </p>
             </div>
             """, unsafe_allow_html=True)
         with col2:
             st.markdown("""
-            <div class="card">
-                <h3>What is LQD?</h3>
-                <p>Investment Grade bonds are loans to safer companies.
-                When LQD outperforms HYG investors are moving toward
-                safety — a classic early warning signal.</p>
+            <div class="static-section">
+                <h3>Methodology</h3>
+                <p>
+                Downloads daily price data for HYG and LQD. Calculates
+                21-day rolling mean returns for each — smoothing noise
+                to reveal trends.<br><br>
+                The credit spread is LQD returns minus HYG returns
+                multiplied by 10,000 to convert to basis points.
+                A wider spread means High Yield is underperforming
+                Investment Grade — a stress signal.<br><br>
+                The spread is ranked as a percentile and converted
+                into a stress score from 1 to 5 using equal quintile
+                bins.<br><br>
+                <b>Methodology never changes regardless of date range.</b>
+                </p>
             </div>
             """, unsafe_allow_html=True)
+
         st.markdown("""
-        <div class="card">
-            <h3>Current Reading — September 17, 2026</h3>
+        <div class="static-section">
+            <h3>Stress Score Classification</h3>
             <p>
-            Credit Spread: <b>1.2 basis points</b><br><br>
-            Stress Score: <b>4 out of 5 — ELEVATED</b><br><br>
-            Higher than <b>63%</b> of all readings since 2010.
+            <b>Score 1 — Very Calm:</b> Credit markets extremely
+            relaxed. Investors comfortable taking risk.<br><br>
+            <b>Score 2 — Calm:</b> Normal credit conditions.
+            Spreads in line with historical average.<br><br>
+            <b>Score 3 — Moderate:</b> Some caution warranted.
+            Spreads widening but not at alarming levels.<br><br>
+            <b>Score 4 — Elevated:</b>
+            <span style="color:#E64A19; font-weight:bold;">
+            Credit stress building — watch closely.</span>
+            Spreads significantly wider than normal.<br><br>
+            <b>Score 5 — High Stress:</b>
+            <span style="color:#B71C1C; font-weight:bold;">
+            Significant credit risk — reduce exposure.</span>
+            Spreads at historically wide levels.
             </p>
         </div>
         """, unsafe_allow_html=True)
+
         st.markdown("---")
-        st.markdown("### Run the Credit Spread Model")
+        st.markdown("### Run the Model")
         col1, col2 = st.columns(2)
         with col1:
             start_date_cs = st.date_input("Start Date",
@@ -1204,6 +1430,7 @@ elif page == "AI Research":
             end_date_cs = st.date_input("End Date",
                 value=datetime.date(2026, 9, 18), key="cs_end")
         st.markdown("<br>", unsafe_allow_html=True)
+
         if st.button("Run Credit Spread Model"):
             with st.spinner("Downloading data and running model..."):
                 cs_tickers = ['HYG', 'LQD', 'SPY']
@@ -1225,28 +1452,205 @@ elif page == "AI Research":
                         labels=[1, 2, 3, 4, 5]).astype(float),
                     'spread_smooth': spread.rolling(21).mean()
                 })
-                cs_current_spread = spread.iloc[-1]
-                cs_current_score  = spread_df['stress_score'].iloc[-1]
-                cs_current_date   = spread.index[-1].strftime('%B %d, %Y')
+                cs_current_spread = float(spread.iloc[-1])
+                cs_current_score  = float(
+                    spread_df['stress_score'].iloc[-1])
+                cs_current_date   = spread.index[-1].strftime(
+                    '%B %d, %Y')
+                pct_rank = float(
+                    (spread < cs_current_spread).mean() * 100)
+                avg_spread_cs = float(spread.mean())
+                max_spread_cs = float(spread.max())
+                min_spread_cs = float(spread.min())
+
+            # ── DYNAMIC SECTION ────────────────────────────────
             st.markdown("---")
-            st.markdown("### Current Credit Signal")
+
+            # Signal
+            st.markdown("### Signal")
             if cs_current_score <= 2:
-                st.success(f"CALM — As of {cs_current_date} credit markets "
-                           f"are relaxed. Stress score {cs_current_score:.0f}/5.")
+                st.success(f"✅ CALM — As of {cs_current_date} credit "
+                           f"markets are relaxed. "
+                           f"Spread: {cs_current_spread:.1f} bps")
             elif cs_current_score <= 3:
-                st.warning(f"MODERATE — As of {cs_current_date} some caution "
-                           f"warranted. Stress score {cs_current_score:.0f}/5.")
+                st.warning(f"⚠️ MODERATE — As of {cs_current_date} "
+                           f"some caution warranted. "
+                           f"Spread: {cs_current_spread:.1f} bps")
             else:
-                st.error(f"ELEVATED — As of {cs_current_date} credit stress "
-                         f"building. Stress score {cs_current_score:.0f}/5.")
+                st.error(f"🚨 ELEVATED — As of {cs_current_date} "
+                         f"credit stress building. "
+                         f"Spread: {cs_current_spread:.1f} bps")
+
+            # Strategy Signal
+            st.markdown("### Strategy Signal")
+            if cs_current_score <= 2:
+                st.success("LOW RISK — Credit conditions support "
+                           "normal risk taking. Spreads are calm.")
+            elif cs_current_score == 3:
+                st.warning("MODERATE CAUTION — Monitor spread direction "
+                           "closely. Consider reducing high yield exposure.")
+            elif cs_current_score == 4:
+                st.error("REDUCE RISK — Elevated stress score. Reduce "
+                         "high yield bond exposure and watch for "
+                         "further widening.")
+            else:
+                st.error("HIGH ALERT — Stress score at maximum. "
+                         "Significantly reduce credit risk exposure. "
+                         "Historical periods at this level have "
+                         "produced major drawdowns.")
+
+            # Results
             st.markdown("---")
-            st.markdown("### Credit Spread Metrics")
+            st.markdown("### Results")
             m1, m2, m3 = st.columns(3)
-            m1.metric("Credit Spread", f"{cs_current_spread:.1f} bps")
-            m2.metric("Stress Score",  f"{cs_current_score:.0f} / 5")
-            pct_rank = (spread < cs_current_spread).mean() * 100
-            m3.metric("Percentile Rank", f"{pct_rank:.0f}%",
-                      "vs history since 2010")
+            m1.metric("Credit Spread",
+                f"{cs_current_spread:.1f} bps")
+            m2.metric("Stress Score",
+                f"{cs_current_score:.0f} / 5")
+            m3.metric("Percentile Rank",
+                f"{pct_rank:.0f}th",
+                "vs history since 2010")
+
+            # Summary & Key Findings
+            st.markdown("---")
+            st.markdown("### Summary & Key Findings")
+            score_labels = {
+                1: 'Very Calm', 2: 'Calm',
+                3: 'Moderate', 4: 'Elevated', 5: 'High Stress'
+            }
+            score_label = score_labels.get(
+                int(cs_current_score), 'Unknown')
+            summary_cs = (
+                f"The credit spread is currently {cs_current_spread:.1f} "
+                f"basis points as of {cs_current_date} — "
+                f"a stress score of {cs_current_score:.0f}/5 "
+                f"({score_label}). This reading is higher than "
+                f"{pct_rank:.0f}% of all readings since 2010. "
+                f"The average spread over the selected period was "
+                f"{avg_spread_cs:.1f} basis points."
+            )
+            st.markdown(f"""
+            <div class="dynamic-section">
+                <h3>Summary</h3>
+                <p>{summary_cs}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # What It Means
+            st.markdown("### What It Means")
+            if cs_current_score <= 2:
+                meanings_cs = [
+                    'High Yield bonds and Investment Grade bonds are '
+                    'moving in line with each other. Investors are '
+                    'comfortable lending to riskier companies — '
+                    'a sign of healthy credit conditions.',
+                    'When the spread is calm it means the market does '
+                    'not see elevated default risk in corporate bonds. '
+                    'Companies can borrow cheaply which supports '
+                    'economic growth.',
+                    'Calm credit conditions typically coincide with '
+                    'stable or rising equity markets and low financial '
+                    'system stress.',
+                ]
+            elif cs_current_score == 3:
+                meanings_cs = [
+                    'The spread between High Yield and Investment Grade '
+                    'bonds is widening somewhat — investors are becoming '
+                    'slightly more cautious about lending to riskier '
+                    'companies.',
+                    'A moderate stress reading does not necessarily '
+                    'signal a crisis but it warrants attention. '
+                    'The direction of the spread matters — '
+                    'is it widening or narrowing?',
+                    'Moderate stress often appears during periods of '
+                    'economic uncertainty or Fed policy shifts — '
+                    'watch for the spread to either stabilize '
+                    'or accelerate from here.',
+                ]
+            else:
+                meanings_cs = [
+                    'High Yield bonds are significantly underperforming '
+                    'Investment Grade bonds — investors are pulling back '
+                    'from risky lending. This is one of the most '
+                    'reliable early warning signals in finance.',
+                    'When spreads widen sharply it means the market is '
+                    'pricing in higher default risk for corporate bonds. '
+                    'Companies with weak balance sheets struggle to '
+                    'borrow which slows economic activity.',
+                    'Elevated and high stress readings have historically '
+                    'preceded or coincided with equity market stress. '
+                    'The 2008 crisis, 2020 COVID crash, and 2022 rate '
+                    'hike cycle all showed elevated credit stress before '
+                    'equity markets fully reflected the risk.',
+                ]
+            for point in meanings_cs:
+                st.markdown(f"""
+                <div class="dynamic-section"
+                style="border-left: 4px solid #333333;">
+                    <p>{point}</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # What to Watch
+            st.markdown("### What to Watch")
+            if cs_current_score <= 2:
+                watch_cs = [
+                    'Watch for any sudden widening in the spread — '
+                    'that is the first warning sign of stress building',
+                    'Monitor HYG price directly — a sharp decline '
+                    'in HYG is a real time credit stress signal',
+                    'Watch equity volatility — VIX spikes often '
+                    'accompany credit spread widening',
+                    'Fed policy changes — rate hikes can trigger '
+                    'spread widening for high yield issuers',
+                ]
+            elif cs_current_score == 3:
+                watch_cs = [
+                    'Direction of the spread — widening further '
+                    'toward score 4 is a warning to reduce risk',
+                    'HYG vs LQD relative performance week over week',
+                    'High yield default rates — rising defaults '
+                    'accelerate spread widening',
+                    'Fed communications — hawkish tone can push '
+                    'spreads wider quickly',
+                ]
+            else:
+                watch_cs = [
+                    'Watch for spread to peak and start narrowing — '
+                    'that signals the worst stress may be passing',
+                    'Monitor for contagion to equity markets — '
+                    'wide spreads often lead equity declines',
+                    'Watch Fed response — emergency rate cuts or '
+                    'liquidity support can rapidly tighten spreads',
+                    'High yield default rates — the ultimate '
+                    'confirmation of whether stress is systemic',
+                ]
+            col1, col2 = st.columns(2)
+            for i, point in enumerate(watch_cs):
+                with col1 if i % 2 == 0 else col2:
+                    st.markdown(f"""
+                    <div class="dynamic-section"
+                    style="padding: 0.8rem 1rem;">
+                        <p>➜ {point}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            # Historical Context
+            st.markdown("---")
+            st.markdown("### Historical Context")
+            h1, h2, h3, h4 = st.columns(4)
+            h1.metric("Current Spread",
+                f"{cs_current_spread:.1f} bps")
+            h2.metric("Average Spread",
+                f"{avg_spread_cs:.1f} bps", "selected period")
+            h3.metric("Widest Spread",
+                f"{max_spread_cs:.1f} bps",
+                spread.idxmax().strftime('%b %Y'))
+            h4.metric("Tightest Spread",
+                f"{min_spread_cs:.1f} bps",
+                spread.idxmin().strftime('%b %Y'))
+
+            # Charts
             st.markdown("---")
             st.markdown("### Charts")
             fig, axes = plt.subplots(2, 1, figsize=(12, 10))
@@ -1260,20 +1664,24 @@ elif page == "AI Research":
                     spine.set_edgecolor('#CCCCCC')
             axes[0].axhspan(spread_df['spread'].quantile(0.80),
                 spread_df['spread'].max(),
-                alpha=0.08, color='#D85A30', label='High Stress Zone')
+                alpha=0.08, color='#D85A30',
+                label='High Stress Zone')
             axes[0].axhspan(spread_df['spread'].min(),
                 spread_df['spread'].quantile(0.20),
-                alpha=0.08, color='#1D9E75', label='Low Stress Zone')
+                alpha=0.08, color='#1D9E75',
+                label='Low Stress Zone')
             axes[0].plot(spread_df.index, spread_df['spread'],
                 color='#CCCCCC', linewidth=0.5, alpha=0.5)
-            axes[0].plot(spread_df.index, spread_df['spread_smooth'],
+            axes[0].plot(spread_df.index,
+                spread_df['spread_smooth'],
                 color='#333333', linewidth=2,
                 label='Credit Spread (21-day avg)')
             axes[0].scatter(spread_df.index[-1],
                 spread_df['spread_smooth'].iloc[-1],
                 color='#D85A30', s=80, zorder=5,
                 label=f'Today: {cs_current_spread:.1f} bps')
-            axes[0].set_title('Credit Spread — HYG vs LQD (Basis Points)',
+            axes[0].set_title(
+                'Credit Spread — HYG vs LQD (Basis Points)',
                 color='#333333', fontsize=13, fontweight='bold')
             axes[0].set_ylabel('Spread (bps)', color='#333333')
             axes[0].legend(facecolor='#F9F9F9',
@@ -1297,7 +1705,8 @@ elif page == "AI Research":
             axes[1].axhline(y=cs_current_score,
                 color='#D85A30', linestyle='--', linewidth=1.2,
                 label=f'Current: {cs_current_score:.0f}/5')
-            axes[1].set_title('Credit Stress Score — 21-Day Smoothed',
+            axes[1].set_title(
+                'Credit Stress Score — 21-Day Smoothed',
                 color='#333333', fontsize=13, fontweight='bold')
             axes[1].set_ylabel('Stress Score', color='#333333')
             axes[1].set_ylim(0, 5.5)
@@ -1307,18 +1716,24 @@ elif page == "AI Research":
             axes[1].grid(axis='y', color='#DDDDDD', linewidth=0.5)
             plt.tight_layout(pad=2.0)
             st.pyplot(fig)
+
+        # ── FULL RESEARCH NOTEBOOK ─────────────────────────────
         st.markdown("---")
         st.markdown("""
         <div class="card">
             <h3>Full Research Notebook</h3>
             <p>
-            View the complete Credit Spread Monitor on GitHub:<br><br>
+            View the complete Credit Spread Monitor including all
+            code, charts, stress score analysis, and historical
+            period breakdown on GitHub:<br><br>
             github.com/sidneyppratt-svg/credit-spread-monitor
             </p>
         </div>
         """, unsafe_allow_html=True)
 
-# ── Model 4: Hockey Pathway Navigator ─────────────────────────
+# ══════════════════════════════════════════════════════════════
+# MODEL 4 — HOCKEY PATHWAY NAVIGATOR
+# ══════════════════════════════════════════════════════════════
     elif model == "Hockey Pathway Navigator":
         st.markdown("## Hockey Pathway Navigator")
         st.markdown("""
@@ -1614,7 +2029,6 @@ elif page == "AI Research":
             ("NA3HL",         "Tier 3 — Development",
              "$4,000-7,000",  "https://www.na3hl.com/teams"),
         ]
-
         for league, tier, cost, url in league_links:
             st.markdown(f"""
             <div class="card" style="padding: 1rem 1.5rem;">
