@@ -10,7 +10,7 @@ from PIL import Image
 from io import BytesIO
 
 st.set_page_config(
-    page_title="Sidney Pratt | Quant Research",
+    page_title="Sidney Pratt | Student of Finance & Economics",
     page_icon="📈",
     layout="wide"
 )
