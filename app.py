@@ -491,7 +491,7 @@ elif page == "AI Research":
 
         st.markdown("""
         <div class="data-source-section">
-            <h3>Data Sources & Methodology</h3>
+            <h3>Data Sources</h3>
             <p>
             <b>Treasury Yields:</b> Live US Treasury yields downloaded
             directly from Yahoo Finance — tickers ^IRX (3-Month),
@@ -793,7 +793,7 @@ elif page == "AI Research":
 
         st.markdown("""
         <div class="data-source-section">
-            <h3>Data Sources & Methodology</h3>
+            <h3>Data Sources</h3>
             <p>
             <b>SPY (US Equities):</b> S&P 500 ETF — Yahoo Finance.
             Real closing prices adjusted for dividends and splits.<br><br>
@@ -1042,7 +1042,7 @@ elif page == "AI Research":
 
         st.markdown("""
         <div class="data-source-section">
-            <h3>Data Sources & Methodology</h3>
+            <h3>Data Sources</h3>
             <p>
             <b>Primary Data:</b> ICE BofA US High Yield Option-Adjusted Spread
             (FRED series: BAMLH0A0HYM2) — pulled directly from the Federal
