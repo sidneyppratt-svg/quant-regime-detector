@@ -4,6 +4,6 @@ pandas
 numpy
 scikit-learn
 matplotlib
-seaborn
-pillow
+pandas-datareader
 requests
+Pillow
