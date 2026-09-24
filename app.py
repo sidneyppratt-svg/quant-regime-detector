@@ -181,8 +181,6 @@ with st.sidebar:
     st.markdown("## Sidney Pratt")
     st.markdown("*Economics & Finance*")
     st.markdown("---")
-    page = st.radio("", ["About", "Resume", "AI Research"])
-    st.markdown("---")
     st.markdown("### Contact")
     st.markdown("""
     <div class="sidebar-contact">
@@ -195,12 +193,22 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
+# TOP NAV — always visible, left aligned
+# ══════════════════════════════════════════════════════════════
+page = st.radio("", ["About", "Resume", "AI Research"],
+    horizontal=True,
+    label_visibility="collapsed")
+
+st.markdown("<hr style='margin-top:0.3rem; margin-bottom:1rem;'>",
+    unsafe_allow_html=True)
+
+# ══════════════════════════════════════════════════════════════
 # ABOUT (opening page)
 # ══════════════════════════════════════════════════════════════
 if page == "About":
     st.markdown("# Sidney Pratt")
     st.markdown("""
-    <div style="margin-bottom:1rem;">
+    <div style="margin-bottom:0.75rem;">
         <span class="tag">Finance & Economics</span>
         <span class="tag">ACHA D1 Hockey</span>
         <span class="tag">AI Researcher</span>
@@ -208,30 +216,27 @@ if page == "About":
     </div>
     """, unsafe_allow_html=True)
 
-    # Small cards at the top
+    # Compact cards
     c1, c2, c3 = st.columns(3)
     with c1:
         st.markdown("""
-        <div class="card" style="text-align:center; padding:0.8rem;">
-            <h3 style="font-size:13px; margin-bottom:0.3rem;">Education</h3>
-            <p style="font-size:12px; line-height:1.5;">Western Michigan University<br>
-            Finance & Economics<br>GPA: 3.25</p>
+        <div class="card" style="text-align:center; padding:0.5rem 0.8rem; margin-bottom:0.5rem;">
+            <p style="font-size:12px; font-weight:bold; margin:0 0 2px 0; color:#444;">Education</p>
+            <p style="font-size:11px; line-height:1.3; margin:0;">Western Michigan University &middot; Finance & Economics &middot; GPA 3.25</p>
         </div>
         """, unsafe_allow_html=True)
     with c2:
         st.markdown("""
-        <div class="card" style="text-align:center; padding:0.8rem;">
-            <h3 style="font-size:13px; margin-bottom:0.3rem;">Experience</h3>
-            <p style="font-size:12px; line-height:1.5;">AIER Intern<br>
-            Economic Research<br>Policy Analysis</p>
+        <div class="card" style="text-align:center; padding:0.5rem 0.8rem; margin-bottom:0.5rem;">
+            <p style="font-size:12px; font-weight:bold; margin:0 0 2px 0; color:#444;">Experience</p>
+            <p style="font-size:11px; line-height:1.3; margin:0;">AIER Intern &middot; Economic Research &middot; Policy Analysis</p>
         </div>
         """, unsafe_allow_html=True)
     with c3:
         st.markdown("""
-        <div class="card" style="text-align:center; padding:0.8rem;">
-            <h3 style="font-size:13px; margin-bottom:0.3rem;">Global</h3>
-            <p style="font-size:12px; line-height:1.5;">Mt. Kilimanjaro<br>
-            Amazon Rainforest<br>Tanzania Volunteer</p>
+        <div class="card" style="text-align:center; padding:0.5rem 0.8rem; margin-bottom:0.5rem;">
+            <p style="font-size:12px; font-weight:bold; margin:0 0 2px 0; color:#444;">Global</p>
+            <p style="font-size:11px; line-height:1.3; margin:0;">Mt. Kilimanjaro &middot; Amazon Rainforest &middot; Tanzania Volunteer</p>
         </div>
         """, unsafe_allow_html=True)
 
