@@ -236,77 +236,49 @@ if page == "About":
     st.markdown("""
     <div class="card">
         <p>
-        Sidney Pratt is a Finance and Economics double major at Western
-        Michigan University with a passion for financial markets,
-        quantitative research, and innovation. Born and raised in
-        San Francisco, Sidney brings a rare combination of academic
-        rigor, athletic discipline, and global perspective to everything
-        he does.
+        I'm a Finance and Economics student at Western Michigan University
+        with a curiosity for how markets, data, and technology interact.
+        I enjoy digging into financial and economic questions, working with
+        data in Python and SQL, and building projects that turn complex
+        information into something practical and understandable.
         </p>
         <p>
-        As an ACHA D1 hockey player at Western Michigan University,
-        Sidney understands what it takes to perform under pressure,
-        work within a team, and push through challenges that most
-        people walk away from. Those same qualities show up in his
-        academic and professional work.
+        As I continue developing my Python and quantitative skills, I've
+        embraced AI tools such as Claude as part of my learning and
+        development process. I use AI to help explore unfamiliar concepts,
+        troubleshoot code, refine ideas, and accelerate the process of
+        turning an idea into a working project. I see these tools as a way
+        to learn faster and build more ambitious projects while continuing
+        to develop my own technical foundation and understanding.
         </p>
         <p>
-        Sidney has already gained real world experience as an intern
-        at the American Institute for Economic Research where he
-        contributed to economic research, policy analysis, and data
-        collection. He has also built live AI tools that detect
-        market regimes and credit stress across multiple asset classes
-        using over a decade of real market data.
+        A big part of who I am comes from experiences outside the classroom.
+        As an ACHA D1 hockey player, I've learned the importance of
+        discipline, consistency, accountability, and being someone your
+        teammates can rely on. My experiences volunteering in places like
+        the Peruvian Amazon and Tanzania have also pushed me outside my
+        comfort zone and taught me to adapt to new environments and
+        perspectives. In Tanzania, I worked with a group to complete the
+        challenge of summiting Mount Kilimanjaro, where supporting one
+        another through the difficult moments was just as important as
+        reaching the summit itself.
         </p>
         <p>
-        Beyond finance Sidney has summited Mount Kilimanjaro in
-        Tanzania, worked with conservation rangers protecting the
-        Amazon rainforest in Peru, and volunteered at orphanages
-        in Africa. These experiences shaped a globally minded,
-        adaptable, and deeply curious professional who sees the
-        world as a place of opportunity.
+        I've also had the opportunity to explore finance and economics
+        through research, quantitative projects, and hands-on work. From
+        building financial models that monitor yield curves and credit
+        markets to contributing to economic research at the American
+        Institute for Economic Research, I've enjoyed finding ways to
+        combine analytical thinking with real-world problems.
         </p>
         <p>
-        Sidney is currently seeking internship opportunities in
-        fixed income trading, quantitative research, and portfolio
-        management where he can contribute immediately and continue
-        growing.
+        I'm always looking to learn, take on new challenges, and surround
+        myself with people who push me to improve. Long term, I'm interested
+        in building a career at the intersection of finance, economics,
+        technology, and quantitative research.
         </p>
     </div>
     """, unsafe_allow_html=True)
-    st.markdown("---")
-    st.markdown("## What I Bring to the Table")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("""
-        <div class="card">
-            <h3>Quantitative Skills</h3>
-            <p>Python, SQL, financial analysis, machine learning,
-            backtesting, and market data analysis. Built live
-            AI tools trained on real market data.</p>
-        </div>
-        <div class="card">
-            <h3>Athletic Discipline</h3>
-            <p>ACHA D1 Hockey player — understanding of high
-            performance, teamwork under pressure, and the discipline
-            to show up every day regardless of circumstances.</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown("""
-        <div class="card">
-            <h3>Research Experience</h3>
-            <p>Interned at the American Institute of Economic
-            Research — contributing to real economic policy analysis,
-            literature review, and data-driven research.</p>
-        </div>
-        <div class="card">
-            <h3>Global Perspective</h3>
-            <p>Summited Kilimanjaro, protected the Amazon rainforest,
-            and volunteered across Africa. A worldview shaped by
-            real experience — not just a classroom.</p>
-        </div>
-        """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
 # RESUME
