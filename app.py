@@ -179,9 +179,9 @@ with st.sidebar:
     margin-bottom:0.5rem;">Photo coming soon</p>
     """, unsafe_allow_html=True)
     st.markdown("## Sidney Pratt")
-    st.markdown("*Quant Researcher*")
+    st.markdown("*Economics & Finance*")
     st.markdown("---")
-    page = st.radio("", ["Home", "About", "Resume", "AI Research"])
+    page = st.radio("", ["About", "Resume", "AI Research"])
     st.markdown("---")
     st.markdown("### Contact")
     st.markdown("""
@@ -195,9 +195,9 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
-# HOME
+# ABOUT (opening page)
 # ══════════════════════════════════════════════════════════════
-if page == "Home":
+if page == "About":
     st.markdown("# Sidney Pratt")
     st.markdown("""
     <div style="margin-bottom:1rem;">
@@ -207,14 +207,34 @@ if page == "Home":
         <span class="tag">World Explorer</span>
     </div>
     """, unsafe_allow_html=True)
-    st.markdown("---")
-    st.markdown("""
-    <p style="color:#333333; font-size:16px; line-height:1.8;">
-    Finance and Economics student combining quantitative research,
-    AI tools, and real-world market experience to build the next
-    generation of trading strategies.
-    </p>
-    """, unsafe_allow_html=True)
+
+    # Small cards at the top
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.markdown("""
+        <div class="card" style="text-align:center; padding:0.8rem;">
+            <h3 style="font-size:13px; margin-bottom:0.3rem;">Education</h3>
+            <p style="font-size:12px; line-height:1.5;">Western Michigan University<br>
+            Finance & Economics<br>GPA: 3.25</p>
+        </div>
+        """, unsafe_allow_html=True)
+    with c2:
+        st.markdown("""
+        <div class="card" style="text-align:center; padding:0.8rem;">
+            <h3 style="font-size:13px; margin-bottom:0.3rem;">Experience</h3>
+            <p style="font-size:12px; line-height:1.5;">AIER Intern<br>
+            Economic Research<br>Policy Analysis</p>
+        </div>
+        """, unsafe_allow_html=True)
+    with c3:
+        st.markdown("""
+        <div class="card" style="text-align:center; padding:0.8rem;">
+            <h3 style="font-size:13px; margin-bottom:0.3rem;">Global</h3>
+            <p style="font-size:12px; line-height:1.5;">Mt. Kilimanjaro<br>
+            Amazon Rainforest<br>Tanzania Volunteer</p>
+        </div>
+        """, unsafe_allow_html=True)
+
     st.markdown("""
     <div class="seeking-card">
         <h4>Currently Seeking</h4>
@@ -228,38 +248,7 @@ if page == "Home":
         </p>
     </div>
     """, unsafe_allow_html=True)
-    st.markdown("---")
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown("""
-        <div class="card" style="text-align:center;">
-            <h3>Education</h3>
-            <p>Western Michigan University<br>
-            Finance & Economics<br>GPA: 3.25</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with c2:
-        st.markdown("""
-        <div class="card" style="text-align:center;">
-            <h3>Experience</h3>
-            <p>AIER Intern<br>
-            Economic Research<br>Policy Analysis</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with c3:
-        st.markdown("""
-        <div class="card" style="text-align:center;">
-            <h3>Global</h3>
-            <p>Mt. Kilimanjaro<br>
-            Amazon Rainforest<br>Tanzania Volunteer</p>
-        </div>
-        """, unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════════════════════
-# ABOUT
-# ══════════════════════════════════════════════════════════════
-elif page == "About":
-    st.markdown("# About Me")
     st.markdown("---")
     st.markdown("""
     <div class="card">
