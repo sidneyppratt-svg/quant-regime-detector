@@ -216,29 +216,7 @@ if page == "About":
     </div>
     """, unsafe_allow_html=True)
 
-    # Compact cards
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown("""
-        <div class="card" style="text-align:center; padding:0.5rem 0.8rem; margin-bottom:0.5rem;">
-            <p style="font-size:12px; font-weight:bold; margin:0 0 2px 0; color:#444;">Education</p>
-            <p style="font-size:11px; line-height:1.3; margin:0;">Western Michigan University &middot; Finance & Economics &middot; GPA 3.25</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with c2:
-        st.markdown("""
-        <div class="card" style="text-align:center; padding:0.5rem 0.8rem; margin-bottom:0.5rem;">
-            <p style="font-size:12px; font-weight:bold; margin:0 0 2px 0; color:#444;">Experience</p>
-            <p style="font-size:11px; line-height:1.3; margin:0;">AIER Intern &middot; Economic Research &middot; Policy Analysis</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with c3:
-        st.markdown("""
-        <div class="card" style="text-align:center; padding:0.5rem 0.8rem; margin-bottom:0.5rem;">
-            <p style="font-size:12px; font-weight:bold; margin:0 0 2px 0; color:#444;">Global</p>
-            <p style="font-size:11px; line-height:1.3; margin:0;">Mt. Kilimanjaro &middot; Amazon Rainforest &middot; Tanzania Volunteer</p>
-        </div>
-        """, unsafe_allow_html=True)
+
 
     st.markdown("""
     <div class="seeking-card">
