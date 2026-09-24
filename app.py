@@ -222,12 +222,15 @@ if page == "About":
     <div class="seeking-card">
         <h4>Currently Seeking</h4>
         <p>
-        Internship opportunities in:<br>
-        - Fixed Income Trading (Rates, Credit, Mortgages)<br>
-        - Quantitative Research<br>
-        - Portfolio Management<br>
-        - Economic Research<br>
-        - Financial Analysis
+        I am currently seeking an internship with a hedge fund, investment
+        firm, or wealth management team where I can learn directly from
+        professionals working in the markets. I'm especially interested in
+        supporting a trading or investment desk through market research,
+        quantitative analysis, portfolio monitoring, and data-driven
+        projects. I'm looking for an opportunity where I can contribute,
+        learn quickly, and continue developing my understanding of markets
+        while applying my skills in finance, economics, Python, and
+        quantitative research.
         </p>
     </div>
     """, unsafe_allow_html=True)
