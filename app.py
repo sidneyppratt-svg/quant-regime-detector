@@ -223,7 +223,7 @@ st.markdown("""
     }
     /* Push page content down so it doesn't hide under the fixed nav */
     .main > div:nth-child(2) {
-        margin-top: 3rem;
+        margin-top: 6.5rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -243,8 +243,8 @@ if page == "About":
     st.markdown("""
     <div style="margin-bottom:0.75rem;">
         <span class="tag">Finance & Economics</span>
-        <span class="tag">ACHA D1 Hockey</span>
         <span class="tag">AI Researcher</span>
+        <span class="tag">ACHA D1 Hockey</span>
         <span class="tag">World Explorer</span>
     </div>
     """, unsafe_allow_html=True)
