@@ -218,7 +218,7 @@ st.markdown("""
         background-color: #FFFFFF;
         padding: 6px 2rem 6px 2rem;
         border-bottom: 1px solid #DDDDDD;
-        left: 245px;
+        left: 21rem;
         right: 0;
     }
     /* Push page content down so it doesn't hide under the fixed nav */
