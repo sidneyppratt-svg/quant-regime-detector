@@ -22,6 +22,10 @@ st.markdown("""
     .stApp { background-color: #FFFFFF; }
     [data-testid="stSidebar"] { background-color: #4A4A4A; }
     [data-testid="stSidebar"] * { color: white !important; }
+    [data-testid="stSidebar"] p { color: #FFFFFF !important; }
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3 { color: #FFFFFF !important; }
     .stMarkdown, .stMarkdown p, label { color: #1a1a1a !important; }
     h1 { color: #333333 !important; font-size: 2.5rem !important; }
     h2 { color: #444444 !important; }
@@ -179,9 +183,9 @@ with st.sidebar:
     """, unsafe_allow_html=True)
     st.markdown("---")
     st.markdown("""
-    <p style="color:white; font-size:18px; font-weight:bold; margin:0; line-height:1.4;">Sidney Pratt</p>
-    <p style="color:white; font-size:14px; margin:0; line-height:1.4;">Economics & Finance</p>
-    <p style="color:white; font-size:14px; margin:0 0 0.75rem 0; line-height:1.4;">Western Michigan University</p>
+    <p style="color:#FFFFFF !important; font-size:18px; font-weight:bold; margin:0; line-height:1.4;">Sidney Pratt</p>
+    <p style="color:#FFFFFF !important; font-size:14px; margin:0; line-height:1.4;">Economics & Finance</p>
+    <p style="color:#FFFFFF !important; font-size:14px; margin:0 0 0.75rem 0; line-height:1.4;">Western Michigan University</p>
     """, unsafe_allow_html=True)
     st.markdown("---")
     st.markdown("### Contact")
