@@ -451,24 +451,19 @@ elif page == "AI Research":
     # Model selection cards — full card is the button
     c1, c2, c3, c4, c5 = st.columns(5)
     with c1:
-        m1 = st.button(
-            "Yield Curve Monitor\n\nUS Treasury yield curve — 5 regime classification",
+        m1 = st.button("Yield Curve Monitor",
             key="btn_yc", use_container_width=True)
     with c2:
-        m2 = st.button(
-            "Regime Detector\n\nML detection of RISK-ON / RISK-OFF across 4 assets",
+        m2 = st.button("Regime Detector",
             key="btn_rd", use_container_width=True)
     with c3:
-        m3 = st.button(
-            "Credit Spread Monitor\n\nICE BofA OAS spread — Bloomberg accurate via FRED",
+        m3 = st.button("Credit Spread Monitor",
             key="btn_cs", use_container_width=True)
     with c4:
-        m4 = st.button(
-            "Mortgage Monitor\n\nOfficial Freddie Mac 30Y mortgage rate via FRED",
+        m4 = st.button("Mortgage Monitor",
             key="btn_mm", use_container_width=True)
     with c5:
-        m5 = st.button(
-            "Hockey Navigator\n\nPersonalized hockey pathway finder",
+        m5 = st.button("Hockey Navigator",
             key="btn_hn", use_container_width=True)
 
     # Session state to track which model is open
