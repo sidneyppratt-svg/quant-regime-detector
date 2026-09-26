@@ -22,10 +22,16 @@ st.markdown("""
     .stApp { background-color: #FFFFFF; }
     [data-testid="stSidebar"] { background-color: #4A4A4A; }
     [data-testid="stSidebar"] * { color: white !important; }
-    [data-testid="stSidebar"] p { color: #FFFFFF !important; }
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] div,
+    [data-testid="stSidebar"] a,
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3 { color: #FFFFFF !important; }
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] h4,
+    [data-testid="stSidebar"] h5,
+    [data-testid="stSidebar"] label { color: #FFFFFF !important; }
     .stMarkdown, .stMarkdown p, label { color: #1a1a1a !important; }
     h1 { color: #333333 !important; font-size: 2.5rem !important; }
     h2 { color: #444444 !important; }
