@@ -214,13 +214,12 @@ st.markdown("""
     div[data-testid="stRadio"] {
         position: fixed;
         top: 2.75rem;
-        left: 0;
-        right: 0;
         z-index: 9999;
         background-color: #FFFFFF;
-        padding: 6px 1rem 6px 1rem;
+        padding: 6px 2rem 6px 2rem;
         border-bottom: 1px solid #DDDDDD;
-        margin-left: 245px;
+        left: 245px;
+        right: 0;
     }
     /* Push page content down so it doesn't hide under the fixed nav */
     .main > div:nth-child(2) {
