@@ -241,7 +241,7 @@ st.markdown("<div style='padding-top:2rem;'></div>",
 # ABOUT (opening page)
 # ══════════════════════════════════════════════════════════════
 if page == "About":
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
     st.markdown("# Sidney Pratt")
     st.markdown("""
     <div style="margin-bottom:0.75rem;">
@@ -323,7 +323,7 @@ if page == "About":
 # RESUME
 # ══════════════════════════════════════════════════════════════
 elif page == "Resume":
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
     st.markdown("# Resume")
     st.markdown("---")
     st.markdown("""
@@ -415,7 +415,7 @@ elif page == "Resume":
 # AI RESEARCH
 # ══════════════════════════════════════════════════════════════
 elif page == "AI Research":
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
     st.markdown("# AI Research")
     st.markdown("""
     <p style="color:#333333; font-size:16px;">
@@ -544,7 +544,7 @@ elif page == "AI Research":
         with col2:
             yc_end = st.date_input("End Date",
                 value=datetime.date.today(), key="yc_end")
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
 
         if st.button("Run Yield Curve Monitor"):
             with st.spinner("Downloading Treasury yield data..."):
@@ -847,7 +847,7 @@ elif page == "AI Research":
         with col2:
             end_date = st.date_input("End Date",
                 value=datetime.date.today())
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
 
         if st.button("Run AI Model"):
             with st.spinner("Downloading data and running AI model..."):
@@ -1085,7 +1085,7 @@ elif page == "AI Research":
         with col2:
             end_date_cs = st.date_input("End Date",
                 value=datetime.date.today(), key="cs_end")
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
 
         if st.button("Run Credit Spread Model"):
             with st.spinner("Downloading ICE BofA OAS spread from FRED..."):
@@ -1401,7 +1401,7 @@ elif page == "AI Research":
         with col2:
             end_date_mm = st.date_input("End Date",
                 value=datetime.date.today(), key="mm_end")
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
 
         if st.button("Run Mortgage Market Monitor"):
             with st.spinner("Downloading official Freddie Mac mortgage rate from FRED..."):
@@ -1743,7 +1743,7 @@ elif page == "AI Research":
                     "USPHL NCDC", "EHL",
                     "USPHL Premier", "USPHL Elite", "NA3HL",
                 ])
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
         if st.button("Get My Pathway Recommendation"):
             junior_league = None if \
                 player_league == "Not in junior hockey yet" \
