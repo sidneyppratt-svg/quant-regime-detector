@@ -184,10 +184,9 @@ with st.sidebar:
     st.markdown("### Contact")
     st.markdown("""
     <div class="sidebar-contact">
-    📧 sidneyppratt@gmail.com<br>
-    📍 San Francisco, CA<br>
-    🔗 linkedin.com/in/sidney-pratt<br>
-    💻 github.com/sidneyppratt-svg<br>
+    📧 <a href="mailto:sidneyppratt@gmail.com" style="color:white;">sidneyppratt@gmail.com</a><br>
+    🔗 <a href="https://linkedin.com/in/sidney-pratt" target="_blank" style="color:white;">linkedin.com/in/sidney-pratt</a><br>
+    💻 <a href="https://github.com/sidneyppratt-svg" target="_blank" style="color:white;">github.com/sidneyppratt-svg</a><br>
     🌐 sidneyppratt.com
     </div>
     """, unsafe_allow_html=True)
