@@ -221,9 +221,9 @@ st.markdown("""
         left: 21rem;
         right: 0;
     }
-    /* Push page content down so it doesn't hide under the fixed nav */
-    .main > div:nth-child(2) {
-        margin-top: 9rem;
+    /* Push all main content down below the fixed nav */
+    section[data-testid="stMainBlockContainer"] > div:first-child {
+        padding-top: 4rem !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -232,13 +232,16 @@ page = st.radio("", ["About", "Resume", "AI Research"],
     horizontal=True,
     label_visibility="collapsed")
 
-st.markdown("<hr style='margin-top:0.2rem; margin-bottom:0.75rem;'>",
+st.markdown("<hr style='margin-top:0.2rem; margin-bottom:0rem;'>",
+    unsafe_allow_html=True)
+st.markdown("<div style='padding-top:2rem;'></div>",
     unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
 # ABOUT (opening page)
 # ══════════════════════════════════════════════════════════════
 if page == "About":
+    st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("# Sidney Pratt")
     st.markdown("""
     <div style="margin-bottom:0.75rem;">
@@ -320,6 +323,7 @@ if page == "About":
 # RESUME
 # ══════════════════════════════════════════════════════════════
 elif page == "Resume":
+    st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("# Resume")
     st.markdown("---")
     st.markdown("""
@@ -411,6 +415,7 @@ elif page == "Resume":
 # AI RESEARCH
 # ══════════════════════════════════════════════════════════════
 elif page == "AI Research":
+    st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("# AI Research")
     st.markdown("""
     <p style="color:#333333; font-size:16px;">
