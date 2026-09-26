@@ -174,13 +174,15 @@ st.markdown("""
 
 with st.sidebar:
     st.markdown("""
-    <div class="profile-placeholder">SP</div>
-    <p style="text-align:center; color:#CCCCCC; font-size:11px;
-    margin-bottom:0.5rem;">Photo coming soon</p>
+    <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+        <div class="profile-placeholder" style="margin:0; flex-shrink:0;">SP</div>
+        <div>
+            <p style="color:white; font-size:18px; font-weight:bold; margin:0; line-height:1.3;">Sidney Pratt</p>
+            <p style="color:white; font-size:13px; margin:0; line-height:1.3;">Economics & Finance</p>
+            <p style="color:white; font-size:13px; margin:0; line-height:1.3;">Western Michigan University</p>
+        </div>
+    </div>
     """, unsafe_allow_html=True)
-    st.markdown("## Sidney Pratt")
-    st.markdown("Economics & Finance")
-    st.markdown("Western Michigan University")
     st.markdown("---")
     st.markdown("### Contact")
     st.markdown("""
