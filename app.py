@@ -193,13 +193,41 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
-# TOP NAV — always visible, left aligned
+# TOP NAV — sticky, compact, always visible
 # ══════════════════════════════════════════════════════════════
+st.markdown("""
+<style>
+    /* Stick the radio nav to the top of the main content area */
+    div[data-testid="stRadio"] {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background-color: #FFFFFF;
+        padding: 4px 0 4px 0;
+        margin-bottom: 0;
+        border-bottom: 1px solid #DDDDDD;
+    }
+    /* Tighten the radio buttons themselves */
+    div[data-testid="stRadio"] > div {
+        gap: 0.5rem;
+    }
+    div[data-testid="stRadio"] label {
+        font-size: 14px !important;
+        padding: 4px 12px !important;
+        border-radius: 6px !important;
+    }
+    /* Remove extra top padding from main block */
+    .block-container {
+        padding-top: 0.5rem !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 page = st.radio("", ["About", "Resume", "AI Research"],
     horizontal=True,
     label_visibility="collapsed")
 
-st.markdown("<hr style='margin-top:0.3rem; margin-bottom:1rem;'>",
+st.markdown("<hr style='margin-top:0.2rem; margin-bottom:0.75rem;'>",
     unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
