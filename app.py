@@ -225,15 +225,23 @@ st.markdown("""
     section[data-testid="stMainBlockContainer"] > div:first-child {
         padding-top: 4rem !important;
     }
-    /* Shrink and hide the empty model open buttons */
+    /* Style model open buttons to look minimal */
     div[data-testid="stButton"] button {
-        height: 0px !important;
-        min-height: 0px !important;
-        padding: 0px !important;
-        border: none !important;
         background: transparent !important;
-        color: transparent !important;
-        margin-top: -0.5rem !important;
+        border: none !important;
+        color: #1A73E8 !important;
+        font-size: 11px !important;
+        font-weight: bold !important;
+        padding: 0 !important;
+        margin-top: -1.2rem !important;
+        width: 100% !important;
+        cursor: pointer !important;
+        box-shadow: none !important;
+    }
+    div[data-testid="stButton"] button:hover {
+        background: transparent !important;
+        color: #0d47a1 !important;
+        box-shadow: none !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -442,46 +450,41 @@ elif page == "AI Research":
         <div class="seeking-card" style="text-align:center; padding:0.8rem;">
             <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Yield Curve Monitor</p>
             <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">US Treasury yield curve — 5 regime classification</p>
-            <p style="font-size:11px; color:#1A73E8; margin:0; font-weight:bold;">click to open</p>
         </div>
         """, unsafe_allow_html=True)
-        m1 = st.button("", key="btn_yc", use_container_width=True)
+        m1 = st.button("click to open", key="btn_yc", use_container_width=True)
     with c2:
         st.markdown("""
         <div class="seeking-card" style="text-align:center; padding:0.8rem;">
             <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Regime Detector</p>
             <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">ML detection of RISK-ON / RISK-OFF across 4 assets</p>
-            <p style="font-size:11px; color:#1A73E8; margin:0; font-weight:bold;">click to open</p>
         </div>
         """, unsafe_allow_html=True)
-        m2 = st.button("", key="btn_rd", use_container_width=True)
+        m2 = st.button("click to open", key="btn_rd", use_container_width=True)
     with c3:
         st.markdown("""
         <div class="seeking-card" style="text-align:center; padding:0.8rem;">
             <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Credit Spread Monitor</p>
             <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">ICE BofA OAS spread — Bloomberg accurate via FRED</p>
-            <p style="font-size:11px; color:#1A73E8; margin:0; font-weight:bold;">click to open</p>
         </div>
         """, unsafe_allow_html=True)
-        m3 = st.button("", key="btn_cs", use_container_width=True)
+        m3 = st.button("click to open", key="btn_cs", use_container_width=True)
     with c4:
         st.markdown("""
         <div class="seeking-card" style="text-align:center; padding:0.8rem;">
             <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Mortgage Monitor</p>
             <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">Official Freddie Mac 30Y mortgage rate via FRED</p>
-            <p style="font-size:11px; color:#1A73E8; margin:0; font-weight:bold;">click to open</p>
         </div>
         """, unsafe_allow_html=True)
-        m4 = st.button("", key="btn_mm", use_container_width=True)
+        m4 = st.button("click to open", key="btn_mm", use_container_width=True)
     with c5:
         st.markdown("""
         <div class="seeking-card" style="text-align:center; padding:0.8rem;">
             <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Hockey Navigator</p>
             <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">Personalized hockey pathway finder</p>
-            <p style="font-size:11px; color:#1A73E8; margin:0; font-weight:bold;">click to open</p>
         </div>
         """, unsafe_allow_html=True)
-        m5 = st.button("", key="btn_hn", use_container_width=True)
+        m5 = st.button("click to open", key="btn_hn", use_container_width=True)
 
     # Session state to track which model is open
     if "model" not in st.session_state:
