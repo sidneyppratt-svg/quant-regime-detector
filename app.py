@@ -189,9 +189,11 @@ with st.sidebar:
     """, unsafe_allow_html=True)
     st.markdown("---")
     st.markdown("""
-    <p style="color:#FFFFFF !important; font-size:18px; font-weight:bold; margin:0; line-height:1.4;">Sidney Pratt</p>
-    <p style="color:#FFFFFF !important; font-size:14px; margin:0; line-height:1.4;">Economics & Finance</p>
-    <p style="color:#FFFFFF !important; font-size:14px; margin:0 0 0.75rem 0; line-height:1.4;">Western Michigan University</p>
+    <div class="sidebar-contact">
+    <span style="font-size:18px; font-weight:bold;">Sidney Pratt</span><br>
+    Economics & Finance<br>
+    Western Michigan University
+    </div>
     """, unsafe_allow_html=True)
     st.markdown("---")
     st.markdown("### Contact")
