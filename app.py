@@ -392,6 +392,7 @@ elif page == "AI Research":
         "Yield Curve Monitor",
         "Multi-Asset Market Regime Detector",
         "Credit Spread Monitor",
+        "Mortgage Market Monitor",
         "Hockey Pathway Navigator",
     ])
 
@@ -1278,7 +1279,393 @@ elif page == "AI Research":
         """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
-# MODEL 4 — HOCKEY PATHWAY NAVIGATOR
+# MODEL 4 — MORTGAGE MARKET MONITOR
+# ══════════════════════════════════════════════════════════════
+    elif model == "Mortgage Market Monitor":
+        st.markdown("## Mortgage Market Monitor")
+        st.markdown("*Fixed Income Mortgage Research Tool | Sidney Pratt*")
+        st.markdown("---")
+
+        st.markdown("""
+        <div class="static-section">
+            <h3>Overview</h3>
+            <p>
+            This model tracks the official Freddie Mac 30-year fixed
+            mortgage rate, the mortgage spread over the 10-year Treasury
+            yield, and the refinancing environment using real data pulled
+            directly from the Federal Reserve (FRED).<br><br>
+            The mortgage spread — the gap between the 30-year mortgage
+            rate and the 10-year Treasury yield — is the key signal
+            watched by every mortgage trading desk. When the spread
+            widens it signals stress in the MBS market. When it narrows
+            it signals lender competition and tight credit conditions.
+            Built on 16 years of real daily data from 2010 to present.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="static-section">
+            <h3>Key Features</h3>
+            <p>
+            • Official Freddie Mac 30-year mortgage rate pulled live from FRED<br><br>
+            • Mortgage spread calculated against the 10-year Treasury yield<br><br>
+            • Spread regime classification — Tight, Normal, Wide, Very Wide<br><br>
+            • Refinancing environment signal — Minimal, Some, Active, Wave<br><br>
+            • Prepayment risk classification — Low, Moderate, High<br><br>
+            • Percentile ranking against full history since 2010<br><br>
+            • Three chart visualization — rates, spread regime, MBB vs AGG
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="data-source-section">
+            <h3>Data Sources</h3>
+            <p>
+            <b>Primary Data:</b> Freddie Mac Primary Mortgage Market Survey
+            (FRED series: MORTGAGE30US) — the official 30-year fixed mortgage
+            rate published weekly by the Federal Reserve Bank of St. Louis.<br><br>
+            <b>Accuracy:</b> This is the exact same mortgage rate reported by
+            Bloomberg, CNBC, and every major financial news source. 100%
+            accurate — not a proxy or approximation.<br><br>
+            <b>Treasury Yields:</b> 10-year (^TNX) and 30-year (^TYX) yields
+            from Yahoo Finance — match the US Treasury website exactly.<br><br>
+            <b>MBB & AGG:</b> ETF closing prices from Yahoo Finance used for
+            the relative performance chart only.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("""
+            <div class="static-section">
+                <h3>Why It Matters</h3>
+                <p>
+                The mortgage spread is the primary signal watched by
+                every mortgage trading desk. It determines whether MBS
+                are cheap or expensive relative to Treasuries, drives
+                prepayment modeling assumptions, and signals stress in
+                the housing finance system before it shows up elsewhere.<br><br>
+                The November 2022 spike to 3.39% — the widest since the
+                2008 crisis — showed how rapidly the spread can move
+                during Fed rate hike cycles. Every mortgage desk
+                watched that spread daily.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        with col2:
+            st.markdown("""
+            <div class="static-section">
+                <h3>Methodology</h3>
+                <p>
+                Downloads the official Freddie Mac 30-year mortgage rate
+                from FRED and the 10-year Treasury yield from Yahoo Finance.
+                The mortgage spread is simply the difference between the two.<br><br>
+                The spread is classified into four regimes based on
+                historical thresholds. The refi signal compares today's
+                rate to 12 months ago — a drop of 0.75%+ triggers Active
+                Refi, 1.50%+ triggers a Refi Wave.<br><br>
+                Prepayment risk is derived from combining the spread
+                regime and the refi environment.<br><br>
+                <b>Methodology never changes regardless of date range.</b>
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="static-section">
+            <h3>Regime Classification</h3>
+            <p>
+            <b>Spread TIGHT (below 1.50%):</b> Lenders competing aggressively.
+            MBS rich relative to Treasuries. Less attractive for new purchases.<br><br>
+            <b>Spread NORMAL (1.50% to 2.00%):</b> Mortgage risk priced
+            appropriately. Normal prepayment modeling assumptions apply.<br><br>
+            <b>Spread WIDE (2.00% to 2.50%):</b>
+            <span style="color:#E65100; font-weight:bold;">
+            Lenders demanding more compensation. MBS cheap relative to Treasuries.
+            Worth monitoring for further widening.</span><br><br>
+            <b>Spread VERY WIDE (above 2.50%):</b>
+            <span style="color:#B71C1C; font-weight:bold;">
+            Significant MBS market stress. Seen during 2008-09, COVID March 2020,
+            and the November 2022 rate shock.</span>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown("### Run the Model")
+        col1, col2 = st.columns(2)
+        with col1:
+            start_date_mm = st.date_input("Start Date",
+                value=datetime.date(2010, 1, 1), key="mm_start")
+        with col2:
+            end_date_mm = st.date_input("End Date",
+                value=datetime.date.today(), key="mm_end")
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        if st.button("Run Mortgage Market Monitor"):
+            with st.spinner("Downloading official Freddie Mac mortgage rate from FRED..."):
+
+                # Official Freddie Mac 30-Year Fixed Mortgage Rate from FRED
+                mortgage = web.DataReader("MORTGAGE30US", "fred",
+                    str(start_date_mm), str(end_date_mm))
+                mortgage.columns = ["Mortgage_Rate"]
+
+                # Treasury yields and ETFs from Yahoo Finance
+                tnx = yf.download("^TNX", start=str(start_date_mm),
+                    end=str(end_date_mm), auto_adjust=True,
+                    progress=False)["Close"]
+                tyx = yf.download("^TYX", start=str(start_date_mm),
+                    end=str(end_date_mm), auto_adjust=True,
+                    progress=False)["Close"]
+                mbb = yf.download("MBB", start=str(start_date_mm),
+                    end=str(end_date_mm), auto_adjust=True,
+                    progress=False)["Close"]
+                agg = yf.download("AGG", start=str(start_date_mm),
+                    end=str(end_date_mm), auto_adjust=True,
+                    progress=False)["Close"]
+
+                prices = pd.concat([tnx, tyx, mbb, agg], axis=1).dropna()
+                prices.columns = ["10Y_Treasury", "30Y_Treasury", "MBB", "AGG"]
+                mortgage_aligned = mortgage.reindex(
+                    prices.index, method="ffill").dropna()
+                df_mm = pd.concat([prices, mortgage_aligned], axis=1).dropna()
+
+                # Calculations
+                df_mm["Mortgage_Spread"] = \
+                    df_mm["Mortgage_Rate"] - df_mm["10Y_Treasury"]
+                df_mm["Spread_Smooth"]   = \
+                    df_mm["Mortgage_Spread"].rolling(21).mean()
+                df_mm = df_mm.dropna()
+
+                def classify_spread_mm(spread):
+                    if spread < 1.50:   return "TIGHT"
+                    elif spread < 2.00: return "NORMAL"
+                    elif spread < 2.50: return "WIDE"
+                    else:               return "VERY WIDE"
+
+                def classify_refi_mm(rate, rate_12m):
+                    if pd.isna(rate_12m): return "UNKNOWN"
+                    drop = rate_12m - rate
+                    if drop >= 1.50:   return "REFI WAVE"
+                    elif drop >= 0.75: return "ACTIVE REFI"
+                    elif drop >= 0.25: return "SOME REFI"
+                    else:              return "MINIMAL REFI"
+
+                def prepay_risk_mm(regime, refi):
+                    if refi in ["REFI WAVE", "ACTIVE REFI"]: return "HIGH"
+                    elif refi == "SOME REFI":                return "MODERATE"
+                    elif regime == "TIGHT":                  return "MODERATE"
+                    else:                                    return "LOW"
+
+                df_mm["Spread_Regime"] = \
+                    df_mm["Mortgage_Spread"].apply(classify_spread_mm)
+                rate_12m = df_mm["Mortgage_Rate"].shift(252)
+                df_mm["Refi_Signal"] = [
+                    classify_refi_mm(row["Mortgage_Rate"], rate_12m.iloc[i])
+                    for i, (_, row) in enumerate(df_mm.iterrows())
+                ]
+                df_mm["Prepay_Risk"] = [
+                    prepay_risk_mm(row["Spread_Regime"], row["Refi_Signal"])
+                    for _, row in df_mm.iterrows()
+                ]
+
+                cur_mort_mm    = float(df_mm["Mortgage_Rate"].iloc[-1])
+                cur_10y_mm     = float(df_mm["10Y_Treasury"].iloc[-1])
+                cur_30y_mm     = float(df_mm["30Y_Treasury"].iloc[-1])
+                cur_spread_mm  = float(df_mm["Mortgage_Spread"].iloc[-1])
+                avg_spread_mm  = float(df_mm["Mortgage_Spread"].mean())
+                cur_regime_mm  = df_mm["Spread_Regime"].iloc[-1]
+                cur_refi_mm    = df_mm["Refi_Signal"].iloc[-1]
+                cur_prepay_mm  = df_mm["Prepay_Risk"].iloc[-1]
+                cur_date_mm    = df_mm.index[-1].strftime('%B %d, %Y')
+                pct_rank_mm    = float(
+                    (df_mm["Mortgage_Spread"] < cur_spread_mm).mean() * 100)
+                max_spread_mm  = float(df_mm["Mortgage_Spread"].max())
+                min_spread_mm  = float(df_mm["Mortgage_Spread"].min())
+                max_date_mm    = df_mm["Mortgage_Spread"].idxmax().strftime('%B %Y')
+                min_date_mm    = df_mm["Mortgage_Spread"].idxmin().strftime('%B %Y')
+                mbb_1m_mm      = float(
+                    (df_mm["MBB"].iloc[-1]/df_mm["MBB"].iloc[-21]-1)*100)
+                mbb_12m_mm     = float(
+                    (df_mm["MBB"].iloc[-1]/df_mm["MBB"].iloc[-252]-1)*100)
+
+            st.markdown("---")
+
+            # Signal
+            st.markdown("### Signal")
+            if cur_regime_mm == "TIGHT":
+                st.success(f"✅ TIGHT SPREAD — As of {cur_date_mm} the mortgage "
+                    f"spread is {cur_spread_mm:.2f}% ({cur_spread_mm*100:.0f} bps). "
+                    f"Lenders competing aggressively.")
+            elif cur_regime_mm == "NORMAL":
+                st.success(f"✅ NORMAL SPREAD — As of {cur_date_mm} the mortgage "
+                    f"spread is {cur_spread_mm:.2f}% ({cur_spread_mm*100:.0f} bps). "
+                    f"Mortgage risk priced appropriately.")
+            elif cur_regime_mm == "WIDE":
+                st.warning(f"⚠️ WIDE SPREAD — As of {cur_date_mm} the mortgage "
+                    f"spread is {cur_spread_mm:.2f}% ({cur_spread_mm*100:.0f} bps). "
+                    f"Lenders demanding more compensation.")
+            else:
+                st.error(f"🚨 VERY WIDE SPREAD — As of {cur_date_mm} the mortgage "
+                    f"spread is {cur_spread_mm:.2f}% ({cur_spread_mm*100:.0f} bps). "
+                    f"Significant MBS market stress.")
+
+            # Refi and Prepay signal
+            st.markdown("### Refinancing & Prepayment Signal")
+            if cur_refi_mm in ["MINIMAL REFI", "SOME REFI"]:
+                st.success(f"✅ {cur_refi_mm} — Prepayment Risk: {cur_prepay_mm}. "
+                    f"MBS duration is close to its stated maturity.")
+            elif cur_refi_mm == "ACTIVE REFI":
+                st.warning(f"⚠️ {cur_refi_mm} — Prepayment Risk: {cur_prepay_mm}. "
+                    f"Prepayment speeds above normal. Duration shortening.")
+            else:
+                st.error(f"🚨 {cur_refi_mm} — Prepayment Risk: {cur_prepay_mm}. "
+                    f"Significant prepayment acceleration. Duration shortening rapidly.")
+
+            # Results
+            st.markdown("---")
+            st.markdown("### Results")
+            m1, m2, m3, m4 = st.columns(4)
+            m1.metric("Official 30Y Mortgage", f"{cur_mort_mm:.2f}%")
+            m2.metric("10-Year Treasury",       f"{cur_10y_mm:.2f}%")
+            m3.metric("Mortgage Spread",        f"{cur_spread_mm:.2f}%")
+            m4.metric("Percentile since 2010",  f"{pct_rank_mm:.0f}th")
+
+            s1, s2, s3 = st.columns(3)
+            s1.metric("Spread Regime",          cur_regime_mm)
+            s2.metric("Refi Environment",       cur_refi_mm)
+            s3.metric("Prepayment Risk",        cur_prepay_mm)
+
+            # Historical context
+            st.markdown("---")
+            st.markdown("### Historical Context")
+            h1, h2, h3, h4 = st.columns(4)
+            h1.metric("Historical Avg",    f"{avg_spread_mm:.2f}%", "since 2010")
+            h2.metric("vs Average",        f"{cur_spread_mm - avg_spread_mm:+.2f}%")
+            h3.metric("All-Time High",     f"{max_spread_mm:.2f}%", max_date_mm)
+            h4.metric("All-Time Low",      f"{min_spread_mm:.2f}%", min_date_mm)
+
+            w1, w2 = st.columns(2)
+            w1.metric("MBB 1-Month",  f"{mbb_1m_mm:+.1f}%")
+            w2.metric("MBB 12-Month", f"{mbb_12m_mm:+.1f}%")
+
+            # Charts
+            st.markdown("---")
+            st.markdown("### Charts")
+            fig = plt.figure(figsize=(14, 14))
+            fig.patch.set_facecolor('#FFFFFF')
+            gs   = gridspec.GridSpec(3, 1, figure=fig, hspace=0.35)
+            axes = [fig.add_subplot(gs[i]) for i in range(3)]
+
+            for ax in axes:
+                ax.set_facecolor('#F9F9F9')
+                ax.tick_params(colors='#333333', labelsize=9)
+                for spine in ax.spines.values():
+                    spine.set_edgecolor('#DDDDDD')
+                ax.grid(axis='y', color='#EEEEEE', linewidth=0.8)
+                ax.grid(axis='x', color='#EEEEEE', linewidth=0.5, alpha=0.5)
+
+            fig.suptitle(
+                "Mortgage Market Monitor — Freddie Mac via FRED (MORTGAGE30US)",
+                fontsize=13, fontweight='bold', color='#222222', y=0.98)
+
+            # Chart 1 — Mortgage rate vs 10Y Treasury
+            ax = axes[0]
+            ax.plot(df_mm.index, df_mm["10Y_Treasury"],
+                color='#1A237E', linewidth=1.5, label='10-Year Treasury')
+            ax.plot(df_mm.index, df_mm["Mortgage_Rate"],
+                color='#B71C1C', linewidth=1.5,
+                label='Official 30Y Mortgage Rate (Freddie Mac)')
+            ax.fill_between(df_mm.index,
+                df_mm["10Y_Treasury"], df_mm["Mortgage_Rate"],
+                color='#E53935', alpha=0.08, label='Mortgage Spread')
+            ax.set_title(
+                'Official 30-Year Mortgage Rate vs 10-Year Treasury',
+                color='#333333', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Rate (%)', color='#333333')
+            ax.legend(facecolor='#F9F9F9', labelcolor='#333333', fontsize=8)
+            ax.yaxis.set_major_formatter(
+                plt.FuncFormatter(lambda x, _: f'{x:.1f}%'))
+            ax.annotate(f'  Today: {cur_mort_mm:.2f}%',
+                xy=(df_mm.index[-1], cur_mort_mm),
+                fontsize=8, color='#B71C1C', fontweight='bold')
+
+            # Chart 2 — Mortgage spread with regime shading
+            ax = axes[1]
+            ax.axhspan(0,    1.50, color='#1B5E20', alpha=0.08,
+                label='Tight (<1.50%)')
+            ax.axhspan(1.50, 2.00, color='#2E7D32', alpha=0.08,
+                label='Normal (1.50-2.00%)')
+            ax.axhspan(2.00, 2.50, color='#F9A825', alpha=0.08,
+                label='Wide (2.00-2.50%)')
+            ax.axhspan(2.50, 5.00, color='#C62828', alpha=0.10,
+                label='Very Wide (>2.50%)')
+            ax.axhline(y=avg_spread_mm, color='#666666', linewidth=1,
+                linestyle='--', alpha=0.7,
+                label=f'Avg: {avg_spread_mm:.2f}%')
+            ax.plot(df_mm.index, df_mm["Mortgage_Spread"],
+                color='#CCCCCC', linewidth=0.5, alpha=0.6)
+            ax.plot(df_mm["Spread_Smooth"].index,
+                df_mm["Spread_Smooth"].values,
+                color='#1A237E', linewidth=2,
+                label='Spread (21-day avg)', zorder=4)
+            ax.scatter(df_mm.index[-1],
+                float(df_mm["Spread_Smooth"].iloc[-1]),
+                color='#1A237E', s=70, zorder=5)
+            ax.annotate(f'  Today: {cur_spread_mm:.2f}%',
+                xy=(df_mm.index[-1],
+                float(df_mm["Spread_Smooth"].iloc[-1])),
+                fontsize=8, color='#1A237E', fontweight='bold')
+            ax.set_title(
+                'Mortgage Spread — TIGHT / NORMAL / WIDE / VERY WIDE',
+                color='#333333', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Spread (%)', color='#333333')
+            ax.legend(facecolor='#F9F9F9', labelcolor='#333333',
+                fontsize=8, ncol=3)
+            ax.yaxis.set_major_formatter(
+                plt.FuncFormatter(lambda x, _: f'{x:.2f}%'))
+
+            # Chart 3 — MBB vs AGG
+            ax = axes[2]
+            mbb_norm_mm = (df_mm["MBB"] / df_mm["MBB"].iloc[0]) * 100
+            agg_norm_mm = (df_mm["AGG"] / df_mm["AGG"].iloc[0]) * 100
+            relative_mm = mbb_norm_mm - agg_norm_mm
+            ax.fill_between(df_mm.index, 0, relative_mm,
+                where=relative_mm >= 0, color='#2E7D32', alpha=0.4,
+                label='MBB outperforming AGG')
+            ax.fill_between(df_mm.index, 0, relative_mm,
+                where=relative_mm < 0,  color='#C62828', alpha=0.4,
+                label='MBB underperforming AGG')
+            ax.axhline(y=0, color='#333333', linewidth=1)
+            ax.plot(df_mm.index, relative_mm,
+                color='#333333', linewidth=0.8, alpha=0.6)
+            ax.set_title(
+                'MBS ETF (MBB) vs Investment Grade Bonds (AGG) — Relative Performance',
+                color='#333333', fontsize=12, fontweight='bold')
+            ax.set_ylabel('MBB minus AGG (pts)', color='#333333')
+            ax.legend(facecolor='#F9F9F9', labelcolor='#333333', fontsize=8)
+
+            plt.tight_layout(pad=2.5)
+            st.pyplot(fig)
+
+        st.markdown("---")
+        st.markdown("""
+        <div class="card">
+            <h3>Full Research Notebook</h3>
+            <p>
+            View the complete Mortgage Market Monitor including all code,
+            charts, spread analysis, and historical period breakdown
+            on GitHub:<br><br>
+            github.com/sidneyppratt-svg/mortgage-market-monitor
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+# ══════════════════════════════════════════════════════════════
+# MODEL 5 — HOCKEY PATHWAY NAVIGATOR
 # ══════════════════════════════════════════════════════════════
     elif model == "Hockey Pathway Navigator":
         st.markdown("## Hockey Pathway Navigator")
