@@ -424,15 +424,61 @@ elif page == "AI Research":
     Each model is built on real data and fully interactive.
     </p>
     """, unsafe_allow_html=True)
-    st.markdown("---")
 
-    model = st.selectbox("Select a model:", [
-        "Yield Curve Monitor",
-        "Multi-Asset Market Regime Detector",
-        "Credit Spread Monitor",
-        "Mortgage Market Monitor",
-        "Hockey Pathway Navigator",
-    ])
+    # Model selection cards
+    c1, c2, c3, c4, c5 = st.columns(5)
+    with c1:
+        st.markdown("""
+        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
+            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Yield Curve Monitor</p>
+            <p style="font-size:11px; color:#555; margin:0; line-height:1.4;">US Treasury yield curve — 5 regime classification</p>
+        </div>
+        """, unsafe_allow_html=True)
+        m1 = st.button("Open", key="btn_yc", use_container_width=True)
+    with c2:
+        st.markdown("""
+        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
+            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Regime Detector</p>
+            <p style="font-size:11px; color:#555; margin:0; line-height:1.4;">ML detection of RISK-ON / RISK-OFF across 4 assets</p>
+        </div>
+        """, unsafe_allow_html=True)
+        m2 = st.button("Open", key="btn_rd", use_container_width=True)
+    with c3:
+        st.markdown("""
+        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
+            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Credit Spread Monitor</p>
+            <p style="font-size:11px; color:#555; margin:0; line-height:1.4;">ICE BofA OAS spread — Bloomberg accurate via FRED</p>
+        </div>
+        """, unsafe_allow_html=True)
+        m3 = st.button("Open", key="btn_cs", use_container_width=True)
+    with c4:
+        st.markdown("""
+        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
+            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Mortgage Monitor</p>
+            <p style="font-size:11px; color:#555; margin:0; line-height:1.4;">Official Freddie Mac 30Y mortgage rate via FRED</p>
+        </div>
+        """, unsafe_allow_html=True)
+        m4 = st.button("Open", key="btn_mm", use_container_width=True)
+    with c5:
+        st.markdown("""
+        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
+            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Hockey Navigator</p>
+            <p style="font-size:11px; color:#555; margin:0; line-height:1.4;">Personalized hockey pathway and college outcome guide</p>
+        </div>
+        """, unsafe_allow_html=True)
+        m5 = st.button("Open", key="btn_hn", use_container_width=True)
+
+    # Session state to track which model is open
+    if "model" not in st.session_state:
+        st.session_state.model = "Yield Curve Monitor"
+    if m1: st.session_state.model = "Yield Curve Monitor"
+    if m2: st.session_state.model = "Multi-Asset Market Regime Detector"
+    if m3: st.session_state.model = "Credit Spread Monitor"
+    if m4: st.session_state.model = "Mortgage Market Monitor"
+    if m5: st.session_state.model = "Hockey Pathway Navigator"
+
+    model = st.session_state.model
+    st.markdown("---")
 
 # ══════════════════════════════════════════════════════════════
 # MODEL 1 — YIELD CURVE MONITOR
