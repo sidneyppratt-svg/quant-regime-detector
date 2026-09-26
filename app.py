@@ -223,7 +223,7 @@ st.markdown("""
     }
     /* Push page content down so it doesn't hide under the fixed nav */
     .main > div:nth-child(2) {
-        margin-top: 6.5rem;
+        margin-top: 9rem;
     }
 </style>
 """, unsafe_allow_html=True)
