@@ -238,7 +238,10 @@ st.markdown("""
         cursor: pointer !important;
         box-shadow: none !important;
         white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
         height: auto !important;
+        min-height: 3rem !important;
         line-height: 1.5 !important;
         transition: background 0.15s ease, border-color 0.15s ease !important;
     }
