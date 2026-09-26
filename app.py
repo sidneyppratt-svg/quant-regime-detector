@@ -233,17 +233,22 @@ st.markdown("""
         color: #333333 !important;
         font-size: 13px !important;
         font-weight: bold !important;
-        padding: 0.8rem !important;
+        padding: 1rem 0.75rem !important;
         width: 100% !important;
         cursor: pointer !important;
         box-shadow: none !important;
-        white-space: normal !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-        height: auto !important;
-        min-height: 3rem !important;
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+        height: unset !important;
+        min-height: unset !important;
+        max-height: unset !important;
         line-height: 1.5 !important;
+        display: block !important;
         transition: background 0.15s ease, border-color 0.15s ease !important;
+    }
+    div[data-testid="stButton"] button p {
+        white-space: normal !important;
+        word-break: break-word !important;
     }
     div[data-testid="stButton"] button:hover {
         background: #EFEFEF !important;
