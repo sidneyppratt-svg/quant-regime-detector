@@ -494,15 +494,40 @@ elif page == "AI Research":
         <div class="static-section">
             <h3>Regime Classification</h3>
             <p>
-            <b>Steep</b> (above +1.50%) — Strong growth signal →
+            <b>STEEP</b> (10Y minus 3M above +1.50%) —
+            Long-term rates are significantly higher than short-term rates.
+            The market expects strong future economic growth. Banks earn
+            wide margins borrowing short and lending long. Historically
+            the best environment for bonds and equities. →
             <span style="color:#2E7D32; font-weight:bold;">HOLD TLT</span><br><br>
-            <b>Normal</b> (+0.50% to +1.50%) — Healthy economy →
+
+            <b>NORMAL</b> (+0.50% to +1.50%) —
+            The curve has its typical upward slope. Short-term rates are
+            lower than long-term rates as expected. The economy is healthy
+            with no recession signals. The most common regime. →
             <span style="color:#2E7D32; font-weight:bold;">HOLD TLT</span><br><br>
-            <b>Flat</b> (-0.50% to +0.50%) — Transition zone →
+
+            <b>FLAT</b> (-0.50% to +0.50%) —
+            Short and long-term rates are nearly equal. The market is
+            uncertain about the future. Banks earn little margin. Often
+            a transition zone between healthy and inverted. A warning
+            sign that the economy may be slowing. →
             <span style="color:#E65100; font-weight:bold;">MOVE TO CASH</span><br><br>
-            <b>Inverted</b> (-0.50% to 0%) — Recession warning →
+
+            <b>INVERTED</b> (-0.50% to 0%) —
+            Short-term rates are higher than long-term rates. This is
+            abnormal and historically the most reliable recession predictor.
+            Means the market expects the Fed will cut rates sharply in the
+            future because the economy is slowing. Every major US recession
+            since 1970 was preceded by an inversion. →
             <span style="color:#C62828; font-weight:bold;">MOVE TO CASH</span><br><br>
-            <b>Deeply Inverted</b> (below -0.50%) — High alert →
+
+            <b>DEEPLY INVERTED</b> (below -0.50%) —
+            The most extreme inversion level. Short-term rates are
+            significantly above long-term rates. The Fed has tightened
+            aggressively and the market expects a hard landing. The
+            2022-23 inversion reached -1.70% — the deepest since the
+            1980s Volcker era. High alert. →
             <span style="color:#B71C1C; font-weight:bold;">MOVE TO CASH</span>
             </p>
         </div>
@@ -799,16 +824,51 @@ elif page == "AI Research":
 
         st.markdown("""
         <div class="static-section">
+            <h3>Regime Classification</h3>
+            <p>
+            <b>RISK-ON</b> —
+            Investors are comfortable taking risk. All four asset classes
+            are behaving normally — stocks are rising, high yield credit
+            is performing well, and there is no unusual demand for safe
+            havens like gold or government bonds. This is the environment
+            where equity exposure makes sense and credit spreads are calm.
+            The model signals stay invested in equities.<br><br>
+
+            <b>RISK-OFF</b> —
+            Investors are pulling back from risk. Stress is showing up
+            across multiple asset classes simultaneously — stocks falling,
+            high yield credit underperforming investment grade, and demand
+            rising for safe havens like gold and government bonds. This is
+            the environment where capital preservation matters more than
+            returns. The model signals move to cash.<br><br>
+
+            <b>What makes this model different:</b> Most indicators watch
+            one asset. This model watches four at once. A single bad day
+            in stocks does not trigger RISK-OFF. What triggers it is when
+            stocks, credit, and safe haven assets all move together in a
+            stress pattern — exactly what happens during real market crises.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="static-section">
             <h3>Asset Classes Covered</h3>
             <p>
-            <b>SPY — US Equities:</b> S&P 500 — broad US stock market.
-            Primary return driver in RISK-ON environments.<br><br>
-            <b>AGG — Investment Grade Bonds:</b> High quality corporate
-            and government bonds. Safe haven during RISK-OFF.<br><br>
-            <b>HYG — High Yield Credit:</b> Riskier corporate bonds.
-            Falls sharply during stress — early warning signal.<br><br>
-            <b>GLD — Gold:</b> Safe haven asset. Spikes during stress
-            and geopolitical uncertainty.
+            <b>SPY — US Equities:</b> S&P 500 ETF — the broadest measure
+            of US stock market performance. Rises in RISK-ON, falls sharply
+            in RISK-OFF. The primary return driver in this model.<br><br>
+            <b>AGG — Investment Grade Bonds:</b> High quality corporate and
+            government bonds. Often rises during RISK-OFF as investors flee
+            to safety. Acts as the counter-weight to equities.<br><br>
+            <b>HYG — High Yield Credit:</b> Riskier corporate bonds from
+            companies with lower credit ratings. Falls sharply during stress
+            because investors demand more compensation for default risk.
+            Often the first asset to show cracks before stocks fall.<br><br>
+            <b>GLD — Gold:</b> The classic safe haven. Spikes during
+            geopolitical stress, inflation fears, and financial crises.
+            When gold and bonds both rise while stocks fall, that is a
+            strong RISK-OFF signal.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -1048,19 +1108,41 @@ elif page == "AI Research":
         <div class="static-section">
             <h3>Stress Score & OAS Regime Classification</h3>
             <p>
-            <b>Score 1 — Very Calm (OAS below 2.50%):</b> Credit markets
-            extremely relaxed. Investors comfortable with risk.<br><br>
-            <b>Score 2 — Calm (OAS 2.50% to 3.00%):</b> Normal credit
-            conditions. Spreads near historical average.<br><br>
-            <b>Score 3 — Moderate (OAS 3.00% to 3.50%):</b> Some caution
-            warranted. Spreads widening but not alarming.<br><br>
-            <b>Score 4 — Elevated (OAS 3.50% to 5.00%):</b>
+            The OAS (Option-Adjusted Spread) is the extra yield investors
+            demand to hold high yield bonds instead of risk-free Treasuries.
+            Think of it as the market's price for corporate default risk.
+            When the OAS is low investors are relaxed. When it spikes
+            investors are scared and demanding more compensation.<br><br>
+
+            <b>Score 1 — VERY CALM (OAS below 2.50%):</b>
+            Investors are extremely comfortable lending to risky companies.
+            Default risk is being priced at historically low levels.
+            Credit markets are healthy. Seen during strong economic
+            expansions with low unemployment and rising corporate earnings.<br><br>
+
+            <b>Score 2 — CALM (OAS 2.50% to 3.00%):</b>
+            Credit conditions are normal. Spreads are near their long-run
+            average. No signs of stress. A good environment for holding
+            high yield bonds.<br><br>
+
+            <b>Score 3 — MODERATE (OAS 3.00% to 3.50%):</b>
+            Spreads are starting to widen above average. Investors are
+            becoming more cautious. Worth monitoring whether this is a
+            temporary move or the start of a trend toward stress.<br><br>
+
+            <b>Score 4 — ELEVATED (OAS 3.50% to 5.00%):</b>
             <span style="color:#E64A19; font-weight:bold;">
-            Credit stress building — watch closely.</span><br><br>
-            <b>Score 5 — High Stress (OAS above 5.00%):</b>
+            Credit stress is building. Investors are demanding significantly
+            more compensation for default risk. This level has historically
+            preceded recessions and market downturns. Consider reducing
+            exposure to high yield bonds and risk assets.</span><br><br>
+
+            <b>Score 5 — HIGH STRESS (OAS above 5.00%):</b>
             <span style="color:#B71C1C; font-weight:bold;">
-            Crisis-level spreads — reduce credit risk exposure.
-            Seen during 2008-09 and COVID March 2020.</span>
+            Crisis-level spreads. The market is pricing in a significant
+            wave of corporate defaults. This territory was seen during the
+            2008 financial crisis, COVID March 2020, and the 2016 oil
+            price collapse. Reduce credit risk exposure immediately.</span>
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -1378,18 +1460,69 @@ elif page == "AI Research":
         <div class="static-section">
             <h3>Regime Classification</h3>
             <p>
-            <b>Spread TIGHT (below 1.50%):</b> Lenders competing aggressively.
-            MBS rich relative to Treasuries. Less attractive for new purchases.<br><br>
-            <b>Spread NORMAL (1.50% to 2.00%):</b> Mortgage risk priced
-            appropriately. Normal prepayment modeling assumptions apply.<br><br>
-            <b>Spread WIDE (2.00% to 2.50%):</b>
+            The mortgage spread is the gap between the official 30-year
+            mortgage rate and the 10-year Treasury yield. It represents
+            the extra cost borrowers pay above the risk-free rate to
+            compensate lenders for prepayment risk, credit risk, and
+            servicing costs. A wider spread means mortgages are more
+            expensive relative to Treasuries — a signal of stress or
+            uncertainty in the housing finance market.<br><br>
+
+            <b>TIGHT (below 1.50%):</b>
+            Lenders are competing aggressively for mortgage business.
+            The extra cost of a mortgage above Treasuries is historically
+            low. MBS are expensive relative to Treasuries — investors
+            are accepting less compensation than usual for mortgage risk.
+            Good for new homebuyers but less attractive for MBS investors
+            buying at tight levels.<br><br>
+
+            <b>NORMAL (1.50% to 2.00%):</b>
+            Mortgage risk is priced appropriately relative to Treasuries.
+            The spread is in its historical average range. Lenders are
+            earning a fair margin. Normal prepayment modeling assumptions
+            apply. The most common regime — the market is functioning
+            as expected.<br><br>
+
+            <b>WIDE (2.00% to 2.50%):</b>
             <span style="color:#E65100; font-weight:bold;">
-            Lenders demanding more compensation. MBS cheap relative to Treasuries.
-            Worth monitoring for further widening.</span><br><br>
-            <b>Spread VERY WIDE (above 2.50%):</b>
+            Lenders are demanding more compensation above Treasuries.
+            This can reflect uncertainty about prepayment speeds, tighter
+            bank balance sheets, or broader fixed income stress. MBS are
+            cheap relative to Treasuries. Could be a buying opportunity
+            if the widening is technical — worth monitoring closely.</span><br><br>
+
+            <b>VERY WIDE (above 2.50%):</b>
             <span style="color:#B71C1C; font-weight:bold;">
-            Significant MBS market stress. Seen during 2008-09, COVID March 2020,
-            and the November 2022 rate shock.</span>
+            Significant stress in the mortgage market. Lenders are
+            demanding crisis-level compensation above Treasuries. This
+            territory was seen during the 2008 financial crisis, COVID
+            March 2020, and the November 2022 rate shock when the Fed
+            was hiking aggressively. MBS are very cheap but duration
+            risk is high.</span><br><br>
+
+            <b>MINIMAL REFI:</b> Current mortgage rates are not
+            significantly below where they were 12 months ago. Most
+            borrowers have little financial incentive to refinance.
+            Prepayment speeds are near baseline — MBS duration is
+            close to its stated maturity.<br><br>
+
+            <b>SOME REFI:</b> Rates have fallen modestly. Some borrowers
+            who were well above the current rate may refinance. Prepayment
+            speeds are slightly above baseline.<br><br>
+
+            <b>ACTIVE REFI:</b> Rates have fallen meaningfully — more than
+            0.75% below a year ago. A meaningful portion of existing
+            mortgages are in the money to refinance. Prepayment speeds
+            are elevated. MBS duration is shortening.<br><br>
+
+            <b>REFI WAVE:</b>
+            <span style="color:#B71C1C; font-weight:bold;">
+            Rates have fallen more than 1.50% below a year ago. A large
+            portion of the existing mortgage market can benefit from
+            refinancing. Prepayment speeds are accelerating rapidly.
+            MBS holders receive principal back much faster than expected —
+            duration collapses. A major risk for MBS investors who
+            bought at higher prices.</span>
             </p>
         </div>
         """, unsafe_allow_html=True)
