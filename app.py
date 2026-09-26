@@ -179,7 +179,8 @@ with st.sidebar:
     margin-bottom:0.5rem;">Photo coming soon</p>
     """, unsafe_allow_html=True)
     st.markdown("## Sidney Pratt")
-    st.markdown("*Economics & Finance*")
+    st.markdown("Economics & Finance")
+    st.markdown("Western Michigan University")
     st.markdown("---")
     st.markdown("### Contact")
     st.markdown("""
