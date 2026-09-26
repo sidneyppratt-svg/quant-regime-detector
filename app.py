@@ -225,23 +225,28 @@ st.markdown("""
     section[data-testid="stMainBlockContainer"] > div:first-child {
         padding-top: 4rem !important;
     }
-    /* Style model open buttons to look minimal */
+    /* Style model buttons as full cards */
     div[data-testid="stButton"] button {
-        background: transparent !important;
-        border: none !important;
-        color: #1A73E8 !important;
-        font-size: 11px !important;
+        background: #F9F9F9 !important;
+        border: 1px solid #444444 !important;
+        border-radius: 12px !important;
+        color: #333333 !important;
+        font-size: 13px !important;
         font-weight: bold !important;
-        padding: 0 !important;
-        margin-top: -1.2rem !important;
+        padding: 0.8rem !important;
         width: 100% !important;
         cursor: pointer !important;
         box-shadow: none !important;
+        white-space: normal !important;
+        height: auto !important;
+        line-height: 1.5 !important;
+        transition: background 0.15s ease, border-color 0.15s ease !important;
     }
     div[data-testid="stButton"] button:hover {
-        background: transparent !important;
-        color: #0d47a1 !important;
+        background: #EFEFEF !important;
+        border-color: #111111 !important;
         box-shadow: none !important;
+        color: #111111 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -443,48 +448,28 @@ elif page == "AI Research":
     </p>
     """, unsafe_allow_html=True)
 
-    # Model selection cards
+    # Model selection cards — full card is the button
     c1, c2, c3, c4, c5 = st.columns(5)
     with c1:
-        st.markdown("""
-        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
-            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Yield Curve Monitor</p>
-            <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">US Treasury yield curve — 5 regime classification</p>
-        </div>
-        """, unsafe_allow_html=True)
-        m1 = st.button("click to open", key="btn_yc", use_container_width=True)
+        m1 = st.button(
+            "Yield Curve Monitor\n\nUS Treasury yield curve — 5 regime classification",
+            key="btn_yc", use_container_width=True)
     with c2:
-        st.markdown("""
-        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
-            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Regime Detector</p>
-            <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">ML detection of RISK-ON / RISK-OFF across 4 assets</p>
-        </div>
-        """, unsafe_allow_html=True)
-        m2 = st.button("click to open", key="btn_rd", use_container_width=True)
+        m2 = st.button(
+            "Regime Detector\n\nML detection of RISK-ON / RISK-OFF across 4 assets",
+            key="btn_rd", use_container_width=True)
     with c3:
-        st.markdown("""
-        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
-            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Credit Spread Monitor</p>
-            <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">ICE BofA OAS spread — Bloomberg accurate via FRED</p>
-        </div>
-        """, unsafe_allow_html=True)
-        m3 = st.button("click to open", key="btn_cs", use_container_width=True)
+        m3 = st.button(
+            "Credit Spread Monitor\n\nICE BofA OAS spread — Bloomberg accurate via FRED",
+            key="btn_cs", use_container_width=True)
     with c4:
-        st.markdown("""
-        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
-            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Mortgage Monitor</p>
-            <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">Official Freddie Mac 30Y mortgage rate via FRED</p>
-        </div>
-        """, unsafe_allow_html=True)
-        m4 = st.button("click to open", key="btn_mm", use_container_width=True)
+        m4 = st.button(
+            "Mortgage Monitor\n\nOfficial Freddie Mac 30Y mortgage rate via FRED",
+            key="btn_mm", use_container_width=True)
     with c5:
-        st.markdown("""
-        <div class="seeking-card" style="text-align:center; padding:0.8rem;">
-            <p style="font-weight:bold; font-size:13px; margin:0 0 4px 0; color:#333;">Hockey Navigator</p>
-            <p style="font-size:11px; color:#555; margin:0 0 6px 0; line-height:1.4;">Personalized hockey pathway finder</p>
-        </div>
-        """, unsafe_allow_html=True)
-        m5 = st.button("click to open", key="btn_hn", use_container_width=True)
+        m5 = st.button(
+            "Hockey Navigator\n\nPersonalized hockey pathway finder",
+            key="btn_hn", use_container_width=True)
 
     # Session state to track which model is open
     if "model" not in st.session_state:
