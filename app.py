@@ -59,11 +59,11 @@ st.markdown("""
         background-color: #F9F9F9;
         border: 1px solid #DDDDDD;
         border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
+        padding: 0.9rem 1.1rem;
+        margin-bottom: 0.75rem;
     }
-    .card h3 { color: #444444 !important; margin-bottom: 0.5rem; }
-    .card p { color: #1a1a1a !important; line-height: 1.6; }
+    .card h3 { padding: 0 !important; margin-top: 0 !important; color: #444444 !important; margin-bottom: 0.5rem; }
+    .card p { color: #1a1a1a !important; line-height: 1.5; margin-bottom: 0 !important; }
     .tag {
         display: inline-block;
         background-color: #444444;
@@ -156,29 +156,29 @@ st.markdown("""
         background-color: #F0F4FF;
         border: 1px solid #CCDDFF;
         border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
+        padding: 0.9rem 1.1rem;
+        margin-bottom: 0.75rem;
     }
-    .static-section h3 { color: #1A237E !important; margin-bottom: 0.5rem; }
-    .static-section p { color: #1a1a1a !important; line-height: 1.6; }
+    .static-section h3 { padding: 0 !important; margin-top: 0 !important; color: #1A237E !important; margin-bottom: 0.5rem; }
+    .static-section p { color: #1a1a1a !important; line-height: 1.5; margin-bottom: 0 !important; }
     .dynamic-section {
         background-color: #F9F9F9;
         border: 1px solid #DDDDDD;
         border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
+        padding: 0.9rem 1.1rem;
+        margin-bottom: 0.75rem;
     }
-    .dynamic-section h3 { color: #444444 !important; margin-bottom: 0.5rem; }
-    .dynamic-section p { color: #1a1a1a !important; line-height: 1.6; }
+    .dynamic-section h3 { padding: 0 !important; margin-top: 0 !important; color: #444444 !important; margin-bottom: 0.5rem; }
+    .dynamic-section p { color: #1a1a1a !important; line-height: 1.5; margin-bottom: 0 !important; }
     .data-source-section {
         background-color: #F0FFF4;
         border: 1px solid #A8D5B5;
         border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
+        padding: 0.9rem 1.1rem;
+        margin-bottom: 0.75rem;
     }
-    .data-source-section h3 { color: #1B5E20 !important; margin-bottom: 0.5rem; }
-    .data-source-section p { color: #1a1a1a !important; line-height: 1.6; }
+    .data-source-section h3 { padding: 0 !important; margin-top: 0 !important; color: #1B5E20 !important; margin-bottom: 0.5rem; }
+    .data-source-section p { color: #1a1a1a !important; line-height: 1.5; margin-bottom: 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
