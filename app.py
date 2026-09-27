@@ -529,13 +529,13 @@ elif page == "AI Research":
         <div class="static-section">
             <h3>Key Features</h3>
             <p>
-            • Live Treasury yield data downloaded fresh on every run<br><br>
+            • Live Treasury yield data downloaded fresh on every run<br>
             • Regime classification across 5 curve states —
-            Steep, Normal, Flat, Inverted, Deeply Inverted<br><br>
-            • Plain language interpretation of what the curve is saying<br><br>
-            • Dynamic signal and strategy that updates with the regime<br><br>
-            • 30-day and 90-day trend detection — steepening or flattening<br><br>
-            • Backtest of a TLT bond strategy using curve signals 2003-2026<br><br>
+            Steep, Normal, Flat, Inverted, Deeply Inverted<br>
+            • Plain language interpretation of what the curve is saying<br>
+            • Dynamic signal and strategy that updates with the regime<br>
+            • 30-day and 90-day trend detection — steepening or flattening<br>
+            • Backtest of a TLT bond strategy using curve signals 2003-2026<br>
             • Key historical event annotations — 2001, 2006, 2020, 2022-23
             </p>
         </div>
@@ -547,12 +547,12 @@ elif page == "AI Research":
             <p>
             <b>Treasury Yields:</b> Live US Treasury yields downloaded
             directly from Yahoo Finance — tickers ^IRX (3-Month),
-            ^FVX (5-Year), ^TNX (10-Year), ^TYX (30-Year).<br><br>
+            ^FVX (5-Year), ^TNX (10-Year), ^TYX (30-Year).<br>
             <b>Accuracy:</b> These are real market prices and match the
-            US Treasury website exactly. Updated every trading day.<br><br>
+            US Treasury website exactly. Updated every trading day.<br>
             <b>Key Spread:</b> 10Y minus 3M — the Federal Reserve's own
             preferred inversion signal used in the NY Fed recession
-            probability model.<br><br>
+            probability model.<br>
             <b>Backtest:</b> TLT ETF historical price data from Yahoo Finance.
             All calculations performed in Python using pandas and numpy.
             No lookahead bias — prior day signal drives today's position.
@@ -821,12 +821,12 @@ elif page == "AI Research":
         <div class="static-section">
             <h3>Key Features</h3>
             <p>
-            • Live multi-asset price data downloaded fresh on every run<br><br>
-            • Gaussian Mixture Model — unsupervised machine learning<br><br>
-            • Simultaneous analysis of four asset classes<br><br>
-            • RISK-ON and RISK-OFF regime classification<br><br>
-            • 21-day rolling return smoothing to filter daily noise<br><br>
-            • Full backtest of a SPY strategy using regime signals<br><br>
+            • Live multi-asset price data downloaded fresh on every run<br>
+            • Gaussian Mixture Model — unsupervised machine learning<br>
+            • Simultaneous analysis of four asset classes<br>
+            • RISK-ON and RISK-OFF regime classification<br>
+            • 21-day rolling return smoothing to filter daily noise<br>
+            • Full backtest of a SPY strategy using regime signals<br>
             • Regime detection timeline with key event annotations
             </p>
         </div>
@@ -837,16 +837,16 @@ elif page == "AI Research":
             <h3>Data Sources</h3>
             <p>
             <b>SPY (US Equities):</b> S&P 500 ETF — Yahoo Finance.
-            Real closing prices adjusted for dividends and splits.<br><br>
+            Real closing prices adjusted for dividends and splits.<br>
             <b>AGG (Investment Grade Bonds):</b> iShares Core US Aggregate
-            Bond ETF — Yahoo Finance. Real closing prices.<br><br>
+            Bond ETF — Yahoo Finance. Real closing prices.<br>
             <b>HYG (High Yield Credit):</b> iShares iBoxx High Yield
-            Corporate Bond ETF — Yahoo Finance. Real closing prices.<br><br>
+            Corporate Bond ETF — Yahoo Finance. Real closing prices.<br>
             <b>GLD (Gold):</b> SPDR Gold Shares ETF — Yahoo Finance.
-            Real closing prices.<br><br>
+            Real closing prices.<br>
             <b>Accuracy:</b> All four data sources are real market prices
             from Yahoo Finance. ETF prices are adjusted for dividends and
-            splits. These match Bloomberg terminal closing prices exactly.<br><br>
+            splits. These match Bloomberg terminal closing prices exactly.<br>
             <b>Model:</b> Gaussian Mixture Model from scikit-learn.
             Unsupervised — no labels used during training.
             </p>
@@ -1068,12 +1068,12 @@ elif page == "AI Research":
         <div class="static-section">
             <h3>Key Features</h3>
             <p>
-            • Real ICE BofA OAS spread pulled live from FRED on every run<br><br>
-            • Credit stress score from 1 (very calm) to 5 (high stress)<br><br>
-            • Percentile ranking against full history since 2010<br><br>
-            • OAS regime classification — Tight, Normal, Wide, Very Wide<br><br>
-            • 21-day rolling spread smoothing to filter daily noise<br><br>
-            • Three chart visualization — OAS over time, stress score, HYG vs LQD<br><br>
+            • Real ICE BofA OAS spread pulled live from FRED on every run<br>
+            • Credit stress score from 1 (very calm) to 5 (high stress)<br>
+            • Percentile ranking against full history since 2010<br>
+            • OAS regime classification — Tight, Normal, Wide, Very Wide<br>
+            • 21-day rolling spread smoothing to filter daily noise<br>
+            • Three chart visualization — OAS over time, stress score, HYG vs LQD<br>
             • Dynamic signal and interpretation that updates every run
             </p>
         </div>
@@ -1086,13 +1086,13 @@ elif page == "AI Research":
             <b>Primary Data:</b> ICE BofA US High Yield Option-Adjusted Spread
             (FRED series: BAMLH0A0HYM2) — pulled directly from the Federal
             Reserve Economic Data (FRED) database via the pandas-datareader
-            library on every run.<br><br>
+            library on every run.<br>
             <b>Accuracy:</b> This is the exact same OAS series displayed on
             Bloomberg terminals and used by every major credit desk. Published
             daily by the Federal Reserve Bank of St. Louis. 100% accurate —
-            not a proxy or approximation.<br><br>
+            not a proxy or approximation.<br>
             <b>HYG & LQD:</b> ETF closing prices from Yahoo Finance used for
-            the relative performance chart only — not for the OAS calculation.<br><br>
+            the relative performance chart only — not for the OAS calculation.<br>
             <b>Stress Score:</b> Current OAS ranked as a percentile against all
             historical readings since 2010, then divided into five equal quintile
             bins (score 1-5). Methodology is objective and repeatable.
@@ -1385,12 +1385,12 @@ elif page == "AI Research":
         <div class="static-section">
             <h3>Key Features</h3>
             <p>
-            • Official Freddie Mac 30-year mortgage rate pulled live from FRED<br><br>
-            • Mortgage spread calculated against the 10-year Treasury yield<br><br>
-            • Spread regime classification — Tight, Normal, Wide, Very Wide<br><br>
-            • Refinancing environment signal — Minimal, Some, Active, Wave<br><br>
-            • Prepayment risk classification — Low, Moderate, High<br><br>
-            • Percentile ranking against full history since 2010<br><br>
+            • Official Freddie Mac 30-year mortgage rate pulled live from FRED<br>
+            • Mortgage spread calculated against the 10-year Treasury yield<br>
+            • Spread regime classification — Tight, Normal, Wide, Very Wide<br>
+            • Refinancing environment signal — Minimal, Some, Active, Wave<br>
+            • Prepayment risk classification — Low, Moderate, High<br>
+            • Percentile ranking against full history since 2010<br>
             • Three chart visualization — rates, spread regime, MBB vs AGG
             </p>
         </div>
@@ -1402,12 +1402,12 @@ elif page == "AI Research":
             <p>
             <b>Primary Data:</b> Freddie Mac Primary Mortgage Market Survey
             (FRED series: MORTGAGE30US) — the official 30-year fixed mortgage
-            rate published weekly by the Federal Reserve Bank of St. Louis.<br><br>
+            rate published weekly by the Federal Reserve Bank of St. Louis.<br>
             <b>Accuracy:</b> This is the exact same mortgage rate reported by
             Bloomberg, CNBC, and every major financial news source. 100%
-            accurate — not a proxy or approximation.<br><br>
+            accurate — not a proxy or approximation.<br>
             <b>Treasury Yields:</b> 10-year (^TNX) and 30-year (^TYX) yields
-            from Yahoo Finance — match the US Treasury website exactly.<br><br>
+            from Yahoo Finance — match the US Treasury website exactly.<br>
             <b>MBB & AGG:</b> ETF closing prices from Yahoo Finance used for
             the relative performance chart only.
             </p>
