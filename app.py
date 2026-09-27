@@ -334,7 +334,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-page = st.radio("", ["About", "Resume", "AI Research"],
+page = st.radio("", ["About", "Resume", "AI Finance", "Other Projects"],
     horizontal=True,
     label_visibility="collapsed")
 
@@ -520,9 +520,9 @@ elif page == "Resume":
 # ══════════════════════════════════════════════════════════════
 # AI RESEARCH
 # ══════════════════════════════════════════════════════════════
-elif page == "AI Research":
+elif page == "AI Finance":
     st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
-    st.markdown("# AI Research")
+    st.markdown("# AI Finance")
     st.markdown("""
     <p style="color:#333333; font-size:16px;">
     Using machine learning to find signals in financial markets
@@ -532,7 +532,7 @@ elif page == "AI Research":
     """, unsafe_allow_html=True)
 
     # Model selection cards — full card is the button
-    c1, c2, c3, c4, c5 = st.columns(5)
+    c1, c2, c3, c4 = st.columns(4)
     with c1:
         m1 = st.button("Yield Curve Monitor",
             key="btn_yc", use_container_width=True)
@@ -545,18 +545,17 @@ elif page == "AI Research":
     with c4:
         m4 = st.button("Mortgage Market Monitor",
             key="btn_mm", use_container_width=True)
-    with c5:
-        m5 = st.button("Hockey Navigator",
-            key="btn_hn", use_container_width=True)
 
     # Session state to track which model is open
-    if "model" not in st.session_state:
+    finance_models = ["Yield Curve Monitor",
+        "Multi-Asset Market Regime Detector",
+        "Credit Spread Monitor", "Mortgage Market Monitor"]
+    if st.session_state.get("model") not in finance_models:
         st.session_state.model = "Yield Curve Monitor"
     if m1: st.session_state.model = "Yield Curve Monitor"
     if m2: st.session_state.model = "Multi-Asset Market Regime Detector"
     if m3: st.session_state.model = "Credit Spread Monitor"
     if m4: st.session_state.model = "Mortgage Market Monitor"
-    if m5: st.session_state.model = "Hockey Pathway Navigator"
 
     model = st.session_state.model
     st.markdown("---")
@@ -1847,222 +1846,231 @@ elif page == "AI Research":
         """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
-# MODEL 5 — HOCKEY PATHWAY NAVIGATOR
+# OTHER PROJECTS — HOCKEY PATHWAY NAVIGATOR
 # ══════════════════════════════════════════════════════════════
-    elif model == "Hockey Pathway Navigator":
-        st.markdown("## Hockey Pathway Navigator")
-        st.markdown("""
-        <p style="color:#333333; font-size:16px;">
-        Every hockey pathway from youth to the pros —
-        personalized recommendations, honest cost breakdowns,
-        and realistic college outcomes for every junior league.
+elif page == "Other Projects":
+    st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
+    st.markdown("# Other Projects")
+    st.markdown("""
+    <p style="color:#333333; font-size:16px;">
+    Projects outside of finance, built with the same Python and data skills.
+    </p>
+    """, unsafe_allow_html=True)
+    st.markdown("---")
+
+    st.markdown("## Hockey Pathway Navigator")
+    st.markdown("""
+    <p style="color:#333333; font-size:16px;">
+    Every hockey pathway from youth to the pros —
+    personalized recommendations, honest cost breakdowns,
+    and realistic college outcomes for every junior league.
+    </p>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="card">
+        <h3>Overview</h3>
+        <p>
+        Hockey pathways are confusing. Families spend thousands
+        of dollars on junior hockey without understanding what
+        college level that league realistically leads to, whether
+        athletic scholarships are even available, or what
+        opportunities they may be missing entirely.<br><br>
+        This tool gives honest clear answers. Built by a player
+        who lived this experience firsthand as an ACHA D1 hockey
+        player at Western Michigan University and a member of the
+        Northern Cyclones junior program.
         </p>
-        """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
-        st.markdown("""
-        <div class="card">
-            <h3>Overview</h3>
-            <p>
-            Hockey pathways are confusing. Families spend thousands
-            of dollars on junior hockey without understanding what
-            college level that league realistically leads to, whether
-            athletic scholarships are even available, or what
-            opportunities they may be missing entirely.<br><br>
-            This tool gives honest clear answers. Built by a player
-            who lived this experience firsthand as an ACHA D1 hockey
-            player at Western Michigan University and a member of the
-            Northern Cyclones junior program.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown("### Junior League Cost & College Outcome Guide")
+    league_data = [
+        ("USHL",          "Tier 1", "FREE",
+         "NCAA D1 scholarship",     "✅ Yes"),
+        ("AJHL",          "Tier 1", "Under $3,000",
+         "NCAA D1 possible",        "✅ Possible"),
+        ("NAHL",          "Tier 2", "$5,000-8,000",
+         "NCAA D1 or D3",           "⚠️ Partial possible"),
+        ("USPHL NCDC",    "Tier 2", "$8,000-12,000",
+         "NCAA D3 small private",   "❌ Academic aid only"),
+        ("EHL",           "Tier 2", "$8,000-12,000",
+         "NCAA D3 small private",   "❌ Academic aid only"),
+        ("USPHL Premier", "Tier 3", "$7,000-10,000",
+         "NCAA D3 or ACHA D1",      "❌ Academic aid only"),
+        ("USPHL Elite",   "Tier 3", "$5,000-8,000",
+         "ACHA D1 or small D3",     "❌ Academic aid only"),
+        ("NA3HL",         "Tier 3", "$4,000-7,000",
+         "ACHA D1 or small D3",     "❌ Academic aid only"),
+    ]
+    header = ["League", "Tier", "Annual Cost",
+              "Typical College Outcome", "Athletic Scholarship"]
+    df_leagues = pd.DataFrame(league_data, columns=header)
+    st.dataframe(df_leagues, use_container_width=True, hide_index=True)
 
+    st.markdown("---")
+    st.markdown("### Personalized Pathway Finder")
+    col1, col2 = st.columns(2)
+    with col1:
+        player_age = st.number_input("Player Age",
+            min_value=6, max_value=22, value=15)
+        player_location = st.selectbox("Location", [
+            "Midwest", "East Coast / Northeast",
+            "West Coast", "South", "Canada",
+        ])
+    with col2:
+        player_level = st.selectbox("Current Level", [
+            "Learn to Skate / Mite", "Squirt", "Peewee AAA",
+            "Bantam AAA", "Midget Minor", "Midget Major",
+            "High School Varsity", "Prep School", "Junior Hockey",
+        ])
+        player_goal = st.selectbox("Goal", [
+            "NCAA D1 or Pro", "NCAA D3 or ACHA", "Just love the game",
+        ])
+        player_league = st.selectbox(
+            "Current Junior League (if applicable)", [
+                "Not in junior hockey yet",
+                "USHL", "AJHL", "NAHL",
+                "USPHL NCDC", "EHL",
+                "USPHL Premier", "USPHL Elite", "NA3HL",
+            ])
+    st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
+    if st.button("Get My Pathway Recommendation"):
+        junior_league = None if \
+            player_league == "Not in junior hockey yet" \
+            else player_league
+        league_outcomes = {
+            'USHL': {'college': 'NCAA D1 scholarship highly likely',
+                'scholarship': 'Full or partial athletic scholarship very common',
+                'cost': 'FREE — teams pay stipends',
+                'realistic': 'Over 90% of USHL players play college hockey. D1 scholarship is the most common outcome.'},
+            'AJHL': {'college': 'NCAA D1 possible, D3 common',
+                'scholarship': 'Athletic scholarship possible at D1',
+                'cost': 'Under $3,000/year — billet family system',
+                'realistic': 'Strong pipeline to US and Canadian college programs.'},
+            'NAHL': {'college': 'NCAA D1 possible, D3 most common',
+                'scholarship': 'Partial athletic scholarship possible',
+                'cost': '$5,000 - $8,000 per year',
+                'realistic': 'D3 is the most common outcome. D1 offers happen but are not guaranteed.'},
+            'USPHL NCDC': {'college': 'NCAA D3 most common — small private schools',
+                'scholarship': 'NO athletic scholarship. Academic merit aid only.',
+                'cost': '$8,000 - $12,000 per year',
+                'realistic': 'Most players land at small private NCAA D3 schools.'},
+            'EHL': {'college': 'NCAA D3 most common — northeast schools',
+                'scholarship': 'NO athletic scholarship. Academic merit aid only.',
+                'cost': '$8,000 - $12,000 per year',
+                'realistic': 'Most players attend small private D3 schools in New England.'},
+            'USPHL Premier': {'college': 'NCAA D3 small private schools or ACHA D1',
+                'scholarship': 'NO athletic scholarship. Academic merit aid only.',
+                'cost': '$7,000 - $10,000 per year',
+                'realistic': 'Players typically land at small private D3 schools or ACHA D1 programs.'},
+            'USPHL Elite': {'college': 'ACHA D1 or very small NCAA D3 schools',
+                'scholarship': 'NO athletic scholarship. Academic merit aid only.',
+                'cost': '$5,000 - $8,000 per year',
+                'realistic': 'Entry level junior league. Moving up to USPHL Premier significantly improves options.'},
+            'NA3HL': {'college': 'ACHA D1 or small NCAA D3 schools',
+                'scholarship': 'NO athletic scholarship. Academic merit aid only.',
+                'cost': '$4,000 - $7,000 per year',
+                'realistic': 'Development league. Players who move up to NAHL significantly improve options.'},
+        }
         st.markdown("---")
-        st.markdown("### Junior League Cost & College Outcome Guide")
-        league_data = [
-            ("USHL",          "Tier 1", "FREE",
-             "NCAA D1 scholarship",     "✅ Yes"),
-            ("AJHL",          "Tier 1", "Under $3,000",
-             "NCAA D1 possible",        "✅ Possible"),
-            ("NAHL",          "Tier 2", "$5,000-8,000",
-             "NCAA D1 or D3",           "⚠️ Partial possible"),
-            ("USPHL NCDC",    "Tier 2", "$8,000-12,000",
-             "NCAA D3 small private",   "❌ Academic aid only"),
-            ("EHL",           "Tier 2", "$8,000-12,000",
-             "NCAA D3 small private",   "❌ Academic aid only"),
-            ("USPHL Premier", "Tier 3", "$7,000-10,000",
-             "NCAA D3 or ACHA D1",      "❌ Academic aid only"),
-            ("USPHL Elite",   "Tier 3", "$5,000-8,000",
-             "ACHA D1 or small D3",     "❌ Academic aid only"),
-            ("NA3HL",         "Tier 3", "$4,000-7,000",
-             "ACHA D1 or small D3",     "❌ Academic aid only"),
-        ]
-        header = ["League", "Tier", "Annual Cost",
-                  "Typical College Outcome", "Athletic Scholarship"]
-        df_leagues = pd.DataFrame(league_data, columns=header)
-        st.dataframe(df_leagues, use_container_width=True, hide_index=True)
-
-        st.markdown("---")
-        st.markdown("### Personalized Pathway Finder")
-        col1, col2 = st.columns(2)
-        with col1:
-            player_age = st.number_input("Player Age",
-                min_value=6, max_value=22, value=15)
-            player_location = st.selectbox("Location", [
-                "Midwest", "East Coast / Northeast",
-                "West Coast", "South", "Canada",
-            ])
-        with col2:
-            player_level = st.selectbox("Current Level", [
-                "Learn to Skate / Mite", "Squirt", "Peewee AAA",
-                "Bantam AAA", "Midget Minor", "Midget Major",
-                "High School Varsity", "Prep School", "Junior Hockey",
-            ])
-            player_goal = st.selectbox("Goal", [
-                "NCAA D1 or Pro", "NCAA D3 or ACHA", "Just love the game",
-            ])
-            player_league = st.selectbox(
-                "Current Junior League (if applicable)", [
-                    "Not in junior hockey yet",
-                    "USHL", "AJHL", "NAHL",
-                    "USPHL NCDC", "EHL",
-                    "USPHL Premier", "USPHL Elite", "NA3HL",
-                ])
-        st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
-        if st.button("Get My Pathway Recommendation"):
-            junior_league = None if \
-                player_league == "Not in junior hockey yet" \
-                else player_league
-            league_outcomes = {
-                'USHL': {'college': 'NCAA D1 scholarship highly likely',
-                    'scholarship': 'Full or partial athletic scholarship very common',
-                    'cost': 'FREE — teams pay stipends',
-                    'realistic': 'Over 90% of USHL players play college hockey. D1 scholarship is the most common outcome.'},
-                'AJHL': {'college': 'NCAA D1 possible, D3 common',
-                    'scholarship': 'Athletic scholarship possible at D1',
-                    'cost': 'Under $3,000/year — billet family system',
-                    'realistic': 'Strong pipeline to US and Canadian college programs.'},
-                'NAHL': {'college': 'NCAA D1 possible, D3 most common',
-                    'scholarship': 'Partial athletic scholarship possible',
-                    'cost': '$5,000 - $8,000 per year',
-                    'realistic': 'D3 is the most common outcome. D1 offers happen but are not guaranteed.'},
-                'USPHL NCDC': {'college': 'NCAA D3 most common — small private schools',
-                    'scholarship': 'NO athletic scholarship. Academic merit aid only.',
-                    'cost': '$8,000 - $12,000 per year',
-                    'realistic': 'Most players land at small private NCAA D3 schools.'},
-                'EHL': {'college': 'NCAA D3 most common — northeast schools',
-                    'scholarship': 'NO athletic scholarship. Academic merit aid only.',
-                    'cost': '$8,000 - $12,000 per year',
-                    'realistic': 'Most players attend small private D3 schools in New England.'},
-                'USPHL Premier': {'college': 'NCAA D3 small private schools or ACHA D1',
-                    'scholarship': 'NO athletic scholarship. Academic merit aid only.',
-                    'cost': '$7,000 - $10,000 per year',
-                    'realistic': 'Players typically land at small private D3 schools or ACHA D1 programs.'},
-                'USPHL Elite': {'college': 'ACHA D1 or very small NCAA D3 schools',
-                    'scholarship': 'NO athletic scholarship. Academic merit aid only.',
-                    'cost': '$5,000 - $8,000 per year',
-                    'realistic': 'Entry level junior league. Moving up to USPHL Premier significantly improves options.'},
-                'NA3HL': {'college': 'ACHA D1 or small NCAA D3 schools',
-                    'scholarship': 'NO athletic scholarship. Academic merit aid only.',
-                    'cost': '$4,000 - $7,000 per year',
-                    'realistic': 'Development league. Players who move up to NAHL significantly improve options.'},
-            }
-            st.markdown("---")
-            st.markdown("### Your Personalized Pathway Report")
-            if junior_league and junior_league in league_outcomes:
-                li = league_outcomes[junior_league]
-                st.markdown(f"""
-                <div class="card">
-                    <h3>Your Junior League — {junior_league}</h3>
-                    <p>
-                    <b>Annual Cost:</b> {li['cost']}<br><br>
-                    <b>College Outlook:</b> {li['college']}<br><br>
-                    <b>Scholarship:</b> {li['scholarship']}<br><br>
-                    <b>Reality Check:</b> {li['realistic']}
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-
-            if player_age <= 12:
-                recs = ["Focus on skill development and fun above all else.",
-                    "Play multiple sports — do not specialize yet.",
-                    "Look for quality AAA programs in your area.",
-                    "Start researching prep schools if interested."]
-                opps = ["AAA programs in your region",
-                    "USA Hockey national tournaments",
-                    "Summer development camps",
-                    "Prep school information sessions"]
-                next_step = "Attend one major showcase and focus on loving the game."
-            elif player_age <= 14:
-                recs = ["AAA Bantam is the most critical age for junior development.",
-                    "USHL scouts begin watching at this level.",
-                    "Start building a highlight reel now.",
-                    "Attend USHL and NAHL showcases.",
-                    "Research prep schools seriously."]
-                opps = ["AAA Bantam Major programs",
-                    "Prep school hockey programs",
-                    "USHL and NAHL prospect showcases",
-                    "USA Hockey Select 15 and Select 16 camps",
-                    "Shattuck St. Marys — top prep school pipeline"]
-                next_step = "Get on a AAA Bantam team and attend at least one major showcase."
-            elif player_age <= 16:
-                recs = ["Critical decision point — junior hockey or high school.",
-                    "USHL draft eligible at 16 — this is your D1 window.",
-                    "NAHL is a strong Tier 2 option.",
-                    "USPHL NCDC and EHL lead to D3 not D1 scholarships.",
-                    "Email every junior coach with your highlight reel now."]
-                opps = ["USHL Phase 1 and Phase 2 drafts",
-                    "NAHL Draft and free agent camps",
-                    "USPHL NCDC tryouts", "EHL tryouts",
-                    "Prep school for one more development year"]
-                next_step = "Email junior coaches directly. Do not wait to be discovered."
-            elif player_age <= 18:
-                recs = ["Junior hockey should be your priority.",
-                    "The league you play in determines your college level.",
-                    "USHL and NAHL are your best paths to D1.",
-                    "USPHL NCDC and EHL most commonly lead to D3 only.",
-                    "Email college coaches directly with your highlight reel."]
-                opps = ["USHL free agent camps", "NAHL free agent camps",
-                    "USPHL NCDC tryouts", "EHL tryouts", "AJHL tryouts",
-                    "NCAA D3 coaches — email directly"]
-                next_step = "Junior hockey now. Email every coach. Cast a wide net."
-            else:
-                recs = ["ACHA D1 and D2 are great options to keep playing.",
-                    "Play at the school that fits you academically.",
-                    "Strong academics open more doors at this stage.",
-                    "Hockey is a lifelong sport — enjoy every level."]
-                opps = ["ACHA D1 at your college", "ACHA D2 at your college",
-                    "Adult recreational leagues", "Intramural hockey"]
-                next_step = "Find an ACHA program at a school that fits academically."
-
-            col1, col2 = st.columns(2)
-            with col1:
-                st.markdown("""<div class="card"><h3>Recommendations</h3>""",
-                    unsafe_allow_html=True)
-                for r in recs:
-                    st.markdown(f"• {r}")
-                st.markdown("</div>", unsafe_allow_html=True)
-            with col2:
-                st.markdown("""<div class="card"><h3>Opportunities Now</h3>""",
-                    unsafe_allow_html=True)
-                for o in opps:
-                    st.markdown(f"• {o}")
-                st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("### Your Personalized Pathway Report")
+        if junior_league and junior_league in league_outcomes:
+            li = league_outcomes[junior_league]
             st.markdown(f"""
             <div class="card">
-                <h3>Your Next Step</h3>
-                <p>{next_step}</p>
+                <h3>Your Junior League — {junior_league}</h3>
+                <p>
+                <b>Annual Cost:</b> {li['cost']}<br><br>
+                <b>College Outlook:</b> {li['college']}<br><br>
+                <b>Scholarship:</b> {li['scholarship']}<br><br>
+                <b>Reality Check:</b> {li['realistic']}
+                </p>
             </div>
             """, unsafe_allow_html=True)
 
-        st.markdown("---")
-        st.markdown("""
+        if player_age <= 12:
+            recs = ["Focus on skill development and fun above all else.",
+                "Play multiple sports — do not specialize yet.",
+                "Look for quality AAA programs in your area.",
+                "Start researching prep schools if interested."]
+            opps = ["AAA programs in your region",
+                "USA Hockey national tournaments",
+                "Summer development camps",
+                "Prep school information sessions"]
+            next_step = "Attend one major showcase and focus on loving the game."
+        elif player_age <= 14:
+            recs = ["AAA Bantam is the most critical age for junior development.",
+                "USHL scouts begin watching at this level.",
+                "Start building a highlight reel now.",
+                "Attend USHL and NAHL showcases.",
+                "Research prep schools seriously."]
+            opps = ["AAA Bantam Major programs",
+                "Prep school hockey programs",
+                "USHL and NAHL prospect showcases",
+                "USA Hockey Select 15 and Select 16 camps",
+                "Shattuck St. Marys — top prep school pipeline"]
+            next_step = "Get on a AAA Bantam team and attend at least one major showcase."
+        elif player_age <= 16:
+            recs = ["Critical decision point — junior hockey or high school.",
+                "USHL draft eligible at 16 — this is your D1 window.",
+                "NAHL is a strong Tier 2 option.",
+                "USPHL NCDC and EHL lead to D3 not D1 scholarships.",
+                "Email every junior coach with your highlight reel now."]
+            opps = ["USHL Phase 1 and Phase 2 drafts",
+                "NAHL Draft and free agent camps",
+                "USPHL NCDC tryouts", "EHL tryouts",
+                "Prep school for one more development year"]
+            next_step = "Email junior coaches directly. Do not wait to be discovered."
+        elif player_age <= 18:
+            recs = ["Junior hockey should be your priority.",
+                "The league you play in determines your college level.",
+                "USHL and NAHL are your best paths to D1.",
+                "USPHL NCDC and EHL most commonly lead to D3 only.",
+                "Email college coaches directly with your highlight reel."]
+            opps = ["USHL free agent camps", "NAHL free agent camps",
+                "USPHL NCDC tryouts", "EHL tryouts", "AJHL tryouts",
+                "NCAA D3 coaches — email directly"]
+            next_step = "Junior hockey now. Email every coach. Cast a wide net."
+        else:
+            recs = ["ACHA D1 and D2 are great options to keep playing.",
+                "Play at the school that fits you academically.",
+                "Strong academics open more doors at this stage.",
+                "Hockey is a lifelong sport — enjoy every level."]
+            opps = ["ACHA D1 at your college", "ACHA D2 at your college",
+                "Adult recreational leagues", "Intramural hockey"]
+            next_step = "Find an ACHA program at a school that fits academically."
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("""<div class="card"><h3>Recommendations</h3>""",
+                unsafe_allow_html=True)
+            for r in recs:
+                st.markdown(f"• {r}")
+            st.markdown("</div>", unsafe_allow_html=True)
+        with col2:
+            st.markdown("""<div class="card"><h3>Opportunities Now</h3>""",
+                unsafe_allow_html=True)
+            for o in opps:
+                st.markdown(f"• {o}")
+            st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown(f"""
         <div class="card">
-            <h3>Full Research Notebook & Team Directory</h3>
-            <p>
-            View the complete Hockey Pathway Navigator including
-            all 10 pathways, full league and team directory,
-            and personalized recommendation engine on GitHub:<br><br>
-            github.com/sidneyppratt-svg/hockey-pathway-navigator
-            </p>
+            <h3>Your Next Step</h3>
+            <p>{next_step}</p>
         </div>
         """, unsafe_allow_html=True)
+
+    st.markdown("---")
+    st.markdown("""
+    <div class="card">
+        <h3>Full Research Notebook & Team Directory</h3>
+        <p>
+        View the complete Hockey Pathway Navigator including
+        all 10 pathways, full league and team directory,
+        and personalized recommendation engine on GitHub:<br><br>
+        github.com/sidneyppratt-svg/hockey-pathway-navigator
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
