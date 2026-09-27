@@ -102,7 +102,8 @@ st.markdown("""
         margin-bottom: 0.75rem;
     }
     .card h3 { padding: 0 !important; margin-top: 0 !important; color: #444444 !important; margin-bottom: 0.5rem; }
-    .card p { color: #1a1a1a !important; line-height: 1.5; margin-bottom: 0 !important; }
+    .card p { color: #1a1a1a !important; line-height: 1.5; margin-bottom: 1.1rem !important; }
+    .card p:last-child { margin-bottom: 0 !important; }
     .tag {
         display: inline-block;
         background-color: #444444;
