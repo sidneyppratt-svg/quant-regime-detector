@@ -7,3 +7,4 @@ matplotlib
 pandas-datareader
 requests
 Pillow
+anthropic
