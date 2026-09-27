@@ -1849,6 +1849,7 @@ elif page == "AI Finance":
 # OTHER PROJECTS — HOCKEY PATHWAY NAVIGATOR
 # ══════════════════════════════════════════════════════════════
 elif page == "Other Projects":
+    import os
     st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
     st.markdown("# Other Projects")
     st.markdown("""
@@ -1856,7 +1857,276 @@ elif page == "Other Projects":
     Projects outside of finance, built with the same Python and data skills.
     </p>
     """, unsafe_allow_html=True)
+
+    # Project selection buttons (same style as AI Finance)
+    p1, p2 = st.columns(2)
+    with p1:
+        pick_rb = st.button("Recipe Builder",
+            key="btn_rb", use_container_width=True)
+    with p2:
+        pick_hn = st.button("Hockey Pathway Navigator",
+            key="btn_hn", use_container_width=True)
+    if "project" not in st.session_state:
+        st.session_state.project = "Recipe Builder"
+    if pick_rb: st.session_state.project = "Recipe Builder"
+    if pick_hn: st.session_state.project = "Hockey Pathway Navigator"
     st.markdown("---")
+
+    # ══════════════════════════════════════════════════════════
+    # RECIPE BUILDER
+    # ══════════════════════════════════════════════════════════
+    if st.session_state.project == "Recipe Builder":
+        st.markdown("""
+        <style>
+        .rb-card {
+            background-color: #F9F9F9; border: 1px solid #DDDDDD;
+            border-radius: 12px; padding: 0.8rem 1rem; margin-bottom: 0.5rem;
+        }
+        .rb-card h4 { color: #222222 !important; margin: 0 0 0.3rem 0;
+            font-size: 16px; padding: 0 !important; }
+        .rb-meta { color: #555555; font-size: 13px; margin-bottom: 0.4rem; }
+        .rb-nut { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+        .rb-nut span { background: #FFFFFF; border: 1px solid #DDDDDD;
+            border-radius: 6px; padding: 2px 8px; font-size: 13px; color: #1a1a1a; }
+        .rb-nut span.key { background: #F0FFF4; border-color: #A8D5B5;
+            color: #1B5E20; font-weight: 700; }
+        </style>
+        """, unsafe_allow_html=True)
+
+        title_col, card_col = st.columns([3, 2])
+        with title_col:
+            st.markdown("## Recipe Builder")
+            st.markdown("*Healthy Recipe Finder | Sidney Pratt*")
+        with card_col:
+            st.markdown("""
+            <div class="results-card">
+                <div class="rc-head"><b>How it works</b></div>
+                <div class="rc-row"><span class="rc-label">1. Pick a category</span></div>
+                <div class="rc-row"><span class="rc-label">2. Browse real recipes with nutrition</span></div>
+                <div class="rc-row"><span class="rc-label">3. Open one and adjust the servings</span></div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # Each category = Spoonacular search filters + a plain-English note
+        RB_CATEGORIES = {
+            "Game Day Energy": {
+                "params": {"minCarbs": 45, "maxFat": 25, "minProtein": 15,
+                           "type": "main course"},
+                "note": "Carb-focused meals with moderate protein and lower fat, so "
+                        "they digest easily. Eat 3–4 hours before a game to top up "
+                        "your energy stores.",
+                "key": ["Carbs", "Protein"]},
+            "After Game Recovery": {
+                "params": {"minProtein": 30, "minCarbs": 35},
+                "note": "Protein to help repair muscle plus carbs to refill energy. "
+                        "Best eaten within a couple of hours after a game or hard practice.",
+                "key": ["Protein", "Carbs"]},
+            "High Protein": {
+                "params": {"minProtein": 35},
+                "note": "Meals with 35g+ of protein per serving, useful for strength "
+                        "training and staying full longer.",
+                "key": ["Protein"]},
+            "Low Calorie": {
+                "params": {"maxCalories": 450, "minProtein": 15},
+                "note": "Lighter meals under about 450 calories per serving that still "
+                        "include protein, so they stay filling.",
+                "key": ["Calories", "Protein"]},
+            "Vegetarian": {
+                "params": {"diet": "vegetarian", "minProtein": 15},
+                "note": "Meat-free meals with at least 15g of protein per serving from "
+                        "beans, eggs, dairy, grains, and other sources.",
+                "key": ["Protein"]},
+            "Healthy Balanced": {
+                "params": {"minProtein": 20, "maxCalories": 700,
+                           "maxSugar": 15, "minFiber": 5},
+                "note": "A balance of protein, fiber, and moderate calories with little "
+                        "added sugar. A solid everyday meal.",
+                "key": ["Protein", "Fiber"]},
+            "Blood Sugar Friendly": {
+                "params": {"maxCarbs": 45, "minFiber": 6, "maxSugar": 10,
+                           "minProtein": 15},
+                "note": "Moderate carbs, plenty of fiber, protein, and little sugar, "
+                        "which helps keep blood sugar steadier. Nutrition values are "
+                        "estimates: do not use them to calculate insulin doses, and "
+                        "follow the advice of your doctor or dietitian.",
+                "key": ["Carbs", "Fiber"]},
+            "Soups": {
+                "params": {"type": "soup", "maxCalories": 600, "minProtein": 10},
+                "note": "Filling, vegetable-rich soups with protein. Most keep well in "
+                        "the fridge for a few days, which makes them great for meal prep.",
+                "key": ["Calories", "Protein"]},
+        }
+
+        @st.cache_data(ttl=3600, show_spinner=False)
+        def rb_search(category, batch, relaxed=False):
+            """Search Spoonacular. Cached for up to 1 hour (their limit)."""
+            api_key = os.environ.get("SPOONACULAR_API_KEY", "")
+            cfg = RB_CATEGORIES[category]["params"]
+            params = {
+                "apiKey": api_key, "number": 6, "sort": "random",
+                "addRecipeInformation": "true", "addRecipeNutrition": "true",
+                "addRecipeInstructions": "true", "fillIngredients": "true",
+                "instructionsRequired": "true",
+            }
+            if relaxed:   # keep only diet/type if the full filters find nothing
+                params.update({k: v for k, v in cfg.items() if k in ("diet", "type")})
+            else:
+                params.update(cfg)
+            r = requests.get("https://api.spoonacular.com/recipes/complexSearch",
+                             params=params, timeout=20)
+            if r.status_code == 402:
+                return {"error": "limit"}
+            if r.status_code == 401:
+                return {"error": "key"}
+            r.raise_for_status()
+            return r.json()
+
+        def rb_nutrient(recipe, name):
+            for n in recipe.get("nutrition", {}).get("nutrients", []):
+                if n.get("name") == name:
+                    return n.get("amount", 0)
+            return None
+
+        def rb_fmt_amount(x):
+            if x is None: return ""
+            if abs(x - round(x)) < 0.05: return str(int(round(x)))
+            return f"{x:.2f}".rstrip("0").rstrip(".")
+
+        # Category buttons: two rows of four
+        cats = list(RB_CATEGORIES.keys())
+        if "rb_category" not in st.session_state:
+            st.session_state.rb_category = cats[0]
+        if "rb_batch" not in st.session_state:
+            st.session_state.rb_batch = 0
+        for row in (cats[:4], cats[4:]):
+            cols = st.columns(4)
+            for col, cat in zip(cols, row):
+                with col:
+                    if st.button(cat, key=f"rb_{cat}", use_container_width=True):
+                        st.session_state.rb_category = cat
+                        st.session_state.rb_batch = 0
+
+        category = st.session_state.rb_category
+        info = RB_CATEGORIES[category]
+
+        head_l, head_r = st.columns([3, 1])
+        with head_l:
+            st.markdown(f"### {category}")
+        with head_r:
+            if st.button("↻ Show Different Recipes", key="rb_new",
+                         use_container_width=True):
+                st.session_state.rb_batch += 1
+
+        st.markdown(f"""
+        <div class="data-source-section">
+            <h3>Why this works</h3>
+            <p>{info['note']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if not os.environ.get("SPOONACULAR_API_KEY"):
+            st.warning("Recipe data isn't connected yet. Add SPOONACULAR_API_KEY "
+                       "in Render → Environment.")
+            st.stop()
+
+        with st.spinner("Finding recipes..."):
+            try:
+                data = rb_search(category, st.session_state.rb_batch)
+                if "error" not in data and not data.get("results"):
+                    data = rb_search(category, st.session_state.rb_batch, relaxed=True)
+            except Exception:
+                data = {"error": "other"}
+
+        if data.get("error") == "limit":
+            st.info("Today's free recipe limit has been reached. "
+                    "Please check back tomorrow.")
+            st.stop()
+        if data.get("error") == "key":
+            st.error("The recipe service didn't accept the API key. "
+                     "Check SPOONACULAR_API_KEY in Render.")
+            st.stop()
+        if data.get("error"):
+            st.error("Couldn't reach the recipe service right now. "
+                     "Please try again in a minute.")
+            st.stop()
+
+        recipes = data.get("results", [])
+        if not recipes:
+            st.info("No recipes found for this category right now. "
+                    "Try Show Different Recipes.")
+            st.stop()
+
+        order = info["key"] + [n for n in ["Calories", "Protein", "Carbs", "Fiber"]
+                               if n not in info["key"]]
+        api_names = {"Calories": "Calories", "Protein": "Protein",
+                     "Carbs": "Carbohydrates", "Fiber": "Fiber"}
+        units = {"Calories": " cal", "Protein": "g protein",
+                 "Carbs": "g carbs", "Fiber": "g fiber"}
+
+        cols = st.columns(3)
+        for i, rec in enumerate(recipes):
+            with cols[i % 3]:
+                if rec.get("image"):
+                    st.image(rec["image"], use_container_width=True)
+                chips = ""
+                for n in order:
+                    val = rb_nutrient(rec, api_names[n])
+                    if val is None: continue
+                    cls = "key" if n in info["key"] else ""
+                    chips += f'<span class="{cls}">{val:.0f}{units[n]}</span>'
+                st.markdown(f"""
+                <div class="rb-card">
+                    <h4>{rec.get('title', 'Recipe')}</h4>
+                    <div class="rb-meta">⏱ {rec.get('readyInMinutes', '?')} min
+                    &nbsp;|&nbsp; Serves {rec.get('servings', '?')}
+                    &nbsp;|&nbsp; per serving</div>
+                    <div class="rb-nut">{chips}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                with st.expander("View recipe"):
+                    base = rec.get("servings") or 1
+                    want = st.number_input("Servings", min_value=1, max_value=20,
+                        value=int(base), step=1, key=f"serv_{rec.get('id', i)}")
+                    factor = want / base
+                    st.markdown("**Ingredients**")
+                    ings = rec.get("missedIngredients", []) + \
+                           rec.get("usedIngredients", [])
+                    lines = []
+                    for ing in ings:
+                        amt = ing.get("amount")
+                        if amt is not None and ing.get("name"):
+                            lines.append(f"- {rb_fmt_amount(amt * factor)} "
+                                         f"{ing.get('unit', '')} {ing['name']}".replace("  ", " "))
+                        elif ing.get("original"):
+                            lines.append(f"- {ing['original']}")
+                    st.markdown("\n".join(lines) if lines else
+                                "_See the full recipe link below._")
+                    steps = []
+                    for block in rec.get("analyzedInstructions", []):
+                        steps += [s.get("step", "") for s in block.get("steps", [])]
+                    if steps:
+                        st.markdown("**Steps**")
+                        st.markdown("\n".join(f"{n}. {s}"
+                                              for n, s in enumerate(steps, 1)))
+                    if rec.get("sourceUrl"):
+                        src = rec.get("sourceName") or "the original source"
+                        st.markdown(f"[Full recipe from {src}]({rec['sourceUrl']})")
+
+        st.markdown("---")
+        st.markdown("""
+        <p style="color:#555555; font-size:13px;">
+        Recipes and nutrition data from
+        <a href="https://spoonacular.com/food-api" target="_blank">Spoonacular</a>.
+        Nutrition values are estimates per serving. Always check ingredients
+        for allergies.
+        </p>
+        """, unsafe_allow_html=True)
+        st.stop()
+
+    # ══════════════════════════════════════════════════════════
+    # HOCKEY PATHWAY NAVIGATOR (continues below)
+    # ══════════════════════════════════════════════════════════
 
     st.markdown("## Hockey Pathway Navigator")
     st.markdown("""
