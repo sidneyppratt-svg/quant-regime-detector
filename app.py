@@ -1876,6 +1876,9 @@ elif page == "Other Projects":
     # RECIPE BUILDER
     # ══════════════════════════════════════════════════════════
     if st.session_state.project == "Recipe Builder":
+        import json
+        import anthropic
+
         st.markdown("""
         <style>
         .rb-card {
@@ -1885,6 +1888,7 @@ elif page == "Other Projects":
         .rb-card h4 { color: #222222 !important; margin: 0 0 0.3rem 0;
             font-size: 16px; padding: 0 !important; }
         .rb-meta { color: #555555; font-size: 13px; margin-bottom: 0.4rem; }
+        .rb-why { color: #333333; font-size: 13px; margin-top: 0.5rem; }
         .rb-nut { display: flex; flex-wrap: wrap; gap: 0.35rem; }
         .rb-nut span { background: #FFFFFF; border: 1px solid #DDDDDD;
             border-radius: 6px; padding: 2px 8px; font-size: 13px; color: #1a1a1a; }
@@ -1896,99 +1900,122 @@ elif page == "Other Projects":
         title_col, card_col = st.columns([3, 2])
         with title_col:
             st.markdown("## Recipe Builder")
-            st.markdown("*Healthy Recipe Finder | Sidney Pratt*")
+            st.markdown("*AI-Powered Healthy Recipe Generator | Sidney Pratt*")
         with card_col:
             st.markdown("""
             <div class="results-card">
                 <div class="rc-head"><b>How it works</b></div>
                 <div class="rc-row"><span class="rc-label">1. Pick a category</span></div>
-                <div class="rc-row"><span class="rc-label">2. Browse real recipes with nutrition</span></div>
+                <div class="rc-row"><span class="rc-label">2. Claude creates recipes with nutrition</span></div>
                 <div class="rc-row"><span class="rc-label">3. Open one and adjust the servings</span></div>
             </div>
             """, unsafe_allow_html=True)
 
-        # Each category = Spoonacular search filters + a plain-English note
+        # Each category: instructions for Claude + a plain-English note
         RB_CATEGORIES = {
             "Game Day Energy": {
-                "params": {"minCarbs": 45, "maxFat": 25, "minProtein": 15,
-                           "type": "main course"},
+                "rules": "Pre-game meals for an athlete, eaten 3-4 hours before a "
+                         "game. Carb-focused (at least 45g carbs per serving), "
+                         "moderate protein (15-30g), lower fat (under 20g), low "
+                         "fiber and nothing greasy or heavy, so it digests easily.",
                 "note": "Carb-focused meals with moderate protein and lower fat, so "
                         "they digest easily. Eat 3–4 hours before a game to top up "
                         "your energy stores.",
                 "key": ["Carbs", "Protein"]},
             "After Game Recovery": {
-                "params": {"minProtein": 30, "minCarbs": 35},
+                "rules": "Post-game recovery meals for an athlete. At least 30g "
+                         "protein and 40g carbs per serving to repair muscle and "
+                         "refill energy. Include some colorful vegetables or fruit.",
                 "note": "Protein to help repair muscle plus carbs to refill energy. "
                         "Best eaten within a couple of hours after a game or hard practice.",
                 "key": ["Protein", "Carbs"]},
             "High Protein": {
-                "params": {"minProtein": 35},
+                "rules": "At least 35g protein per serving from whole foods such as "
+                         "chicken, fish, lean beef, eggs, Greek yogurt, tofu, or beans. "
+                         "Keep it balanced with vegetables.",
                 "note": "Meals with 35g+ of protein per serving, useful for strength "
                         "training and staying full longer.",
                 "key": ["Protein"]},
             "Low Calorie": {
-                "params": {"maxCalories": 450, "minProtein": 15},
+                "rules": "Under 450 calories per serving but still satisfying: at "
+                         "least 20g protein and lots of vegetables for volume.",
                 "note": "Lighter meals under about 450 calories per serving that still "
                         "include protein, so they stay filling.",
                 "key": ["Calories", "Protein"]},
             "Vegetarian": {
-                "params": {"diet": "vegetarian", "minProtein": 15},
-                "note": "Meat-free meals with at least 15g of protein per serving from "
-                        "beans, eggs, dairy, grains, and other sources.",
+                "rules": "Fully vegetarian (no meat, poultry, or fish; no fish sauce "
+                         "or gelatin). At least 18g protein per serving from beans, "
+                         "lentils, tofu, tempeh, eggs, dairy, or whole grains.",
+                "note": "Meat-free meals with solid protein from beans, lentils, tofu, "
+                        "eggs, dairy, and whole grains.",
                 "key": ["Protein"]},
             "Healthy Balanced": {
-                "params": {"minProtein": 20, "maxCalories": 700,
-                           "maxSugar": 15, "minFiber": 5},
+                "rules": "An everyday balanced plate: lean protein (20g+), whole "
+                         "grains or starchy vegetables, plenty of vegetables, healthy "
+                         "fats, 500-700 calories, at least 6g fiber, little added sugar.",
                 "note": "A balance of protein, fiber, and moderate calories with little "
                         "added sugar. A solid everyday meal.",
                 "key": ["Protein", "Fiber"]},
             "Blood Sugar Friendly": {
-                "params": {"maxCarbs": 45, "minFiber": 6, "maxSugar": 10,
-                           "minProtein": 15},
+                "rules": "Meals suited to steadier blood sugar: 45g carbs or less per "
+                         "serving from whole grains, beans, and vegetables (no refined "
+                         "white flour or white rice as the main carb), at least 6g "
+                         "fiber, 20g+ protein, healthy fats, and no added sugar, "
+                         "honey, syrups, or sugary sauces.",
                 "note": "Moderate carbs, plenty of fiber, protein, and little sugar, "
                         "which helps keep blood sugar steadier. Nutrition values are "
-                        "estimates: do not use them to calculate insulin doses, and "
+                        "AI estimates: do not use them to calculate insulin doses, and "
                         "follow the advice of your doctor or dietitian.",
                 "key": ["Carbs", "Fiber"]},
             "Soups": {
-                "params": {"type": "soup", "maxCalories": 600, "minProtein": 10},
+                "rules": "Healthy, filling soups or stews with plenty of vegetables "
+                         "and at least 15g protein per serving, under 600 calories, "
+                         "moderate sodium (use herbs, spices, and low-sodium broth). "
+                         "Mention in the why note how well it keeps for meal prep.",
                 "note": "Filling, vegetable-rich soups with protein. Most keep well in "
                         "the fridge for a few days, which makes them great for meal prep.",
                 "key": ["Calories", "Protein"]},
         }
 
-        @st.cache_data(ttl=3600, show_spinner=False)
-        def rb_search(category, batch, relaxed=False):
-            """Search Spoonacular. Cached for up to 1 hour (their limit)."""
-            api_key = os.environ.get("SPOONACULAR_API_KEY", "")
-            cfg = RB_CATEGORIES[category]["params"]
-            params = {
-                "apiKey": api_key, "number": 6, "sort": "random",
-                "addRecipeInformation": "true", "addRecipeNutrition": "true",
-                "addRecipeInstructions": "true", "fillIngredients": "true",
-                "instructionsRequired": "true",
-            }
-            if relaxed:   # keep only diet/type if the full filters find nothing
-                params.update({k: v for k, v in cfg.items() if k in ("diet", "type")})
-            else:
-                params.update(cfg)
-            r = requests.get("https://api.spoonacular.com/recipes/complexSearch",
-                             params=params, timeout=20)
-            if r.status_code == 402:
-                return {"error": "limit"}
-            if r.status_code == 401:
-                return {"error": "key"}
-            r.raise_for_status()
-            return r.json()
+        RB_SYSTEM = (
+            "You are a registered-dietitian-style recipe developer. Create realistic, "
+            "tasty, home-cookable recipes using common grocery-store ingredients. "
+            "Nutrition values must be your best per-serving estimates. "
+            "Respond with ONLY valid JSON, no markdown fences and no extra text, in "
+            "exactly this shape: "
+            '{"recipes": [{"title": str, "time_minutes": int, "servings": int, '
+            '"calories": int, "protein_g": int, "carbs_g": int, "fiber_g": int, '
+            '"fat_g": int, "why": str (one sentence on why it fits the category), '
+            '"ingredients": [{"amount": number or null, "unit": str, "item": str}], '
+            '"steps": [str]}]}'
+        )
 
-        def rb_nutrient(recipe, name):
-            for n in recipe.get("nutrition", {}).get("nutrients", []):
-                if n.get("name") == name:
-                    return n.get("amount", 0)
-            return None
+        @st.cache_data(ttl=3600, show_spinner=False)
+        def rb_generate(category, batch):
+            """Ask Claude for 3 recipes. Cached 1 hour to save credits."""
+            client = anthropic.Anthropic()   # reads ANTHROPIC_API_KEY
+            prompt = (
+                f"Category: {category}\n"
+                f"Requirements: {RB_CATEGORIES[category]['rules']}\n"
+                "Create 3 different recipes. Vary the cuisines and main "
+                "ingredients across the three, and keep each under 45 minutes. "
+                f"(Variation set #{batch}: avoid the most obvious choices.)"
+            )
+            msg = client.messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=3000,
+                system=RB_SYSTEM,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            text = "".join(b.text for b in msg.content if b.type == "text")
+            text = text.strip().replace("```json", "").replace("```", "")
+            text = text[text.find("{"): text.rfind("}") + 1]
+            return json.loads(text)
 
         def rb_fmt_amount(x):
             if x is None: return ""
+            try: x = float(x)
+            except (TypeError, ValueError): return str(x)
             if abs(x - round(x)) < 0.05: return str(int(round(x)))
             return f"{x:.2f}".rstrip("0").rstrip(".")
 
@@ -2024,101 +2051,89 @@ elif page == "Other Projects":
         </div>
         """, unsafe_allow_html=True)
 
-        if not os.environ.get("SPOONACULAR_API_KEY"):
-            st.warning("Recipe data isn't connected yet. Add SPOONACULAR_API_KEY "
-                       "in Render → Environment.")
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            st.warning("Recipe generation isn't connected yet. Add "
+                       "ANTHROPIC_API_KEY in Render → Environment.")
             st.stop()
 
-        with st.spinner("Finding recipes..."):
+        with st.spinner("Claude is creating recipes... (about 15 seconds)"):
             try:
-                data = rb_search(category, st.session_state.rb_batch)
-                if "error" not in data and not data.get("results"):
-                    data = rb_search(category, st.session_state.rb_batch, relaxed=True)
+                data = rb_generate(category, st.session_state.rb_batch)
+                error = None
+            except anthropic.AuthenticationError:
+                error = "The Claude API key wasn't accepted. Check ANTHROPIC_API_KEY in Render."
+            except anthropic.BadRequestError as e:
+                if "credit" in str(e).lower():
+                    error = "Recipe credits have run out for now. Please check back later."
+                else:
+                    error = "Couldn't create recipes right now. Please try again."
+            except anthropic.RateLimitError:
+                error = "Too many requests at once. Please wait a minute and try again."
+            except (json.JSONDecodeError, ValueError):
+                error = "The recipes came back in an unexpected format. Click Show Different Recipes to try again."
             except Exception:
-                data = {"error": "other"}
+                error = "Couldn't reach the recipe generator right now. Please try again in a minute."
 
-        if data.get("error") == "limit":
-            st.info("Today's free recipe limit has been reached. "
-                    "Please check back tomorrow.")
-            st.stop()
-        if data.get("error") == "key":
-            st.error("The recipe service didn't accept the API key. "
-                     "Check SPOONACULAR_API_KEY in Render.")
-            st.stop()
-        if data.get("error"):
-            st.error("Couldn't reach the recipe service right now. "
-                     "Please try again in a minute.")
+        if error:
+            st.error(error)
             st.stop()
 
-        recipes = data.get("results", [])
+        recipes = data.get("recipes", [])
         if not recipes:
-            st.info("No recipes found for this category right now. "
-                    "Try Show Different Recipes.")
+            st.info("No recipes came back. Click Show Different Recipes to try again.")
             st.stop()
 
-        order = info["key"] + [n for n in ["Calories", "Protein", "Carbs", "Fiber"]
-                               if n not in info["key"]]
-        api_names = {"Calories": "Calories", "Protein": "Protein",
-                     "Carbs": "Carbohydrates", "Fiber": "Fiber"}
-        units = {"Calories": " cal", "Protein": "g protein",
-                 "Carbs": "g carbs", "Fiber": "g fiber"}
+        nut_fields = {"Calories": ("calories", " cal"), "Protein": ("protein_g", "g protein"),
+                      "Carbs": ("carbs_g", "g carbs"), "Fiber": ("fiber_g", "g fiber")}
+        order = info["key"] + [n for n in nut_fields if n not in info["key"]]
 
         cols = st.columns(3)
         for i, rec in enumerate(recipes):
             with cols[i % 3]:
-                if rec.get("image"):
-                    st.image(rec["image"], use_container_width=True)
                 chips = ""
                 for n in order:
-                    val = rb_nutrient(rec, api_names[n])
+                    field, unit = nut_fields[n]
+                    val = rec.get(field)
                     if val is None: continue
                     cls = "key" if n in info["key"] else ""
-                    chips += f'<span class="{cls}">{val:.0f}{units[n]}</span>'
+                    chips += f'<span class="{cls}">{rb_fmt_amount(val)}{unit}</span>'
                 st.markdown(f"""
                 <div class="rb-card">
                     <h4>{rec.get('title', 'Recipe')}</h4>
-                    <div class="rb-meta">⏱ {rec.get('readyInMinutes', '?')} min
+                    <div class="rb-meta">⏱ {rec.get('time_minutes', '?')} min
                     &nbsp;|&nbsp; Serves {rec.get('servings', '?')}
-                    &nbsp;|&nbsp; per serving</div>
+                    &nbsp;|&nbsp; per serving (est.)</div>
                     <div class="rb-nut">{chips}</div>
+                    <div class="rb-why">{rec.get('why', '')}</div>
                 </div>
                 """, unsafe_allow_html=True)
 
                 with st.expander("View recipe"):
-                    base = rec.get("servings") or 1
+                    try: base = int(rec.get("servings") or 1)
+                    except (TypeError, ValueError): base = 1
                     want = st.number_input("Servings", min_value=1, max_value=20,
-                        value=int(base), step=1, key=f"serv_{rec.get('id', i)}")
+                        value=base, step=1,
+                        key=f"serv_{category}_{st.session_state.rb_batch}_{i}")
                     factor = want / base
                     st.markdown("**Ingredients**")
-                    ings = rec.get("missedIngredients", []) + \
-                           rec.get("usedIngredients", [])
                     lines = []
-                    for ing in ings:
+                    for ing in rec.get("ingredients", []):
                         amt = ing.get("amount")
-                        if amt is not None and ing.get("name"):
-                            lines.append(f"- {rb_fmt_amount(amt * factor)} "
-                                         f"{ing.get('unit', '')} {ing['name']}".replace("  ", " "))
-                        elif ing.get("original"):
-                            lines.append(f"- {ing['original']}")
-                    st.markdown("\n".join(lines) if lines else
-                                "_See the full recipe link below._")
-                    steps = []
-                    for block in rec.get("analyzedInstructions", []):
-                        steps += [s.get("step", "") for s in block.get("steps", [])]
+                        try: scaled = rb_fmt_amount(float(amt) * factor)
+                        except (TypeError, ValueError): scaled = ""
+                        line = f"- {scaled} {ing.get('unit', '')} {ing.get('item', '')}"
+                        lines.append(" ".join(line.split()))
+                    st.markdown("\n".join(lines) if lines else "_No ingredients listed._")
+                    steps = rec.get("steps", [])
                     if steps:
                         st.markdown("**Steps**")
-                        st.markdown("\n".join(f"{n}. {s}"
-                                              for n, s in enumerate(steps, 1)))
-                    if rec.get("sourceUrl"):
-                        src = rec.get("sourceName") or "the original source"
-                        st.markdown(f"[Full recipe from {src}]({rec['sourceUrl']})")
+                        st.markdown("\n".join(f"{n}. {s}" for n, s in enumerate(steps, 1)))
 
         st.markdown("---")
         st.markdown("""
         <p style="color:#555555; font-size:13px;">
-        Recipes and nutrition data from
-        <a href="https://spoonacular.com/food-api" target="_blank">Spoonacular</a>.
-        Nutrition values are estimates per serving. Always check ingredients
+        Recipes are generated by Claude (Anthropic). Nutrition values are AI
+        estimates per serving and may not be exact. Always check ingredients
         for allergies.
         </p>
         """, unsafe_allow_html=True)
