@@ -237,7 +237,7 @@ st.markdown("""
     .results-card .rc-label { color: #1B5E20; }
     .results-card .rc-value { font-weight: 700; text-align: right; }
     .results-card .rc-foot {
-        color: #1B5E20; font-size: 12px; margin-top: 0.45rem; opacity: 0.85;
+        color: #444444; font-size: 12px; font-weight: 700; margin-top: 0.45rem;
     }
 </style>
 """, unsafe_allow_html=True)
