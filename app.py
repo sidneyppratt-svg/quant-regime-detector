@@ -224,7 +224,8 @@ st.markdown("""
         border: 1px solid #A8D5B5;
         border-radius: 12px;
         padding: 0.8rem 1.1rem;
-        margin-top: 0.4rem;
+        margin-top: 0;
+        margin-bottom: 1.25rem;
     }
     .results-card .rc-head {
         display: flex; justify-content: space-between; align-items: baseline;
@@ -1967,6 +1968,16 @@ elif page == "Other Projects":
                         "AI estimates: do not use them to calculate insulin doses, and "
                         "follow the advice of your doctor or dietitian.",
                 "key": ["Carbs", "Fiber"]},
+            "Easy 3-Ingredient": {
+                "rules": "Super simple healthy recipes built from exactly 3 main "
+                         "ingredients. Salt, pepper, cooking oil, water, and dried "
+                         "herbs or spices do not count toward the 3; list them "
+                         "separately as pantry basics. Under 20 minutes, beginner "
+                         "friendly, with a real source of protein or fiber.",
+                "note": "Just three main ingredients plus pantry basics like oil, "
+                        "salt, and spices. Quick, cheap, and hard to mess up, which "
+                        "makes them great for busy days.",
+                "key": ["Protein", "Calories"]},
             "Soups": {
                 "rules": "Healthy, filling soups or stews with plenty of vegetables "
                          "and at least 15g protein per serving, under 600 calories, "
@@ -2019,14 +2030,14 @@ elif page == "Other Projects":
             if abs(x - round(x)) < 0.05: return str(int(round(x)))
             return f"{x:.2f}".rstrip("0").rstrip(".")
 
-        # Category buttons: two rows of four
+        # Category buttons: three rows of three
         cats = list(RB_CATEGORIES.keys())
         if "rb_category" not in st.session_state:
             st.session_state.rb_category = cats[0]
         if "rb_batch" not in st.session_state:
             st.session_state.rb_batch = 0
-        for row in (cats[:4], cats[4:]):
-            cols = st.columns(4)
+        for row in (cats[0:3], cats[3:6], cats[6:9]):
+            cols = st.columns(3)
             for col, cat in zip(cols, row):
                 with col:
                     if st.button(cat, key=f"rb_{cat}", use_container_width=True):
