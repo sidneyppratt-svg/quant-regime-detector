@@ -17,6 +17,45 @@ st.set_page_config(
     layout="wide"
 )
 
+
+# ── Live data helpers ─────────────────────────────────────────
+# Models run automatically on page load. Downloads are saved for
+# one hour so switching pages is fast; "Refresh the Model" clears
+# the saved copy and pulls fresh data.
+@st.cache_data(ttl=3600, show_spinner=False)
+def cached_yf_download(tickers, **kwargs):
+    return yf.download(tickers, **kwargs)
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def cached_fred(series, start, end):
+    return web.DataReader(series, "fred", start, end)
+
+def refresh_data():
+    cached_yf_download.clear()
+    cached_fred.clear()
+
+SIGNAL_GREEN = "#2E7D32"
+SIGNAL_AMBER = "#E65100"
+SIGNAL_RED   = "#C62828"
+SIGNAL_TEXT  = "#1a1a1a"
+
+def results_card(as_of, rows):
+    """rows: list of (label, value, color)."""
+    row_html = "".join(
+        f'<div class="rc-row"><span class="rc-label">{label}</span>'
+        f'<span class="rc-value" style="color:{color};">{value}</span></div>'
+        for label, value, color in rows)
+    return (f'<div class="results-card">'
+            f'<div class="rc-head"><b>Latest results</b>'
+            f'<span class="rc-date">As of {as_of}</span></div>'
+            f'{row_html}'
+            f'<div class="rc-foot">Full results, analysis &amp; charts below ↓</div>'
+            f'</div>')
+
+RESULTS_LOADING = ('<div class="results-card"><div class="rc-head">'
+                   '<b>Latest results</b></div>'
+                   '<div class="rc-foot">Loading live data…</div></div>')
+
 st.markdown("""
 <style>
     .stApp { background-color: #FFFFFF; }
@@ -179,6 +218,27 @@ st.markdown("""
     }
     .data-source-section h3 { padding: 0 !important; margin-top: 0 !important; color: #1B5E20 !important; margin-bottom: 0.5rem; }
     .data-source-section p { color: #1a1a1a !important; line-height: 1.5; margin-bottom: 0 !important; }
+    .results-card {
+        background-color: #F0FFF4;
+        border: 1px solid #A8D5B5;
+        border-radius: 12px;
+        padding: 0.8rem 1.1rem;
+        margin-top: 0.4rem;
+    }
+    .results-card .rc-head {
+        display: flex; justify-content: space-between; align-items: baseline;
+        color: #1B5E20; font-size: 15px; margin-bottom: 0.4rem;
+    }
+    .results-card .rc-date { color: #1B5E20; font-size: 12px; opacity: 0.8; }
+    .results-card .rc-row {
+        display: flex; justify-content: space-between; gap: 1rem;
+        padding: 0.2rem 0; border-top: 1px solid #D4EBDB; font-size: 14px;
+    }
+    .results-card .rc-label { color: #1B5E20; }
+    .results-card .rc-value { font-weight: 700; text-align: right; }
+    .results-card .rc-foot {
+        color: #1B5E20; font-size: 12px; margin-top: 0.45rem; opacity: 0.85;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -482,7 +542,7 @@ elif page == "AI Research":
         m3 = st.button("Credit Spread Monitor",
             key="btn_cs", use_container_width=True)
     with c4:
-        m4 = st.button("Mortgage Monitor",
+        m4 = st.button("Mortgage Market Monitor",
             key="btn_mm", use_container_width=True)
     with c5:
         m5 = st.button("Hockey Navigator",
@@ -504,8 +564,13 @@ elif page == "AI Research":
 # MODEL 1 — YIELD CURVE MONITOR
 # ══════════════════════════════════════════════════════════════
     if model == "Yield Curve Monitor":
-        st.markdown("## Yield Curve Monitor")
-        st.markdown("*Fixed Income Relative Value Tool | Sidney Pratt*")
+        title_col, card_col = st.columns([3, 2])
+        with title_col:
+            st.markdown("## Yield Curve Monitor")
+            st.markdown("*Fixed Income Relative Value Tool | Sidney Pratt*")
+        with card_col:
+            yc_card = st.empty()
+            yc_card.markdown(RESULTS_LOADING, unsafe_allow_html=True)
         st.markdown("---")
 
         st.markdown("""
@@ -602,7 +667,7 @@ elif page == "AI Research":
         """, unsafe_allow_html=True)
 
         st.markdown("---")
-        st.markdown("### Run the Model")
+        st.markdown("### Refresh the Model")
         col1, col2 = st.columns(2)
         with col1:
             yc_start = st.date_input("Start Date",
@@ -612,7 +677,9 @@ elif page == "AI Research":
                 value=datetime.date.today(), key="yc_end")
         st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
 
-        if st.button("Run Yield Curve Monitor"):
+        if st.button("↻ Refresh the Model", key="refresh_yc"):
+            refresh_data()
+        if True:  # runs automatically on page load, no click needed
             with st.spinner("Downloading Treasury yield data..."):
                 tickers = {
                     '3M':  '^IRX',
@@ -622,7 +689,7 @@ elif page == "AI Research":
                 }
                 yc_yields = pd.DataFrame()
                 for name, ticker in tickers.items():
-                    data = yf.download(ticker,
+                    data = cached_yf_download(ticker,
                         start=str(yc_start),
                         end=str(yc_end),
                         auto_adjust=True,
@@ -656,6 +723,13 @@ elif page == "AI Research":
                 trend_30d      = float(yc_yields['10Y_3M'].iloc[-1] -
                                        yc_yields['10Y_3M'].iloc[-22]) \
                                  if len(yc_yields) > 22 else 0.0
+
+            _c = SIGNAL_GREEN if current_regime in ['NORMAL', 'STEEP'] else (SIGNAL_AMBER if current_regime == 'FLAT' else SIGNAL_RED)
+            yc_card.markdown(results_card(current_date, [
+                ("Regime", current_regime, _c),
+                ("10Y minus 3M", f"{current_spread:+.2f}%", SIGNAL_TEXT),
+                ("Signal", "HOLD TLT" if current_regime in ['NORMAL', 'STEEP'] else "MOVE TO CASH", _c),
+            ]), unsafe_allow_html=True)
 
             st.markdown("---")
             st.markdown("### Signal")
@@ -795,8 +869,13 @@ elif page == "AI Research":
 # MODEL 2 — MULTI-ASSET MARKET REGIME DETECTOR
 # ══════════════════════════════════════════════════════════════
     elif model == "Multi-Asset Market Regime Detector":
-        st.markdown("## Multi-Asset Market Regime Detector")
-        st.markdown("*Cross-Asset Quantitative Research Tool | Sidney Pratt*")
+        title_col, card_col = st.columns([3, 2])
+        with title_col:
+            st.markdown("## Multi-Asset Market Regime Detector")
+            st.markdown("*Cross-Asset Quantitative Research Tool | Sidney Pratt*")
+        with card_col:
+            rd_card = st.empty()
+            rd_card.markdown(RESULTS_LOADING, unsafe_allow_html=True)
         st.markdown("---")
 
         st.markdown("""
@@ -905,7 +984,7 @@ elif page == "AI Research":
         """, unsafe_allow_html=True)
 
         st.markdown("---")
-        st.markdown("### Run the Model")
+        st.markdown("### Refresh the Model")
         col1, col2 = st.columns(2)
         with col1:
             start_date = st.date_input("Start Date",
@@ -915,10 +994,12 @@ elif page == "AI Research":
                 value=datetime.date.today())
         st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
 
-        if st.button("Run AI Model"):
+        if st.button("↻ Refresh the Model", key="refresh_rd"):
+            refresh_data()
+        if True:  # runs automatically on page load, no click needed
             with st.spinner("Downloading data and running AI model..."):
                 tickers = ['SPY', 'AGG', 'HYG', 'GLD']
-                prices = yf.download(tickers,
+                prices = cached_yf_download(tickers,
                     start=str(start_date),
                     end=str(end_date),
                     auto_adjust=True)['Close']
@@ -954,6 +1035,13 @@ elif page == "AI Research":
                 latest_date = smooth.index[-1].strftime('%B %d, %Y')
                 risk_off_pct = float(
                     (smooth['label'] == 'RISK-OFF').mean() * 100)
+
+            _c = SIGNAL_GREEN if latest == 'RISK-ON' else SIGNAL_RED
+            rd_card.markdown(results_card(latest_date, [
+                ("Regime", latest, _c),
+                ("Signal", "STAY INVESTED" if latest == 'RISK-ON' else "MOVE TO CASH", _c),
+                ("Sharpe (strategy)", f"{sh_s:.2f}", SIGNAL_TEXT),
+            ]), unsafe_allow_html=True)
 
             st.markdown("---")
             st.markdown("### Signal")
@@ -1042,8 +1130,13 @@ elif page == "AI Research":
 # MODEL 3 — CREDIT SPREAD MONITOR (FRED OAS — Bloomberg Accurate)
 # ══════════════════════════════════════════════════════════════
     elif model == "Credit Spread Monitor":
-        st.markdown("## Credit Spread Monitor")
-        st.markdown("*Fixed Income Credit Research Tool | Sidney Pratt*")
+        title_col, card_col = st.columns([3, 2])
+        with title_col:
+            st.markdown("## Credit Spread Monitor")
+            st.markdown("*Fixed Income Credit Research Tool | Sidney Pratt*")
+        with card_col:
+            cs_card = st.empty()
+            cs_card.markdown(RESULTS_LOADING, unsafe_allow_html=True)
         st.markdown("---")
 
         st.markdown("""
@@ -1143,7 +1236,7 @@ elif page == "AI Research":
         """, unsafe_allow_html=True)
 
         st.markdown("---")
-        st.markdown("### Run the Model")
+        st.markdown("### Refresh the Model")
         col1, col2 = st.columns(2)
         with col1:
             start_date_cs = st.date_input("Start Date",
@@ -1153,16 +1246,18 @@ elif page == "AI Research":
                 value=datetime.date.today(), key="cs_end")
         st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
 
-        if st.button("Run Credit Spread Model"):
+        if st.button("↻ Refresh the Model", key="refresh_cs"):
+            refresh_data()
+        if True:  # runs automatically on page load, no click needed
             with st.spinner("Downloading ICE BofA OAS spread from FRED..."):
 
                 # Pull real OAS spread from FRED
-                oas = web.DataReader("BAMLH0A0HYM2", "fred",
+                oas = cached_fred("BAMLH0A0HYM2",
                     str(start_date_cs), str(end_date_cs))
                 oas.columns = ["OAS_Spread"]
 
                 # HYG and LQD for relative performance chart
-                cs_prices = yf.download(['HYG', 'LQD'],
+                cs_prices = cached_yf_download(['HYG', 'LQD'],
                     start=str(start_date_cs),
                     end=str(end_date_cs),
                     auto_adjust=True)['Close'].dropna()
@@ -1212,6 +1307,13 @@ elif page == "AI Research":
                 score_labels = {1:'Very Calm', 2:'Calm',
                     3:'Moderate', 4:'Elevated', 5:'High Stress'}
                 cur_label = score_labels.get(int(cur_score), 'Unknown')
+
+            _c = SIGNAL_GREEN if cur_score <= 2 else (SIGNAL_AMBER if cur_score == 3 else SIGNAL_RED)
+            cs_card.markdown(results_card(cur_date, [
+                ("Stress Score", f"{cur_score:.0f}/5 — {cur_label}", _c),
+                ("OAS Spread", f"{cur_bps:.0f} bps", SIGNAL_TEXT),
+                ("Signal", cur_signal.split(" — ")[0], _c),
+            ]), unsafe_allow_html=True)
 
             st.markdown("---")
 
@@ -1359,8 +1461,13 @@ elif page == "AI Research":
 # MODEL 4 — MORTGAGE MARKET MONITOR
 # ══════════════════════════════════════════════════════════════
     elif model == "Mortgage Market Monitor":
-        st.markdown("## Mortgage Market Monitor")
-        st.markdown("*Fixed Income Mortgage Research Tool | Sidney Pratt*")
+        title_col, card_col = st.columns([3, 2])
+        with title_col:
+            st.markdown("## Mortgage Market Monitor")
+            st.markdown("*Fixed Income Mortgage Research Tool | Sidney Pratt*")
+        with card_col:
+            mm_card = st.empty()
+            mm_card.markdown(RESULTS_LOADING, unsafe_allow_html=True)
         st.markdown("---")
 
         st.markdown("""
@@ -1459,7 +1566,7 @@ elif page == "AI Research":
         """, unsafe_allow_html=True)
 
         st.markdown("---")
-        st.markdown("### Run the Model")
+        st.markdown("### Refresh the Model")
         col1, col2 = st.columns(2)
         with col1:
             start_date_mm = st.date_input("Start Date",
@@ -1469,25 +1576,27 @@ elif page == "AI Research":
                 value=datetime.date.today(), key="mm_end")
         st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
 
-        if st.button("Run Mortgage Market Monitor"):
+        if st.button("↻ Refresh the Model", key="refresh_mm"):
+            refresh_data()
+        if True:  # runs automatically on page load, no click needed
             with st.spinner("Downloading official Freddie Mac mortgage rate from FRED..."):
 
                 # Official Freddie Mac 30-Year Fixed Mortgage Rate from FRED
-                mortgage = web.DataReader("MORTGAGE30US", "fred",
+                mortgage = cached_fred("MORTGAGE30US",
                     str(start_date_mm), str(end_date_mm))
                 mortgage.columns = ["Mortgage_Rate"]
 
                 # Treasury yields and ETFs from Yahoo Finance
-                tnx = yf.download("^TNX", start=str(start_date_mm),
+                tnx = cached_yf_download("^TNX", start=str(start_date_mm),
                     end=str(end_date_mm), auto_adjust=True,
                     progress=False)["Close"]
-                tyx = yf.download("^TYX", start=str(start_date_mm),
+                tyx = cached_yf_download("^TYX", start=str(start_date_mm),
                     end=str(end_date_mm), auto_adjust=True,
                     progress=False)["Close"]
-                mbb = yf.download("MBB", start=str(start_date_mm),
+                mbb = cached_yf_download("MBB", start=str(start_date_mm),
                     end=str(end_date_mm), auto_adjust=True,
                     progress=False)["Close"]
-                agg = yf.download("AGG", start=str(start_date_mm),
+                agg = cached_yf_download("AGG", start=str(start_date_mm),
                     end=str(end_date_mm), auto_adjust=True,
                     progress=False)["Close"]
 
@@ -1555,6 +1664,14 @@ elif page == "AI Research":
                     (df_mm["MBB"].iloc[-1]/df_mm["MBB"].iloc[-21]-1)*100)
                 mbb_12m_mm     = float(
                     (df_mm["MBB"].iloc[-1]/df_mm["MBB"].iloc[-252]-1)*100)
+
+            _cs = SIGNAL_GREEN if cur_regime_mm in ["TIGHT", "NORMAL"] else (SIGNAL_AMBER if cur_regime_mm == "WIDE" else SIGNAL_RED)
+            _cr = SIGNAL_GREEN if cur_refi_mm in ["MINIMAL REFI", "SOME REFI"] else (SIGNAL_AMBER if cur_refi_mm == "ACTIVE REFI" else SIGNAL_RED)
+            mm_card.markdown(results_card(cur_date_mm, [
+                ("30Y Mortgage Rate", f"{cur_mort_mm:.2f}%", SIGNAL_TEXT),
+                ("Mortgage Spread", f"{cur_regime_mm} ({cur_spread_mm:.2f}%)", _cs),
+                ("Refi Signal", cur_refi_mm, _cr),
+            ]), unsafe_allow_html=True)
 
             st.markdown("---")
 
