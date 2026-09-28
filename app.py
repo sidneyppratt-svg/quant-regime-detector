@@ -536,6 +536,9 @@ elif page == "AI Finance":
     and solve real world problems.
     Each model is built on real data and fully interactive.
     </p>
+    <p style="color:#666666; font-size:13px; font-style:italic; margin-top:-0.4rem;">
+    For educational and research purposes only. Not investment advice.
+    </p>
     """, unsafe_allow_html=True)
 
     # Model selection cards — full card is the button
@@ -747,11 +750,11 @@ elif page == "AI Finance":
 
             st.markdown("### Strategy Signal")
             if current_regime in ['NORMAL', 'STEEP']:
-                st.success("HOLD TLT — Long duration bonds are safe to hold in this regime.")
+                st.success("Model signal: HOLD TLT — in this regime the strategy holds long-duration Treasuries (TLT).")
             elif current_regime == 'FLAT':
-                st.warning("MOVE TO CASH — Curve is in transition zone. Reduce long duration bond exposure.")
+                st.warning("Model signal: MOVE TO CASH — the curve is in a transition zone, where the strategy steps out of long-duration bonds.")
             else:
-                st.error("MOVE TO CASH — Avoid long duration bonds during inversion.")
+                st.error("Model signal: MOVE TO CASH — the strategy steps out of long-duration bonds during inversions.")
 
             st.markdown("---")
             st.markdown("### Results")
@@ -963,7 +966,7 @@ elif page == "AI Finance":
         st.markdown("""
         <div class="static-section">
             <h3>Regime Classification</h3>
-            <p><b>RISK-ON</b> — Investors are comfortable taking risk. All four asset classes are behaving normally — stocks are rising, high yield credit is performing well, and there is no unusual demand for safe havens like gold or government bonds. This is the environment where equity exposure makes sense and credit spreads are calm. The model signals stay invested in equities.<br><br><b>RISK-OFF</b> — Investors are pulling back from risk. Stress is showing up across multiple asset classes simultaneously — stocks falling, high yield credit underperforming investment grade, and demand rising for safe havens like gold and government bonds. This is the environment where capital preservation matters more than returns. The model signals move to cash.<br><br><b>What makes this model different:</b> Most indicators watch one asset. This model watches four at once. A single bad day in stocks does not trigger RISK-OFF. What triggers it is when stocks, credit, and safe haven assets all move together in a stress pattern — exactly what happens during real market crises.</p>
+            <p><b>RISK-ON</b> — Investors are comfortable taking risk. All four asset classes are behaving normally — stocks are rising, high yield credit is performing well, and there is no unusual demand for safe havens like gold or government bonds. Credit spreads are typically calm in this environment. Model signal: stay invested in SPY.<br><br><b>RISK-OFF</b> — Investors are pulling back from risk. Stress is showing up across multiple asset classes simultaneously — stocks falling, high yield credit underperforming investment grade, and demand rising for safe havens like gold and government bonds. Model signal: move to cash.<br><br><b>What makes this model different:</b> Most indicators watch one asset. This model watches four at once. A single bad day in stocks does not trigger RISK-OFF. What triggers it is when stocks, credit, and safe haven assets all move together in a stress pattern — exactly what happens during real market crises.</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1045,11 +1048,11 @@ elif page == "AI Finance":
 
             st.markdown("### Strategy Signal")
             if latest == 'RISK-ON':
-                st.success("STAY INVESTED — Model signals holding SPY. "
-                           "Cross-asset conditions support equity exposure.")
+                st.success("Model signal: STAY INVESTED — the strategy holds SPY "
+                           "when cross-asset conditions look calm.")
             else:
-                st.error("MOVE TO CASH — Model signals reducing equity "
-                         "exposure. Cross-asset stress detected.")
+                st.error("Model signal: MOVE TO CASH — the strategy steps out "
+                         "of SPY when cross-asset stress is detected.")
 
             st.markdown("---")
             st.markdown("### Results")
@@ -1289,7 +1292,7 @@ elif page == "AI Finance":
                 def classify_signal(score):
                     if score <= 2:   return "RISK-ON — Credit conditions healthy"
                     elif score == 3: return "NEUTRAL — Monitor closely"
-                    elif score == 4: return "CAUTION — Reduce high yield exposure"
+                    elif score == 4: return "CAUTION — Spreads elevated vs recent history"
                     else:            return "RISK-OFF — Significant credit stress"
 
                 cur_oas     = float(df["OAS_Spread"].iloc[-1])
@@ -1338,11 +1341,11 @@ elif page == "AI Finance":
             # Strategy Signal
             st.markdown("### Strategy Signal")
             if cur_score <= 2:
-                st.success(f"RISK-ON — {cur_signal}")
+                st.success(f"Model signal: {cur_signal}")
             elif cur_score == 3:
-                st.warning(f"NEUTRAL — {cur_signal}")
+                st.warning(f"Model signal: {cur_signal}")
             else:
-                st.error(f"CAUTION — {cur_signal}")
+                st.error(f"Model signal: {cur_signal}")
 
             # Results
             st.markdown("---")
@@ -1562,7 +1565,7 @@ elif page == "AI Finance":
         st.markdown("""
         <div class="static-section">
             <h3>Regime Classification</h3>
-            <p>The mortgage spread is the gap between the official 30-year mortgage rate and the 10-year Treasury yield. It represents the extra cost borrowers pay above the risk-free rate to compensate lenders for prepayment risk, credit risk, and servicing costs. A wider spread means mortgages are more expensive relative to Treasuries — a signal of stress or uncertainty in the housing finance market.<br><br><b>TIGHT (below 1.50%):</b> Lenders are competing aggressively for mortgage business. The extra cost of a mortgage above Treasuries is historically low. MBS are expensive relative to Treasuries — investors are accepting less compensation than usual for mortgage risk. Good for new homebuyers but less attractive for MBS investors buying at tight levels.<br><br><b>NORMAL (1.50% to 2.00%):</b> Mortgage risk is priced appropriately relative to Treasuries. The spread is in its historical average range. Lenders are earning a fair margin. Normal prepayment modeling assumptions apply. The most common regime — the market is functioning as expected.<br><br><b>WIDE (2.00% to 2.50%):</b> <span style="color:#E65100; font-weight:bold;">Lenders are demanding more compensation above Treasuries. This can reflect uncertainty about prepayment speeds, tighter bank balance sheets, or broader fixed income stress. MBS are cheap relative to Treasuries. Could be a buying opportunity if the widening is technical — worth monitoring closely.</span><br><br><b>VERY WIDE (above 2.50%):</b> <span style="color:#B71C1C; font-weight:bold;">Significant stress in the mortgage market. Lenders are demanding crisis-level compensation above Treasuries. This territory was seen during the 2008 financial crisis, COVID March 2020, and the November 2022 rate shock when the Fed was hiking aggressively. MBS are very cheap but duration risk is high.</span><br><br><b>MINIMAL REFI:</b> Current mortgage rates are not significantly below where they were 12 months ago. Most borrowers have little financial incentive to refinance. Prepayment speeds are near baseline, so MBS behave like longer-duration bonds.<br><br><b>SOME REFI:</b> Rates have fallen modestly. Some borrowers who were well above the current rate may refinance. Prepayment speeds are slightly above baseline.<br><br><b>ACTIVE REFI:</b> Rates have fallen meaningfully — more than 0.75% below a year ago. A meaningful portion of existing mortgages are in the money to refinance. Prepayment speeds are elevated. MBS duration is shortening.<br><br><b>REFI WAVE:</b> <span style="color:#B71C1C; font-weight:bold;">Rates have fallen more than 1.50% below a year ago. A large portion of the existing mortgage market can benefit from refinancing. Prepayment speeds are accelerating rapidly. MBS holders receive principal back much faster than expected — duration collapses. A major risk for MBS investors who bought at higher prices.</span></p>
+            <p>The mortgage spread is the gap between the official 30-year mortgage rate and the 10-year Treasury yield. It represents the extra cost borrowers pay above the risk-free rate to compensate lenders for prepayment risk, credit risk, and servicing costs. A wider spread means mortgages are more expensive relative to Treasuries — a signal of stress or uncertainty in the housing finance market.<br><br><b>TIGHT (below 1.50%):</b> Lenders are competing aggressively for mortgage business. The extra cost of a mortgage above Treasuries is historically low. MBS are expensive relative to Treasuries — investors are accepting less compensation than usual for mortgage risk. Good for new homebuyers but less attractive for MBS investors buying at tight levels.<br><br><b>NORMAL (1.50% to 2.00%):</b> Mortgage risk is priced appropriately relative to Treasuries. The spread is in its historical average range. Lenders are earning a fair margin. Normal prepayment modeling assumptions apply. The most common regime — the market is functioning as expected.<br><br><b>WIDE (2.00% to 2.50%):</b> <span style="color:#E65100; font-weight:bold;">Lenders are demanding more compensation above Treasuries. This can reflect uncertainty about prepayment speeds, tighter bank balance sheets, or broader fixed income stress. MBS are cheap relative to Treasuries. Worth monitoring whether the widening is temporary or a sign of deeper stress.</span><br><br><b>VERY WIDE (above 2.50%):</b> <span style="color:#B71C1C; font-weight:bold;">Significant stress in the mortgage market. Lenders are demanding crisis-level compensation above Treasuries. This territory was seen during the 2008 financial crisis, COVID March 2020, and the November 2022 rate shock when the Fed was hiking aggressively. MBS are very cheap but duration risk is high.</span><br><br><b>MINIMAL REFI:</b> Current mortgage rates are not significantly below where they were 12 months ago. Most borrowers have little financial incentive to refinance. Prepayment speeds are near baseline, so MBS behave like longer-duration bonds.<br><br><b>SOME REFI:</b> Rates have fallen modestly. Some borrowers who were well above the current rate may refinance. Prepayment speeds are slightly above baseline.<br><br><b>ACTIVE REFI:</b> Rates have fallen meaningfully — more than 0.75% below a year ago. A meaningful portion of existing mortgages are in the money to refinance. Prepayment speeds are elevated. MBS duration is shortening.<br><br><b>REFI WAVE:</b> <span style="color:#B71C1C; font-weight:bold;">Rates have fallen more than 1.50% below a year ago. A large portion of the existing mortgage market can benefit from refinancing. Prepayment speeds are accelerating rapidly. MBS holders receive principal back much faster than expected — duration collapses. A major risk for MBS investors who bought at higher prices.</span></p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1845,6 +1848,19 @@ elif page == "AI Finance":
             </p>
         </div>
         """, unsafe_allow_html=True)
+
+    # Disclaimer shown under every finance model
+    st.markdown("---")
+    st.markdown("""
+    <p style="color:#666666; font-size:12px; line-height:1.5;">
+    <b>Disclaimer:</b> This website and its models are for educational and research
+    purposes only and do not constitute investment, financial, or trading advice.
+    Model signals are based on historical data and simplified assumptions, may contain
+    errors, and do not predict future results. Past performance does not guarantee
+    future returns. Consult a qualified financial professional before making
+    investment decisions.
+    </p>
+    """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
 # OTHER PROJECTS — HOCKEY PATHWAY NAVIGATOR
