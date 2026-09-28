@@ -536,7 +536,7 @@ elif page == "AI Finance":
     and solve real world problems.
     Each model is built on real data and fully interactive.
     </p>
-    <p style="color:#666666; font-size:13px; font-style:italic; margin-top:-0.4rem;">
+    <p style="color:#666666; font-size:13px; font-style:italic; font-weight:700; margin-top:-0.4rem;">
     For educational and research purposes only. Not investment advice.
     </p>
     """, unsafe_allow_html=True)
@@ -1852,7 +1852,7 @@ elif page == "AI Finance":
     # Disclaimer shown under every finance model
     st.markdown("---")
     st.markdown("""
-    <p style="color:#666666; font-size:12px; line-height:1.5;">
+    <p style="color:#666666; font-size:12px; line-height:1.5; font-weight:700;">
     <b>Disclaimer:</b> This website and its models are for educational and research
     purposes only and do not constitute investment, financial, or trading advice.
     Model signals are based on historical data and simplified assumptions, may contain
