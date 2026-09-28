@@ -578,15 +578,12 @@ elif page == "AI Finance":
         <div class="static-section">
             <h3>Overview</h3>
             <p>
-            This model tracks the US Treasury yield curve across four
-            maturities — 3-month, 5-year, 10-year, and 30-year — and
-            classifies the current regime as Steep, Normal, Flat,
-            Inverted, or Deeply Inverted based on the classic
-            10Y minus 3M spread.<br><br>
-            Built specifically to complement a fixed income relative
-            value research portfolio. The yield curve is the single
-            most watched indicator across every fixed income trading
-            desk — rates, credit, and mortgages.
+            This model tracks the US Treasury yield curve across four maturities — 3-month,
+            5-year, 10-year, and 30-year — and classifies the current regime as Steep, Normal,
+            Flat, Inverted, or Deeply Inverted based on the classic 10Y minus 3M spread.
+            Built specifically to complement a fixed income relative value research portfolio.
+            The yield curve is one of the most closely watched indicators on fixed income
+            trading desks — rates, credit, and mortgages.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -595,14 +592,13 @@ elif page == "AI Finance":
         <div class="static-section">
             <h3>Key Features</h3>
             <p>
-            • Live Treasury yield data downloaded fresh on every run<br>
-            • Regime classification across 5 curve states —
-            Steep, Normal, Flat, Inverted, Deeply Inverted<br>
+            • Live Treasury yield data, refreshed automatically<br>
+            • Regime classification across 5 curve states — Steep, Normal, Flat, Inverted, Deeply Inverted<br>
             • Plain language interpretation of what the curve is saying<br>
             • Dynamic signal and strategy that updates with the regime<br>
-            • 30-day and 90-day trend detection — steepening or flattening<br>
-            • Backtest of a TLT bond strategy using curve signals 2003-2026<br>
-            • Key historical event annotations — 2001, 2006, 2020, 2022-23
+            • 30-day trend detection — steepening or flattening<br>
+            • Percentile ranking and comparison with the long-run average<br>
+            • Backtest of a TLT bond strategy, 2003-2026, in the full research notebook
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -611,17 +607,15 @@ elif page == "AI Finance":
         <div class="data-source-section">
             <h3>Data Sources</h3>
             <p>
-            <b>Treasury Yields:</b> Live US Treasury yields downloaded
-            directly from Yahoo Finance — tickers ^IRX (3-Month),
-            ^FVX (5-Year), ^TNX (10-Year), ^TYX (30-Year).<br>
-            <b>Accuracy:</b> These are real market prices and match the
-            US Treasury website exactly. Updated every trading day.<br>
-            <b>Key Spread:</b> 10Y minus 3M — the Federal Reserve's own
-            preferred inversion signal used in the NY Fed recession
-            probability model.<br>
-            <b>Backtest:</b> TLT ETF historical price data from Yahoo Finance.
-            All calculations performed in Python using pandas and numpy.
-            No lookahead bias — prior day signal drives today's position.
+            <b>Treasury Yields:</b> Daily US Treasury yields from Yahoo Finance — tickers
+            ^IRX (13-week / 3-Month), ^FVX (5-Year), ^TNX (10-Year), ^TYX (30-Year).<br><br>
+            <b>Accuracy:</b> Real market yields from Cboe's Treasury yield indexes. They closely
+            track official Treasury rates; small differences from the Treasury Department's
+            published curve are normal because of timing and methodology.<br><br>
+            <b>Key Spread:</b> 10Y minus 3M — the spread used in the New York Fed's recession
+            probability model.<br><br>
+            <b>Backtest:</b> TLT ETF price data from Yahoo Finance, in the full research notebook.<br><br>
+            All calculations performed in Python using pandas and NumPy.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -632,14 +626,12 @@ elif page == "AI Finance":
             <div class="static-section">
                 <h3>Why It Matters</h3>
                 <p>
-                The yield curve is the most cited indicator in fixed
-                income markets. Every rates, credit, and mortgage desk
-                watches the 10Y minus 3M spread daily because it predicts
-                recessions, Fed policy shifts, and bond market direction
-                before they happen.<br><br>
-                Every major US recession since 1970 has been preceded
-                by a yield curve inversion. The 2022-23 inversion was
-                the deepest since the 1980s at -1.70%.
+                The yield curve is one of the most cited indicators in fixed income markets.
+                Rates, credit, and mortgage desks track the 10Y minus 3M spread because it has
+                historically signaled recessions and shifts in Fed policy.<br><br>
+                An inversion of this spread has preceded every US recession since the late 1960s,
+                although the time between inversion and recession has varied widely. The 2022-23
+                inversion was the deepest since the early 1980s, with the spread falling below -1.50%.
                 </p>
             </div>
             """, unsafe_allow_html=True)
@@ -648,13 +640,13 @@ elif page == "AI Finance":
             <div class="static-section">
                 <h3>Methodology</h3>
                 <p>
-                Downloads live US Treasury yields across four maturities
-                and calculates the 10Y minus 3M spread — the classic
-                Federal Reserve inversion signal. A 21-day rolling average
-                smooths daily noise.<br><br>
-                Strategy holds TLT during Normal and Steep regimes and
-                moves to cash during Flat and Inverted regimes.
-                Backtest runs from 2003 to present with no lookahead bias.<br><br>
+                Downloads daily US Treasury yields across four maturities and calculates the
+                10Y minus 3M spread.<br><br>
+                Each day is classified into a regime using that day's spread. A 21-day rolling
+                average is shown on the spread chart to smooth daily noise and show the trend.<br><br>
+                The strategy signal holds TLT in Normal and Steep regimes and moves to cash in
+                Flat, Inverted, and Deeply Inverted regimes. The full research notebook backtests
+                this strategy from 2003 to present, using the prior day's signal to avoid lookahead bias.<br><br>
                 <b>Methodology never changes regardless of date range.</b>
                 </p>
             </div>
@@ -663,7 +655,7 @@ elif page == "AI Finance":
         st.markdown("""
         <div class="static-section">
             <h3>Regime Classification</h3>
-            <p><b>STEEP</b> (10Y minus 3M above +1.50%) — Long-term rates are significantly higher than short-term rates. The market expects strong future economic growth. Banks earn wide margins borrowing short and lending long. Historically the best environment for bonds and equities. → <span style="color:#2E7D32; font-weight:bold;">HOLD TLT</span><br><br><b>NORMAL</b> (+0.50% to +1.50%) — The curve has its typical upward slope. Short-term rates are lower than long-term rates as expected. The economy is healthy with no recession signals. The most common regime. → <span style="color:#2E7D32; font-weight:bold;">HOLD TLT</span><br><br><b>FLAT</b> (-0.50% to +0.50%) — Short and long-term rates are nearly equal. The market is uncertain about the future. Banks earn little margin. Often a transition zone between healthy and inverted. A warning sign that the economy may be slowing. → <span style="color:#E65100; font-weight:bold;">MOVE TO CASH</span><br><br><b>INVERTED</b> (-0.50% to 0%) — Short-term rates are higher than long-term rates. This is abnormal and historically the most reliable recession predictor. Means the market expects the Fed will cut rates sharply in the future because the economy is slowing. Every major US recession since 1970 was preceded by an inversion. → <span style="color:#C62828; font-weight:bold;">MOVE TO CASH</span><br><br><b>DEEPLY INVERTED</b> (below -0.50%) — The most extreme inversion level. Short-term rates are significantly above long-term rates. The Fed has tightened aggressively and the market expects a hard landing. The 2022-23 inversion reached -1.70% — the deepest since the 1980s Volcker era. High alert. → <span style="color:#B71C1C; font-weight:bold;">MOVE TO CASH</span></p>
+            <p><b>STEEP</b> (10Y minus 3M above +1.50%) — Long-term rates are significantly higher than short-term rates. The market expects strong future economic growth. Banks earn wide margins borrowing short and lending long. Often seen early in economic recoveries. → <span style="color:#2E7D32; font-weight:bold;">HOLD TLT</span><br><br><b>NORMAL</b> (+0.50% to +1.50%) — The curve has its typical upward slope. Short-term rates are lower than long-term rates as expected. The economy is healthy with no recession signals. The most common regime. → <span style="color:#2E7D32; font-weight:bold;">HOLD TLT</span><br><br><b>FLAT</b> (0% to +0.50%) — Short and long-term rates are nearly equal. The market is uncertain about the future. Banks earn little margin. Often a transition zone between healthy and inverted. A warning sign that the economy may be slowing. → <span style="color:#E65100; font-weight:bold;">MOVE TO CASH</span><br><br><b>INVERTED</b> (-0.50% to 0%) — Short-term rates are higher than long-term rates. This is abnormal and historically the most reliable recession predictor. Means the market expects the Fed will cut rates sharply in the future because the economy is slowing. Every major US recession since 1970 was preceded by an inversion. → <span style="color:#C62828; font-weight:bold;">MOVE TO CASH</span><br><br><b>DEEPLY INVERTED</b> (below -0.50%) — The most extreme inversion level. Short-term rates are significantly above long-term rates. The Fed has tightened aggressively and the market expects a hard landing. The 2022-23 inversion fell below -1.50% — the deepest since the early 1980s. High alert. → <span style="color:#B71C1C; font-weight:bold;">MOVE TO CASH</span></p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -901,13 +893,13 @@ elif page == "AI Finance":
         <div class="static-section">
             <h3>Key Features</h3>
             <p>
-            • Live multi-asset price data downloaded fresh on every run<br>
+            • Live multi-asset price data, refreshed automatically<br>
             • Gaussian Mixture Model — unsupervised machine learning<br>
             • Simultaneous analysis of four asset classes<br>
             • RISK-ON and RISK-OFF regime classification<br>
             • 21-day rolling return smoothing to filter daily noise<br>
-            • Full backtest of a SPY strategy using regime signals<br>
-            • Regime detection timeline with key event annotations
+            • Backtest of a SPY strategy using regime signals, compared with buy and hold<br>
+            • Portfolio growth chart and regime timeline
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -916,19 +908,12 @@ elif page == "AI Finance":
         <div class="data-source-section">
             <h3>Data Sources</h3>
             <p>
-            <b>SPY (US Equities):</b> S&P 500 ETF — Yahoo Finance.
-            Real closing prices adjusted for dividends and splits.<br>
-            <b>AGG (Investment Grade Bonds):</b> iShares Core US Aggregate
-            Bond ETF — Yahoo Finance. Real closing prices.<br>
-            <b>HYG (High Yield Credit):</b> iShares iBoxx High Yield
-            Corporate Bond ETF — Yahoo Finance. Real closing prices.<br>
-            <b>GLD (Gold):</b> SPDR Gold Shares ETF — Yahoo Finance.
-            Real closing prices.<br>
-            <b>Accuracy:</b> All four data sources are real market prices
-            from Yahoo Finance. ETF prices are adjusted for dividends and
-            splits. These match Bloomberg terminal closing prices exactly.<br>
-            <b>Model:</b> Gaussian Mixture Model from scikit-learn.
-            Unsupervised — no labels used during training.
+            <b>SPY (US Equities):</b> SPDR S&P 500 ETF — Yahoo Finance.<br><br>
+            <b>AGG (Investment Grade Bonds):</b> iShares Core US Aggregate Bond ETF — Yahoo Finance.<br><br>
+            <b>HYG (High Yield Credit):</b> iShares iBoxx High Yield Corporate Bond ETF — Yahoo Finance.<br><br>
+            <b>GLD (Gold):</b> SPDR Gold Shares ETF — Yahoo Finance.<br><br>
+            <b>Accuracy:</b> Real daily market prices from Yahoo Finance, adjusted for dividends and splits.<br><br>
+            <b>Model:</b> Gaussian Mixture Model from scikit-learn. Unsupervised — no labels used during training.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -939,14 +924,12 @@ elif page == "AI Finance":
             <div class="static-section">
                 <h3>Why It Matters</h3>
                 <p>
-                Markets do not move in isolation. When stress hits it
-                shows up across multiple asset classes simultaneously —
-                stocks fall, credit widens, and gold spikes at the same
-                time. A model that watches only one asset misses the
-                full picture.<br><br>
-                This model detects those cross-asset stress patterns
-                using machine learning — no rules, no assumptions.
-                The algorithm finds the patterns itself from 12 years
+                Markets do not move in isolation. When stress hits it often shows up across
+                several asset classes at once — stocks fall, credit weakens, and safe havens like
+                gold and high-quality bonds attract buyers. A model that watches only one asset
+                misses the full picture.<br><br>
+                This model looks for those cross-asset patterns using machine learning instead of
+                hand-written rules. The algorithm finds the two regimes itself from about 12 years
                 of real data.
                 </p>
             </div>
@@ -956,15 +939,16 @@ elif page == "AI Finance":
             <div class="static-section">
                 <h3>Methodology</h3>
                 <p>
-                Downloads daily prices for SPY, AGG, HYG, and GLD.
-                Calculates 21-day rolling mean returns for each asset
-                — smoothing noise to reveal trends.<br><br>
-                A Gaussian Mixture Model finds two hidden clusters in
-                the four-dimensional return data. The cluster with
-                higher average SPY returns is RISK-ON. The cluster
-                with lower average SPY returns is RISK-OFF.<br><br>
-                Backtest goes long SPY during RISK-ON and cash during
-                RISK-OFF using prior day signal — no lookahead bias.<br><br>
+                Downloads daily prices for SPY, AGG, HYG, and GLD and calculates 21-day rolling
+                mean returns for each asset to smooth noise.<br><br>
+                A Gaussian Mixture Model finds two clusters in the four-dimensional return data.
+                The cluster with higher average SPY returns is RISK-ON; the other is RISK-OFF.<br><br>
+                The backtest holds SPY during RISK-ON and cash (0% return) during RISK-OFF, using
+                the prior day's signal. The Sharpe ratio shown is annual return divided by annual
+                volatility, without subtracting a risk-free rate.<br><br>
+                <b>Limitations:</b> the model is fit on the full date range, so the backtest is
+                in-sample and likely looks better than real-time trading would. It also ignores
+                trading costs.<br><br>
                 <b>Methodology never changes regardless of date range.</b>
                 </p>
             </div>
@@ -980,7 +964,7 @@ elif page == "AI Finance":
         st.markdown("""
         <div class="static-section">
             <h3>Asset Classes Covered</h3>
-            <p><b>SPY — US Equities:</b> S&P 500 ETF — the broadest measure of US stock market performance. Rises in RISK-ON, falls sharply in RISK-OFF. The primary return driver in this model.<br><br><b>AGG — Investment Grade Bonds:</b> High quality corporate and government bonds. Often rises during RISK-OFF as investors flee to safety. Acts as the counter-weight to equities.<br><br><b>HYG — High Yield Credit:</b> Riskier corporate bonds from companies with lower credit ratings. Falls sharply during stress because investors demand more compensation for default risk. Often the first asset to show cracks before stocks fall.<br><br><b>GLD — Gold:</b> The classic safe haven. Spikes during geopolitical stress, inflation fears, and financial crises. When gold and bonds both rise while stocks fall, that is a strong RISK-OFF signal.</p>
+            <p><b>SPY — US Equities:</b> S&P 500 ETF — the broadest measure of US stock market performance. Rises in RISK-ON, falls sharply in RISK-OFF. The primary return driver in this model.<br><br><b>AGG — Investment Grade Bonds:</b> High quality corporate and government bonds. Often rises during RISK-OFF as investors flee to safety. Acts as the counter-weight to equities.<br><br><b>HYG — High Yield Credit:</b> Riskier corporate bonds from companies with lower credit ratings. Falls sharply during stress because investors demand more compensation for default risk. Can show stress before stocks do.<br><br><b>GLD — Gold:</b> The classic safe haven. Spikes during geopolitical stress, inflation fears, and financial crises. When gold and bonds both rise while stocks fall, that is a strong RISK-OFF signal.</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1128,7 +1112,7 @@ elif page == "AI Finance":
         """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════
-# MODEL 3 — CREDIT SPREAD MONITOR (FRED OAS — Bloomberg Accurate)
+# MODEL 3 — CREDIT SPREAD MONITOR (FRED OAS)
 # ══════════════════════════════════════════════════════════════
     elif model == "Credit Spread Monitor":
         title_col, card_col = st.columns([3, 2])
@@ -1144,16 +1128,15 @@ elif page == "AI Finance":
         <div class="static-section">
             <h3>Overview</h3>
             <p>
-            This model tracks the ICE BofA US High Yield Option-Adjusted
-            Spread (OAS) — the professional benchmark used by Bloomberg
-            and every major credit desk in the world. The spread is
-            converted into a stress score from 1 to 5 using 16 years
-            of real daily data from 2010 to present.<br><br>
-            When high yield credit spreads widen it signals investors
-            are demanding more compensation for credit risk — one of
-            the earliest and most reliable warning signals in fixed
-            income markets. This model detects that widening in real
-            time and classifies it against historical context.
+            This model tracks the ICE BofA US High Yield Option-Adjusted Spread (OAS) — a
+            widely used benchmark for stress in the high yield bond market. The spread is
+            converted into a stress score from 1 to 5 by ranking today's reading against its
+            available history.<br><br>
+            When high yield credit spreads widen it signals investors are demanding more
+            compensation for credit risk — one of the key warning signals in fixed income
+            markets.<br><br>
+            <b>Data note:</b> since April 2026, FRED only provides the most recent three years
+            of this series, so the model's history currently begins in 2023.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -1162,13 +1145,13 @@ elif page == "AI Finance":
         <div class="static-section">
             <h3>Key Features</h3>
             <p>
-            • Real ICE BofA OAS spread pulled live from FRED on every run<br>
+            • Official ICE BofA OAS data from FRED, refreshed automatically<br>
             • Credit stress score from 1 (very calm) to 5 (high stress)<br>
-            • Percentile ranking against full history since 2010<br>
+            • Percentile ranking against all readings in the available history<br>
             • OAS regime classification — Tight, Normal, Wide, Very Wide<br>
-            • 21-day rolling spread smoothing to filter daily noise<br>
+            • 21-day rolling average to smooth daily noise on the chart<br>
             • Three chart visualization — OAS over time, stress score, HYG vs LQD<br>
-            • Dynamic signal and interpretation that updates every run
+            • Dynamic signal and interpretation that updates automatically
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -1177,19 +1160,16 @@ elif page == "AI Finance":
         <div class="data-source-section">
             <h3>Data Sources</h3>
             <p>
-            <b>Primary Data:</b> ICE BofA US High Yield Option-Adjusted Spread
-            (FRED series: BAMLH0A0HYM2) — pulled directly from the Federal
-            Reserve Economic Data (FRED) database via the pandas-datareader
-            library on every run.<br>
-            <b>Accuracy:</b> This is the exact same OAS series displayed on
-            Bloomberg terminals and used by every major credit desk. Published
-            daily by the Federal Reserve Bank of St. Louis. 100% accurate —
-            not a proxy or approximation.<br>
-            <b>HYG & LQD:</b> ETF closing prices from Yahoo Finance used for
-            the relative performance chart only — not for the OAS calculation.<br>
-            <b>Stress Score:</b> Current OAS ranked as a percentile against all
-            historical readings since 2010, then divided into five equal quintile
-            bins (score 1-5). Methodology is objective and repeatable.
+            <b>Primary Data:</b> ICE BofA US High Yield Index Option-Adjusted Spread (FRED
+            series: BAMLH0A0HYM2), produced by ICE Data Indices and distributed through FRED,
+            the St. Louis Fed's economic database, via the pandas-datareader library.<br><br>
+            <b>Accuracy:</b> This is the official index data — not a proxy or approximation.<br><br>
+            <b>History:</b> Since April 2026, FRED limits this series to a rolling three-year
+            window, so percentiles and averages cover roughly the last three years.<br><br>
+            <b>HYG & LQD:</b> ETF prices from Yahoo Finance used for the relative performance
+            chart only — not for the OAS calculation.<br><br>
+            <b>Stress Score:</b> Today's OAS ranked as a percentile against all readings in the
+            available history, then split into five equal bins (score 1-5).
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -1200,14 +1180,11 @@ elif page == "AI Finance":
             <div class="static-section">
                 <h3>Why It Matters</h3>
                 <p>
-                Credit spreads are one of the most important leading
-                indicators in fixed income markets. When OAS widens it
-                signals investors are demanding more compensation for
-                default risk — often weeks or months before stress shows
-                up in equity markets.<br><br>
-                The 2008 crisis, 2011 EU debt crisis, 2016 oil crash,
-                2020 COVID crash, and April 2025 tariff shock all showed
-                up first in credit spreads before hitting equity markets.
+                Credit spreads are one of the most important indicators in fixed income markets.
+                When OAS widens it signals investors are demanding more compensation for default
+                risk, and credit stress can appear before it shows up in stock prices.<br><br>
+                Spreads widened sharply during the 2008 financial crisis, the 2011 euro debt crisis,
+                the 2015-16 oil price crash, the March 2020 COVID crash, and the April 2025 tariff shock.
                 </p>
             </div>
             """, unsafe_allow_html=True)
@@ -1216,14 +1193,12 @@ elif page == "AI Finance":
             <div class="static-section">
                 <h3>Methodology</h3>
                 <p>
-                Downloads the ICE BofA OAS spread directly from FRED
-                (BAMLH0A0HYM2). This is the option-adjusted spread
-                between US high yield bonds and US Treasuries —
-                the professional benchmark.<br><br>
-                The spread is ranked as a percentile against all
-                historical readings and converted into a stress score
-                from 1 to 5 using equal quintile bins.<br><br>
-                A 21-day rolling average smooths daily noise.<br><br>
+                Downloads the ICE BofA OAS directly from FRED (BAMLH0A0HYM2) — the option-adjusted
+                spread between US high yield bonds and US Treasuries.<br><br>
+                Today's spread is ranked as a percentile against all readings in the available
+                history and converted into a stress score from 1 to 5 using five equal bins. The
+                spread level is also labeled Tight, Normal, Wide, or Very Wide using fixed thresholds.<br><br>
+                A 21-day rolling average smooths daily noise on the chart.<br><br>
                 <b>Methodology never changes regardless of date range.</b>
                 </p>
             </div>
@@ -1232,7 +1207,21 @@ elif page == "AI Finance":
         st.markdown("""
         <div class="static-section">
             <h3>Stress Score & OAS Regime Classification</h3>
-            <p>The OAS (Option-Adjusted Spread) is the extra yield investors demand to hold high yield bonds instead of risk-free Treasuries. Think of it as the market's price for corporate default risk. When the OAS is low investors are relaxed. When it spikes investors are scared and demanding more compensation.<br><br><b>Score 1 — VERY CALM (OAS below 2.50%):</b> Investors are extremely comfortable lending to risky companies. Default risk is being priced at historically low levels. Credit markets are healthy. Seen during strong economic expansions with low unemployment and rising corporate earnings.<br><br><b>Score 2 — CALM (OAS 2.50% to 3.00%):</b> Credit conditions are normal. Spreads are near their long-run average. No signs of stress. A good environment for holding high yield bonds.<br><br><b>Score 3 — MODERATE (OAS 3.00% to 3.50%):</b> Spreads are starting to widen above average. Investors are becoming more cautious. Worth monitoring whether this is a temporary move or the start of a trend toward stress.<br><br><b>Score 4 — ELEVATED (OAS 3.50% to 5.00%):</b> <span style="color:#E64A19; font-weight:bold;">Credit stress is building. Investors are demanding significantly more compensation for default risk. This level has historically preceded recessions and market downturns. Consider reducing exposure to high yield bonds and risk assets.</span><br><br><b>Score 5 — HIGH STRESS (OAS above 5.00%):</b> <span style="color:#B71C1C; font-weight:bold;">Crisis-level spreads. The market is pricing in a significant wave of corporate defaults. This territory was seen during the 2008 financial crisis, COVID March 2020, and the 2016 oil price collapse. Reduce credit risk exposure immediately.</span></p>
+            <p>
+            The OAS (Option-Adjusted Spread) is the extra yield investors demand to hold high yield bonds instead of Treasuries. Think of it as the market's price for corporate default risk. When the OAS is low investors are relaxed. When it spikes investors are scared and demanding more compensation.<br><br>
+            <b>Stress Score (relative):</b> based on where today ranks against the available history.<br><br>
+            <b>Score 1 — VERY CALM</b> (bottom 20% of readings): Spreads are among the lowest in the period. Credit markets are relaxed. → <span style="color:#2E7D32; font-weight:bold;">RISK-ON</span><br><br>
+            <b>Score 2 — CALM</b> (20th to 40th percentile): Healthy credit conditions with no signs of stress. → <span style="color:#2E7D32; font-weight:bold;">RISK-ON</span><br><br>
+            <b>Score 3 — MODERATE</b> (40th to 60th percentile): Middle of the range. Worth monitoring for a trend. → <span style="color:#E65100; font-weight:bold;">NEUTRAL</span><br><br>
+            <b>Score 4 — ELEVATED</b> (60th to 80th percentile): Spreads are higher than usual for the period. Investors are getting more cautious. → <span style="color:#C62828; font-weight:bold;">CAUTION</span><br><br>
+            <b>Score 5 — HIGH STRESS</b> (top 20% of readings): Spreads are among the widest in the period. → <span style="color:#B71C1C; font-weight:bold;">RISK-OFF</span><br><br>
+            <b>OAS Regime (absolute):</b> based on the spread level itself.<br><br>
+            <b>TIGHT</b> (below 2.50%): Investors are very comfortable lending to risky companies. Default risk is priced at historically low levels.<br><br>
+            <b>NORMAL</b> (2.50% to 3.50%): Typical credit conditions.<br><br>
+            <b>WIDE</b> (3.50% to 5.00%): Credit stress is building. Investors are demanding significantly more compensation for default risk.<br><br>
+            <b>VERY WIDE</b> (above 5.00%): Crisis-level spreads, seen during the 2008 financial crisis, the 2015-16 oil crash, and March 2020.<br><br>
+            <b>Note:</b> because the stress score is relative, a high score means today is high compared with the recent history, even if the spread level itself is still in the Normal range.
+            </p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1349,13 +1338,13 @@ elif page == "AI Finance":
             m1.metric("OAS Spread",    f"{cur_oas:.2f}%")
             m2.metric("OAS (bps)",     f"{cur_bps:.0f} bps")
             m3.metric("Stress Score",  f"{cur_score:.0f} / 5 — {cur_label}")
-            m4.metric("Percentile",    f"{cur_pct:.0f}th since 2010")
+            m4.metric("Percentile",    f"{cur_pct:.0f}th", f"since {df.index.min().year}")
 
             # Historical Context
             st.markdown("---")
             st.markdown("### Historical Context")
             h1, h2, h3, h4 = st.columns(4)
-            h1.metric("Historical Avg",   f"{avg_oas:.2f}%", "since 2010")
+            h1.metric("Historical Avg",   f"{avg_oas:.2f}%", f"since {df.index.min().year}")
             h2.metric("vs Average",       f"{cur_oas - avg_oas:+.2f}%")
             h3.metric("All-Time High",    f"{max_oas:.2f}%", max_date)
             h4.metric("All-Time Low",     f"{min_oas:.2f}%", min_date)
@@ -1482,10 +1471,10 @@ elif page == "AI Finance":
             from Yahoo Finance.<br><br>
             The mortgage spread — the gap between the 30-year mortgage
             rate and the 10-year Treasury yield — is the key signal
-            watched by every mortgage trading desk. When the spread
+            closely watched on mortgage trading desks. When the spread
             widens it signals stress in the MBS market. When it narrows
-            it signals lender competition and tight credit conditions.
-            Built on 16 years of real daily data from 2010 to present.
+            it signals lender competition and easier credit conditions.
+            Built on data from 2010 to present — weekly mortgage rates and daily market data.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -1499,7 +1488,7 @@ elif page == "AI Finance":
             • Spread regime classification — Tight, Normal, Wide, Very Wide<br>
             • Refinancing environment signal — Minimal, Some, Active, Wave<br>
             • Prepayment risk classification — Low, Moderate, High<br>
-            • Percentile ranking against full history since 2010<br>
+            • Percentile ranking against history (default start 2010)<br>
             • Three chart visualization — rates, spread regime, MBB vs AGG
             </p>
         </div>
@@ -1509,16 +1498,16 @@ elif page == "AI Finance":
         <div class="data-source-section">
             <h3>Data Sources</h3>
             <p>
-            <b>Primary Data:</b> Freddie Mac Primary Mortgage Market Survey
-            (FRED series: MORTGAGE30US) — the official 30-year fixed mortgage
-            rate published weekly by the Federal Reserve Bank of St. Louis.<br>
-            <b>Accuracy:</b> This is the exact same mortgage rate reported by
-            Bloomberg, CNBC, and every major financial news source. 100%
-            accurate — not a proxy or approximation.<br>
-            <b>Treasury Yields:</b> 10-year (^TNX) and 30-year (^TYX) yields
-            from Yahoo Finance — match the US Treasury website exactly.<br>
-            <b>MBB & AGG:</b> ETF closing prices from Yahoo Finance used for
-            the relative performance chart only.
+            <b>Primary Data:</b> Freddie Mac Primary Mortgage Market Survey (FRED series:
+            MORTGAGE30US) — the official 30-year fixed mortgage rate, published weekly by
+            Freddie Mac and distributed through FRED.<br><br>
+            <b>Accuracy:</b> The official survey rate widely cited in financial news — not a
+            proxy or approximation. Because it is weekly, each week's rate is carried forward
+            to line up with daily market data.<br><br>
+            <b>Treasury Yields:</b> 10-year (^TNX) and 30-year (^TYX) yields from Yahoo Finance,
+            which closely track official Treasury rates.<br><br>
+            <b>MBB & AGG:</b> ETF prices from Yahoo Finance used for the relative performance
+            chart and MBB return metrics.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -1529,15 +1518,12 @@ elif page == "AI Finance":
             <div class="static-section">
                 <h3>Why It Matters</h3>
                 <p>
-                The mortgage spread is the primary signal watched by
-                every mortgage trading desk. It determines whether MBS
-                are cheap or expensive relative to Treasuries, drives
-                prepayment modeling assumptions, and signals stress in
-                the housing finance system before it shows up elsewhere.<br><br>
-                The November 2022 spike to 3.39% — the widest since the
-                2008 crisis — showed how rapidly the spread can move
-                during Fed rate hike cycles. Every mortgage desk
-                watched that spread daily.
+                The mortgage spread is one of the key signals watched on mortgage trading desks.
+                It helps show whether MBS are cheap or expensive relative to Treasuries, feeds into
+                prepayment assumptions, and can signal stress in the housing finance system.<br><br>
+                In late 2022, as the Fed raised rates aggressively, the spread rose above 3% — one of
+                its widest levels since the 2008 crisis — showing how quickly it can move during
+                rate hike cycles.
                 </p>
             </div>
             """, unsafe_allow_html=True)
@@ -1563,7 +1549,7 @@ elif page == "AI Finance":
         st.markdown("""
         <div class="static-section">
             <h3>Regime Classification</h3>
-            <p>The mortgage spread is the gap between the official 30-year mortgage rate and the 10-year Treasury yield. It represents the extra cost borrowers pay above the risk-free rate to compensate lenders for prepayment risk, credit risk, and servicing costs. A wider spread means mortgages are more expensive relative to Treasuries — a signal of stress or uncertainty in the housing finance market.<br><br><b>TIGHT (below 1.50%):</b> Lenders are competing aggressively for mortgage business. The extra cost of a mortgage above Treasuries is historically low. MBS are expensive relative to Treasuries — investors are accepting less compensation than usual for mortgage risk. Good for new homebuyers but less attractive for MBS investors buying at tight levels.<br><br><b>NORMAL (1.50% to 2.00%):</b> Mortgage risk is priced appropriately relative to Treasuries. The spread is in its historical average range. Lenders are earning a fair margin. Normal prepayment modeling assumptions apply. The most common regime — the market is functioning as expected.<br><br><b>WIDE (2.00% to 2.50%):</b> <span style="color:#E65100; font-weight:bold;">Lenders are demanding more compensation above Treasuries. This can reflect uncertainty about prepayment speeds, tighter bank balance sheets, or broader fixed income stress. MBS are cheap relative to Treasuries. Could be a buying opportunity if the widening is technical — worth monitoring closely.</span><br><br><b>VERY WIDE (above 2.50%):</b> <span style="color:#B71C1C; font-weight:bold;">Significant stress in the mortgage market. Lenders are demanding crisis-level compensation above Treasuries. This territory was seen during the 2008 financial crisis, COVID March 2020, and the November 2022 rate shock when the Fed was hiking aggressively. MBS are very cheap but duration risk is high.</span><br><br><b>MINIMAL REFI:</b> Current mortgage rates are not significantly below where they were 12 months ago. Most borrowers have little financial incentive to refinance. Prepayment speeds are near baseline — MBS duration is close to its stated maturity.<br><br><b>SOME REFI:</b> Rates have fallen modestly. Some borrowers who were well above the current rate may refinance. Prepayment speeds are slightly above baseline.<br><br><b>ACTIVE REFI:</b> Rates have fallen meaningfully — more than 0.75% below a year ago. A meaningful portion of existing mortgages are in the money to refinance. Prepayment speeds are elevated. MBS duration is shortening.<br><br><b>REFI WAVE:</b> <span style="color:#B71C1C; font-weight:bold;">Rates have fallen more than 1.50% below a year ago. A large portion of the existing mortgage market can benefit from refinancing. Prepayment speeds are accelerating rapidly. MBS holders receive principal back much faster than expected — duration collapses. A major risk for MBS investors who bought at higher prices.</span></p>
+            <p>The mortgage spread is the gap between the official 30-year mortgage rate and the 10-year Treasury yield. It represents the extra cost borrowers pay above the risk-free rate to compensate lenders for prepayment risk, credit risk, and servicing costs. A wider spread means mortgages are more expensive relative to Treasuries — a signal of stress or uncertainty in the housing finance market.<br><br><b>TIGHT (below 1.50%):</b> Lenders are competing aggressively for mortgage business. The extra cost of a mortgage above Treasuries is historically low. MBS are expensive relative to Treasuries — investors are accepting less compensation than usual for mortgage risk. Good for new homebuyers but less attractive for MBS investors buying at tight levels.<br><br><b>NORMAL (1.50% to 2.00%):</b> Mortgage risk is priced appropriately relative to Treasuries. The spread is in its historical average range. Lenders are earning a fair margin. Normal prepayment modeling assumptions apply. The most common regime — the market is functioning as expected.<br><br><b>WIDE (2.00% to 2.50%):</b> <span style="color:#E65100; font-weight:bold;">Lenders are demanding more compensation above Treasuries. This can reflect uncertainty about prepayment speeds, tighter bank balance sheets, or broader fixed income stress. MBS are cheap relative to Treasuries. Could be a buying opportunity if the widening is technical — worth monitoring closely.</span><br><br><b>VERY WIDE (above 2.50%):</b> <span style="color:#B71C1C; font-weight:bold;">Significant stress in the mortgage market. Lenders are demanding crisis-level compensation above Treasuries. This territory was seen during the 2008 financial crisis, COVID March 2020, and the November 2022 rate shock when the Fed was hiking aggressively. MBS are very cheap but duration risk is high.</span><br><br><b>MINIMAL REFI:</b> Current mortgage rates are not significantly below where they were 12 months ago. Most borrowers have little financial incentive to refinance. Prepayment speeds are near baseline, so MBS behave like longer-duration bonds.<br><br><b>SOME REFI:</b> Rates have fallen modestly. Some borrowers who were well above the current rate may refinance. Prepayment speeds are slightly above baseline.<br><br><b>ACTIVE REFI:</b> Rates have fallen meaningfully — more than 0.75% below a year ago. A meaningful portion of existing mortgages are in the money to refinance. Prepayment speeds are elevated. MBS duration is shortening.<br><br><b>REFI WAVE:</b> <span style="color:#B71C1C; font-weight:bold;">Rates have fallen more than 1.50% below a year ago. A large portion of the existing mortgage market can benefit from refinancing. Prepayment speeds are accelerating rapidly. MBS holders receive principal back much faster than expected — duration collapses. A major risk for MBS investors who bought at higher prices.</span></p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1700,7 +1686,7 @@ elif page == "AI Finance":
             st.markdown("### Refinancing & Prepayment Signal")
             if cur_refi_mm in ["MINIMAL REFI", "SOME REFI"]:
                 st.success(f"✅ {cur_refi_mm} — Prepayment Risk: {cur_prepay_mm}. "
-                    f"MBS duration is close to its stated maturity.")
+                    f"Prepayments are near baseline, so MBS duration stays extended.")
             elif cur_refi_mm == "ACTIVE REFI":
                 st.warning(f"⚠️ {cur_refi_mm} — Prepayment Risk: {cur_prepay_mm}. "
                     f"Prepayment speeds above normal. Duration shortening.")
@@ -1715,7 +1701,7 @@ elif page == "AI Finance":
             m1.metric("Official 30Y Mortgage", f"{cur_mort_mm:.2f}%")
             m2.metric("10-Year Treasury",       f"{cur_10y_mm:.2f}%")
             m3.metric("Mortgage Spread",        f"{cur_spread_mm:.2f}%")
-            m4.metric("Percentile since 2010",  f"{pct_rank_mm:.0f}th")
+            m4.metric("Percentile",  f"{pct_rank_mm:.0f}th", f"since {df_mm.index.min().year}")
 
             s1, s2, s3 = st.columns(3)
             s1.metric("Spread Regime",          cur_regime_mm)
@@ -1726,7 +1712,7 @@ elif page == "AI Finance":
             st.markdown("---")
             st.markdown("### Historical Context")
             h1, h2, h3, h4 = st.columns(4)
-            h1.metric("Historical Avg",    f"{avg_spread_mm:.2f}%", "since 2010")
+            h1.metric("Historical Avg",    f"{avg_spread_mm:.2f}%", f"since {df_mm.index.min().year}")
             h2.metric("vs Average",        f"{cur_spread_mm - avg_spread_mm:+.2f}%")
             h3.metric("All-Time High",     f"{max_spread_mm:.2f}%", max_date_mm)
             h4.metric("All-Time Low",      f"{min_spread_mm:.2f}%", min_date_mm)
