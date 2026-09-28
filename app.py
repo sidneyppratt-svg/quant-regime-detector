@@ -1477,8 +1477,9 @@ elif page == "AI Finance":
             <p>
             This model tracks the official Freddie Mac 30-year fixed
             mortgage rate, the mortgage spread over the 10-year Treasury
-            yield, and the refinancing environment using real data pulled
-            directly from the Federal Reserve (FRED).<br><br>
+            yield, and the refinancing environment, using the official
+            mortgage rate from the Federal Reserve (FRED) and market data
+            from Yahoo Finance.<br><br>
             The mortgage spread — the gap between the 30-year mortgage
             rate and the 10-year Treasury yield — is the key signal
             watched by every mortgage trading desk. When the spread
@@ -2064,7 +2065,7 @@ elif page == "Other Projects":
 
         if not os.environ.get("ANTHROPIC_API_KEY"):
             st.warning("Recipe generation isn't connected yet. Add "
-                       "ANTHROPIC_API_KEY in Render → Environment.")
+                       "ANTHROPIC_API_KEY where this site is hosted.")
             st.stop()
 
         with st.spinner("Claude is creating recipes... (about 15 seconds)"):
@@ -2072,7 +2073,7 @@ elif page == "Other Projects":
                 data = rb_generate(category, st.session_state.rb_batch)
                 error = None
             except anthropic.AuthenticationError:
-                error = "The Claude API key wasn't accepted. Check ANTHROPIC_API_KEY in Render."
+                error = "The Claude API key wasn't accepted. Check the ANTHROPIC_API_KEY setting where this site is hosted."
             except anthropic.BadRequestError as e:
                 if "credit" in str(e).lower():
                     error = "Recipe credits have run out for now. Please check back later."
