@@ -1359,8 +1359,8 @@ elif page == "AI Finance":
             h1, h2, h3, h4 = st.columns(4)
             h1.metric("Historical Avg",   f"{avg_oas:.2f}%", f"since {df.index.min().year}")
             h2.metric("vs Average",       f"{cur_oas - avg_oas:+.2f}%")
-            h3.metric("All-Time High",    f"{max_oas:.2f}%", max_date)
-            h4.metric("All-Time Low",     f"{min_oas:.2f}%", min_date)
+            h3.metric(f"High Since {df.index.min().year}", f"{max_oas:.2f}%", max_date)
+            h4.metric(f"Low Since {df.index.min().year}",  f"{min_oas:.2f}%", min_date)
 
             w1, w2 = st.columns(2)
             w1.metric("52-Week High OAS", f"{oas_52w_high:.2f}%")
@@ -1727,8 +1727,8 @@ elif page == "AI Finance":
             h1, h2, h3, h4 = st.columns(4)
             h1.metric("Historical Avg",    f"{avg_spread_mm:.2f}%", f"since {df_mm.index.min().year}")
             h2.metric("vs Average",        f"{cur_spread_mm - avg_spread_mm:+.2f}%")
-            h3.metric("All-Time High",     f"{max_spread_mm:.2f}%", max_date_mm)
-            h4.metric("All-Time Low",      f"{min_spread_mm:.2f}%", min_date_mm)
+            h3.metric(f"High Since {df_mm.index.min().year}", f"{max_spread_mm:.2f}%", max_date_mm)
+            h4.metric(f"Low Since {df_mm.index.min().year}",  f"{min_spread_mm:.2f}%", min_date_mm)
 
             w1, w2 = st.columns(2)
             w1.metric("MBB 1-Month",  f"{mbb_1m_mm:+.1f}%")
