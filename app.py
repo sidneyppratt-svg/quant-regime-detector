@@ -30,6 +30,12 @@ def cached_yf_download(tickers, **kwargs):
 def cached_fred(series, start, end):
     return web.DataReader(series, "fred", start, end)
 
+def ordinal(x):
+    """53 -> '53rd', 11 -> '11th'."""
+    n = int(round(x))
+    suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
 def refresh_data():
     cached_yf_download.clear()
     cached_fred.clear()
@@ -759,7 +765,7 @@ elif page == "AI Finance":
             s1.metric("10Y minus 3M",
                 f"{current_spread:+.2f}%", "Key spread")
             s2.metric("Percentile",
-                f"{pct_rank:.0f}th", "vs history")
+                ordinal(pct_rank), "vs history")
             s3.metric("30-Day Trend",
                 f"{trend_30d:+.2f}%",
                 "Steepening" if trend_30d > 0 else "Flattening")
@@ -1227,10 +1233,17 @@ elif page == "AI Finance":
 
         st.markdown("---")
         st.markdown("### Refresh the Model")
+        # FRED only provides the last 3 years of this series, so default
+        # the start date to exactly three years before today
+        _today = datetime.date.today()
+        try:
+            cs_default_start = _today.replace(year=_today.year - 3)
+        except ValueError:   # today is Feb 29
+            cs_default_start = _today.replace(year=_today.year - 3, day=28)
         col1, col2 = st.columns(2)
         with col1:
             start_date_cs = st.date_input("Start Date",
-                value=datetime.date(2010, 1, 1), key="cs_start")
+                value=cs_default_start, key="cs_start")
         with col2:
             end_date_cs = st.date_input("End Date",
                 value=datetime.date.today(), key="cs_end")
@@ -1338,7 +1351,7 @@ elif page == "AI Finance":
             m1.metric("OAS Spread",    f"{cur_oas:.2f}%")
             m2.metric("OAS (bps)",     f"{cur_bps:.0f} bps")
             m3.metric("Stress Score",  f"{cur_score:.0f} / 5 — {cur_label}")
-            m4.metric("Percentile",    f"{cur_pct:.0f}th", f"since {df.index.min().year}")
+            m4.metric("Percentile",    ordinal(cur_pct), f"since {df.index.min().year}")
 
             # Historical Context
             st.markdown("---")
@@ -1701,7 +1714,7 @@ elif page == "AI Finance":
             m1.metric("Official 30Y Mortgage", f"{cur_mort_mm:.2f}%")
             m2.metric("10-Year Treasury",       f"{cur_10y_mm:.2f}%")
             m3.metric("Mortgage Spread",        f"{cur_spread_mm:.2f}%")
-            m4.metric("Percentile",  f"{pct_rank_mm:.0f}th", f"since {df_mm.index.min().year}")
+            m4.metric("Percentile",  ordinal(pct_rank_mm), f"since {df_mm.index.min().year}")
 
             s1, s2, s3 = st.columns(3)
             s1.metric("Spread Regime",          cur_regime_mm)
