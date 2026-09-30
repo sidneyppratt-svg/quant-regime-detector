@@ -341,7 +341,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-page = st.radio("", ["About", "Resume", "AI Finance", "Other Projects"],
+page = st.radio("", ["About", "Resume", "AI Finance", "SQL Market Data", "Other Projects"],
     horizontal=True,
     label_visibility="collapsed")
 
@@ -1861,6 +1861,13 @@ elif page == "AI Finance":
     investment decisions.
     </p>
     """, unsafe_allow_html=True)
+
+# ══════════════════════════════════════════════════════════════
+# SQL MARKET DATA EXPLORER (the page lives in sql_explorer.py)
+# ══════════════════════════════════════════════════════════════
+elif page == "SQL Market Data":
+    import sql_explorer
+    sql_explorer.render()
 
 # ══════════════════════════════════════════════════════════════
 # OTHER PROJECTS — HOCKEY PATHWAY NAVIGATOR
