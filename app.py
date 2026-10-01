@@ -341,7 +341,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-page = st.radio("", ["About", "Resume", "AI Finance", "SQL Market Data", "Other Projects"],
+page = st.radio("", ["About", "Resume", "Python Market Models", "SQL Market Data", "Other Projects"],
     horizontal=True,
     label_visibility="collapsed")
 
@@ -445,7 +445,7 @@ elif page == "Resume":
         <p>
         <b>Western Michigan University</b> | Kalamazoo, MI<br>
         Double Major in Finance and Economics<br>
-        Expected Graduation: May 2029 | GPA: 3.25
+        Expected Graduation: May 2028 | GPA: 3.25
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -455,7 +455,8 @@ elif page == "Resume":
         <p>
         MIT Professional Education — Forecasting Future Technologies<br>
         NPR — Economic History Summer School<br>
-        Coursera — Python & SQL for Finance
+        Coursera — Python Data Structures<br>
+        Coursera — Programming for Everybody (Getting Started with Python)
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -463,7 +464,7 @@ elif page == "Resume":
     <div class="card">
         <h3>Experience</h3>
         <p>
-        <b>Intern | American Institute of Economic Research (AIER)</b><br>
+        <b>Intern | American Institute for Economic Research (AIER)</b><br>
         February 2026 – April 2026 | Great Barrington, MA<br>
         Contributed to economic research and policy analysis through
         data collection, literature review, and analytical support.
@@ -473,7 +474,7 @@ elif page == "Resume":
         <br>
         <p>
         <b>Sales Associate | Next Gen Exposure</b><br>
-        August 2026 – October 2026 | Kalamazoo, MI<br>
+        August 2025 – October 2025 | Kalamazoo, MI<br>
         Trained in direct-to-consumer sales representing AT&T within
         a high-traffic Costco environment.
         </p>
@@ -504,7 +505,7 @@ elif page == "Resume":
             <h3>Activities</h3>
             <p>
             ACHA D1 Hockey | Western Michigan University<br>
-            Pi Kappa Alpha Fraternity<br>
+            Financial Services Association | Western Michigan University<br>
             Northern Cyclones Financial Club — Co-Founder<br>
             SPuRS Advanced Leadership Pillar
             </p>
@@ -527,9 +528,9 @@ elif page == "Resume":
 # ══════════════════════════════════════════════════════════════
 # AI RESEARCH
 # ══════════════════════════════════════════════════════════════
-elif page == "AI Finance":
+elif page == "Python Market Models":
     st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
-    st.markdown("# AI Finance")
+    st.markdown("# Python Market Models")
     st.markdown("""
     <p style="color:#333333; font-size:16px;">
     Using machine learning to find signals in financial markets
@@ -1882,7 +1883,7 @@ elif page == "Other Projects":
     </p>
     """, unsafe_allow_html=True)
 
-    # Project selection buttons (same style as AI Finance)
+    # Project selection buttons (same style as Python Market Models)
     p1, p2 = st.columns(2)
     with p1:
         pick_rb = st.button("Recipe Builder",
