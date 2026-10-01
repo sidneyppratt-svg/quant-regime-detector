@@ -447,12 +447,16 @@ elif page == "Resume":
 
     DATE = 'style="color:#555555; font-size:14px;"'
 
-    resume_card("Summary", """
-        <p>Finance and Economics double major at Western Michigan University
-        with hands-on experience in Python, SQL, financial analysis, and
-        quantitative research. ACHA D1 hockey player and global volunteer who
-        brings discipline, analytical rigor, and a proven ability to perform
-        across academics, athletics, and service.</p>""")
+    resume_card("Education", """
+        <p><b>Western Michigan University</b> | Kalamazoo, MI<br>
+        Double Major: Finance and Economics<br>
+        Expected Graduation: May 2028 | GPA: 3.25</p>""")
+
+    resume_card("Certifications", """
+        <p><b>MIT Professional Education:</b> Forecasting Future Technologies<br>
+        <b>NPR:</b> Economic History Summer School<br>
+        <b>Coursera:</b> Python Data Structures; Programming for Everybody
+        (Getting Started with Python)</p>""")
 
     resume_card("Skills", """
         <p><b>Technical:</b> Python (pandas, NumPy, matplotlib, scikit-learn),
@@ -464,17 +468,6 @@ elif page == "Resume":
         handling, customer service</p>
         <p><b>Soft Skills:</b> Communication, critical thinking,
         problem-solving, teamwork, adaptability, eager to listen and learn</p>""")
-
-    resume_card("Education", """
-        <p><b>Western Michigan University</b> | Kalamazoo, MI<br>
-        Double Major: Finance and Economics<br>
-        Expected Graduation: May 2028 | GPA: 3.25</p>""")
-
-    resume_card("Certifications", """
-        <p><b>MIT Professional Education:</b> Forecasting Future Technologies<br>
-        <b>NPR:</b> Economic History Summer School<br>
-        <b>Coursera:</b> Python Data Structures; Programming for Everybody
-        (Getting Started with Python)</p>""")
 
     resume_card("Python &amp; SQL Projects", """
         <p style="color:#555555; font-size:14px;">Live at sidneyppratt.com |
