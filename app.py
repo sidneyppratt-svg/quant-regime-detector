@@ -359,7 +359,7 @@ if page == "About":
     st.markdown("""
     <div style="margin-bottom:0.75rem;">
         <span class="tag">Finance & Economics</span>
-        <span class="tag">AI Researcher</span>
+        <span class="tag">Python &amp; SQL</span>
         <span class="tag">ACHA D1 Hockey</span>
         <span class="tag">World Explorer</span>
     </div>
