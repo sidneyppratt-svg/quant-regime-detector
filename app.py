@@ -395,7 +395,7 @@ if page == "About":
         information into something practical and understandable.
         </p>
         <p>
-        As I continue developing my Python and quantitative skills, I've
+        As I continue developing my Python, SQL and quantitative skills, I've
         embraced AI tools such as Claude as part of my learning and
         development process. I use AI to help explore unfamiliar concepts,
         troubleshoot code, refine ideas, and accelerate the process of
