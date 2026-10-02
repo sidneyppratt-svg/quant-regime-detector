@@ -1,1 +1,52 @@
+# Runs the market data loader every weekday after the market closes,
+# saves the updated database, and pushes it to main.
+# Render sees the new commit and redeploys the site automatically.
+name: Update market data
 
+on:
+  schedule:
+    # 22:30 UTC = 6:30 PM Eastern in summer, 5:30 PM in winter.
+    # Monday through Friday only (1-5).
+    - cron: "30 22 * * 1-5"
+  # Adds a "Run workflow" button so it can also be run by hand.
+  workflow_dispatch:
+
+# Allows this job to save changes back to the repository.
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      # Download a copy of the repository onto GitHub's computer.
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      # Install Python.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Install only what the loader needs.
+      - name: Install libraries
+        run: pip install yfinance pandas
+
+      # Run the loader inside the sql folder, where trading.db lives.
+      - name: Download latest prices
+        working-directory: sql
+        run: python load_data.py
+
+      # Save the updated database back to GitHub, only if it changed.
+      - name: Save updated database
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sql/trading.db
+          if git diff --cached --quiet; then
+            echo "No changes to save."
+          else
+            git commit -m "Daily market data update"
+            git push
+          fi
