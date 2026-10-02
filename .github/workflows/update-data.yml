@@ -1,13 +1,14 @@
-# Runs the market data loader every weekday after the market closes,
-# saves the updated database, and pushes it to main.
+# Runs the market data loader early each weekday morning, before the
+# market opens, saves the updated database, and pushes it to main.
 # Render sees the new commit and redeploys the site automatically.
 name: Update market data
 
 on:
   schedule:
-    # 22:30 UTC = 6:30 PM Eastern in summer, 5:30 PM in winter.
-    # Monday through Friday only (1-5).
-    - cron: "30 22 * * 1-5"
+    # 10:00 UTC = 6:00 AM Eastern in summer, 5:00 AM in winter.
+    # Tuesday through Saturday (2-6), so each run picks up the
+    # previous Monday-Friday trading day's final prices.
+    - cron: "0 10 * * 2-6"
   # Adds a "Run workflow" button so it can also be run by hand.
   workflow_dispatch:
 
