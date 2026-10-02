@@ -698,6 +698,8 @@ def render():
         return.<br><br>
         <b>Database:</b> Five years of daily data stored in a SQLite
         database. Latest trading day included: <b>{as_of}</b>.<br><br>
+        <b>Updates:</b> Refreshed automatically every weekday by a
+        scheduled GitHub Actions job that downloads the latest prices.<br><br>
         All tables are produced by SQL queries; Python and Streamlit
         display the results.
         </p>
