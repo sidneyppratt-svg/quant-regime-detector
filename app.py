@@ -341,7 +341,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-page = st.radio("", ["About", "Resume", "Python Market Models", "SQL Market Data", "Other Projects"],
+page = st.radio("", ["About", "Python Market Models", "SQL Market Data", "Other Projects"],
     horizontal=True,
     label_visibility="collapsed")
 
@@ -431,100 +431,6 @@ if page == "About":
         </p>
     </div>
     """, unsafe_allow_html=True)
-
-# ══════════════════════════════════════════════════════════════
-# RESUME
-# ══════════════════════════════════════════════════════════════
-elif page == "Resume":
-    st.markdown("<div style='height:0.1rem;'></div>", unsafe_allow_html=True)
-    st.markdown("# Resume")
-    st.markdown("---")
-
-    # Sections follow the same order as the paper resume.
-    def resume_card(title, body):
-        st.markdown(f'<div class="card"><h3>{title}</h3>{body}</div>',
-                    unsafe_allow_html=True)
-
-    DATE = 'style="color:#555555; font-size:14px;"'
-
-    resume_card("Education", """
-        <p><b>Western Michigan University</b> | Kalamazoo, MI<br>
-        Double Major: Finance and Economics<br>
-        Expected Graduation: May 2028 | GPA: 3.25</p>""")
-
-    resume_card("Certifications", """
-        <p><b>MIT Professional Education:</b> Forecasting Future Technologies<br>
-        <b>NPR:</b> Economic History Summer School<br>
-        <b>Coursera:</b> Python Data Structures; Programming for Everybody
-        (Getting Started with Python)</p>""")
-
-    resume_card("Skills", """
-        <p><b>Technical:</b> Python (pandas, NumPy, matplotlib, scikit-learn),
-        SQL, Streamlit, Google Colab, Render, GitHub, Microsoft Office Suite,
-        financial analysis, Claude AI-assisted quantitative research</p>
-        <p><b>Leadership:</b> Team coordination, player development, staff
-        training, coaching</p>
-        <p><b>Operations:</b> Retail management, inventory control, cash
-        handling, customer service</p>
-        <p><b>Soft Skills:</b> Communication, critical thinking,
-        problem-solving, teamwork, adaptability, eager to listen and learn</p>""")
-
-    resume_card("Python &amp; SQL Projects", """
-        <p style="color:#555555; font-size:14px;">Live at sidneyppratt.com |
-        github.com/sidneyppratt-svg</p>
-        <p>Four live quantitative finance models built in Python on real market
-        data and deployed as an interactive web application<br>
-        • <b>Yield Curve Monitor:</b> tracks Treasury yield curve regimes<br>
-        • <b>Multi-Asset Regime Detector:</b> detects risk-on/risk-off market
-        states using a Gaussian Mixture Model<br>
-        • <b>Credit Spread Monitor:</b> monitors high-yield credit stress using
-        the official ICE BofA spread from the Federal Reserve (FRED), scored
-        1–5 against recent history<br>
-        • <b>Mortgage Market Monitor:</b> tracks the official 30-year mortgage
-        rate and spreads to signal refinancing activity<br>
-        • <b>SQL Market Data Explorer:</b> SQL queries analyzing five years of
-        daily prices for 14 stocks and ETFs</p>""")
-
-    resume_card("Activities &amp; Memberships", f"""
-        <p><b>ACHA D1 Hockey Team Member</b> | Western Michigan University<br>
-        <span {DATE}>September 2024 – Present</span></p>
-        <p><b>Financial Services Association</b> | Western Michigan University<br>
-        <span {DATE}>April 2025 – Present</span></p>
-        <p><b>Northern Cyclones USHL Junior Hockey Financial Club</b> | Co-Founder<br>
-        <span {DATE}>November 2023 – July 2024</span></p>
-        <p><b>SPuRS</b> | Advanced Leadership &amp; Services Pillar<br>
-        <span {DATE}>September 2024 – October 2024</span></p>""")
-
-    resume_card("Experience", f"""
-        <p><b>Intern | American Institute for Economic Research (AIER)</b><br>
-        <span {DATE}>February 2026 – April 2026 | Great Barrington, MA</span><br>
-        Contributed to economic research and policy analysis projects through
-        data collection, literature review, and analytical support. Collaborated
-        with researchers to translate findings into written materials, presented
-        policy research to the broader team, and supported evidence-based policy
-        discussions. Strengthened quantitative and analytical skills in a
-        policy-focused research environment.</p>
-        <p><b>Sales Associate | Next Gen Exposure</b><br>
-        <span {DATE}>August 2025 – October 2025 | Kalamazoo, MI</span><br>
-        Trained in direct-to-consumer sales representing AT&amp;T within a
-        high-traffic Costco environment, engaging members through consultative
-        conversations to identify needs and recommend mobile and internet
-        solutions.</p>
-        <p><b>Assistant Coach | San Francisco Sabercats Hockey Club</b><br>
-        <span {DATE}>May 2025 – July 2025 | San Francisco, CA</span><br>
-        Served as an on-call assistant coach supporting practices and games.
-        Assisted with player development, game strategy, and team coordination
-        to foster a positive and competitive environment.</p>""")
-
-    resume_card("Volunteer &amp; International Service Experience", """
-        <p><b>SF-Marin Food Bank</b> (San Francisco, CA). Organized food
-        donations and supported community food distribution.</p>
-        <p><b>Junglekeepers – Tamandua Expeditions</b> (Peruvian Amazon).
-        Assisted conservation rangers with rainforest patrols and biodiversity
-        protection.</p>
-        <p><b>Kilimanjaro Challenge – Overland Summers</b> (Tanzania).
-        Volunteered at an orphanage, learned about wildlife conservation, and
-        completed a Mount Kilimanjaro summit.</p>""")
 
 # ══════════════════════════════════════════════════════════════
 # AI RESEARCH
